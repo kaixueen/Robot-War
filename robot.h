@@ -6,7 +6,8 @@
 using namespace std;
 
 class War
-{};
+{
+};
 class Battlefield
 {
 private:
@@ -20,27 +21,26 @@ public:
     void displayField() const;
     void updateField(const Robot &r);
     bool isEmpty() const;
-    void removeRobot(const Robot& r);
-    
+    void removeRobot(const Robot &r);
+
     ~Battlefield();
 };
 
 class Robot
 {
 private:
-    string RobotName;
-    string RobotType;
-    int RobotPositionX, RobotPositionY;
-    int RemainingLives;
-    int RemainingHP;
+    string robotName;
+    string robotType;
+    int robotPositionX, robotPositionY;
+    int remainingLives;
+    int remainingHP;
 
 public:
-    Robot();                            // Default constructor
-    Robot(string n, string t);          // Parameterized constructor
-    Robot(const Robot &);               // Copy constructor
-    Robot *operator=(const Robot *obj); // Assignment operator overloading
-    Robot(Robot &&);                    // Move constructor
-    virtual ~Robot();                           // Destructor
+    Robot();                              // Default constructor
+    Robot(string n, string t);            // Parameterized constructor
+    Robot(const Robot &r);                // Copy constructor
+    Robot &operator=(const Robot &right); // Assignment operator overloading
+    virtual ~Robot() {}                   // Destructor
 
     virtual void move() = 0;
     virtual void fire() = 0;
@@ -49,9 +49,10 @@ public:
 
     int getX() const;
     int getY() const;
-    void setX();
-    void setY();
+    void setX(int &x);
+    void setY(int &y);
     bool isAlive() const;
+    bool stillGotLive() const;
     int getRemainingLives() const;
     int getRemainingHP() const;
 };
