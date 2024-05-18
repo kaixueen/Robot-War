@@ -5,14 +5,23 @@
 #include <string>
 using namespace std;
 
+class War
+{};
 class Battlefield
 {
 private:
-    int Width, Length;
-    char RepresentSymbol;
+    int width, length;
+    char emptyCell, robotCell, boundary;
+    char **cellArr;
 
 public:
-    Battlefield();
+    Battlefield(int w, int l);
+
+    void displayField() const;
+    void updateField(const Robot &r);
+    bool isEmpty() const;
+    void removeRobot(const Robot& r);
+    
     ~Battlefield();
 };
 
@@ -31,12 +40,20 @@ public:
     Robot(const Robot &);               // Copy constructor
     Robot *operator=(const Robot *obj); // Assignment operator overloading
     Robot(Robot &&);                    // Move constructor
-    ~Robot();                           // Destructor
+    virtual ~Robot();                           // Destructor
 
     virtual void move() = 0;
     virtual void fire() = 0;
     virtual void look() = 0;
     virtual void step() = 0;
+
+    int getX() const;
+    int getY() const;
+    void setX();
+    void setY();
+    bool isAlive() const;
+    int getRemainingLives() const;
+    int getRemainingHP() const;
 };
 
 class MovingRobot : public Robot
