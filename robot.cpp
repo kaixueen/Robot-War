@@ -52,7 +52,7 @@ Battlefield::~Battlefield()
 }
 
 // Robot class
-Robot::Robot()                            // Default constructor
+Robot::Robot() // Default constructor
 {
     robotName = robotType = "";
     robotPositionX = robotPositionY = -1;
@@ -60,7 +60,7 @@ Robot::Robot()                            // Default constructor
     remainingHP = 100;
 }
 
-Robot::Robot(string n, string t)          // Parameterized constructor
+Robot::Robot(string n, string t) // Parameterized constructor
 {
     robotName = n;
     robotType = t;
@@ -69,7 +69,7 @@ Robot::Robot(string n, string t)          // Parameterized constructor
     remainingHP = 100;
 }
 
-Robot::Robot(const Robot &r)               // Copy constructor
+Robot::Robot(const Robot &r) // Copy constructor
 {
     robotName = r.robotName;
     robotType = r.robotType;
@@ -79,7 +79,7 @@ Robot::Robot(const Robot &r)               // Copy constructor
     remainingHP = r.remainingHP;
 }
 
-Robot & Robot::operator=(const Robot &right) // Assignment operator overloading
+Robot &Robot::operator=(const Robot &right) // Assignment operator overloading
 {
     if (this != &right)
     {
@@ -132,4 +132,3 @@ int Robot::getRemainingHP() const
 {
     return remainingHP;
 }
-
