@@ -20,7 +20,8 @@ public:
 
     void displayField() const;
     void updateField(const Robot &r);
-    bool isEmpty() const;
+    bool isEmpty(int x, int y) const;
+    bool isValid(int x, int y) const;
     void removeRobot(const Robot &r);
 
     ~Battlefield();
@@ -34,10 +35,10 @@ private:
     int robotPositionX, robotPositionY;
     int remainingLives;
     int remainingHP;
+    Battlefield* battlefield;
 
 public:
-    Robot();                              // Default constructor
-    Robot(string n, string t);            // Parameterized constructor
+    Robot(string n, string t, Battlefield* bt);            // Parameterized constructor
     Robot(const Robot &r);                // Copy constructor
     Robot &operator=(const Robot &right); // Assignment operator overloading
     virtual ~Robot() {}                   // Destructor
@@ -47,18 +48,30 @@ public:
     virtual void look() = 0;
     virtual void step() = 0;
 
+    string getName() const;
+    string getType() const;
+
     int getX() const;
     int getY() const;
-    void setX(int &x);
-    void setY(int &y);
+    void setX(int x);
+    void setY(int y);
+
     bool isAlive() const;
     bool stillGotLive() const;
+
     int getRemainingLives() const;
     int getRemainingHP() const;
 };
 
 class MovingRobot : public Robot
 {
+private:
+    const enum DIRECTION {up, upright, right, downright, down, downleft, left, upleft};
+
+public:
+    MovingRobot(string n, string t);
+    virtual void move();
+    virtual ~MovingRobot();
 };
 
 class ShootingRobot : public Robot
