@@ -55,6 +55,7 @@ public:
     int getY() const;
     void setX(int x);
     void setY(int y);
+    bool validPosition(int x, int y);
 
     bool isAlive() const;
     bool stillGotLive() const;
@@ -69,9 +70,9 @@ private:
     const enum DIRECTION {up, upright, right, downright, down, downleft, left, upleft};
 
 public:
-    MovingRobot(string n, string t);
+    MovingRobot(string n, string t, Battlefield* bt);
     virtual void move();
-    virtual ~MovingRobot();
+    virtual ~MovingRobot() {}
 };
 
 class ShootingRobot : public Robot

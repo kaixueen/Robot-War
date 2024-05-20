@@ -46,7 +46,17 @@ void Battlefield::updateField(const Robot &r)
 
 bool Battlefield::isEmpty(int x, int y) const
 {
-    
+    return cellArr[x][y] == ' ';
+}
+
+bool Battlefield::isValid(int x, int y) const
+{
+    return x > 0 && x < width && y > 0 && y < length && isEmpty(x, y);
+}
+
+void Battlefield::removeRobot(const Robot &r)
+{
+    cellArr[r.getX()][r.getY()] = ' ';
 }
 
 Battlefield::~Battlefield()
@@ -59,7 +69,7 @@ Battlefield::~Battlefield()
 }
 
 // Robot class
-Robot::Robot(string n, string t, Battlefield* bt) // Parameterized constructor
+Robot::Robot(string n, string t, Battlefield *bt) // Parameterized constructor
 {
     robotName = n;
     robotType = t;
@@ -125,6 +135,11 @@ void Robot::setY(int y)
     robotPositionY = y;
 }
 
+bool Robot::validPosition(int x, int y)
+{
+    battlefield->isValid(x, y);
+}
+
 bool Robot::isAlive() const
 {
     return remainingHP > 0;
@@ -146,42 +161,107 @@ int Robot::getRemainingHP() const
 }
 
 // MovingRobot
-MovingRobot::MovingRobot(string n, string t) : Robot(n, t)
+MovingRobot::MovingRobot(string n, string t, Battlefield *bt) : Robot(n, t, bt)
 {
 }
 
 void MovingRobot::move()
 {
+    int newX, newY;
+    DIRECTION direction;
+    bool invalidMove = true;
     srand(time(0));
-    DIRECTION direction = static_cast<DIRECTION>(rand() % 8);
-    switch (direction)
+    while (invalidMove)
     {
+        direction = static_cast<DIRECTION>(rand() % 8);
+        switch (direction)
+        {
         case up:
-            setY(getY()+1);
+            newY = getY() + 1;
+            if(validPosition(getX(), newY))
+            {
+                setY(newY);
+                invalidMove = false;
+            }    
+            else
+                continue;
             break;
         case upright:
-            setX(getX()+1);
-            setY(getY()+1);
+            newX = getX() + 1;
+            newY = getY() + 1;
+            if(validPosition(newX, newY))
+            {
+                setX(newX);
+                setY(newY);
+            }
+            else
+                continue;
             break;
         case right:
-            setX(getX()+1);
+            newX = getX() + 1;
+            if(validPosition(newX, getY()))
+            {
+                setX(newX);
+                invalidMove = false;
+            }  
+            else
+                continue;
             break;
         case downright:
-            setX(getX()+1);
-            setY(getY()-1);
+            newX = getX() + 1;
+            newY = getY() - 1;
+            if(validPosition(newX, newY))
+            {
+                setX(newX);
+                setY(newY);
+                invalidMove = false;
+            }
+            else
+                continue;
             break;
         case down:
-            setY(getY()-1);
+            newY = getY() - 1;
+            if(validPosition(getX(), newY))
+            {
+                setY(newY);
+                invalidMove = false;
+            }    
+            else
+                continue;
             break;
         case downleft:
-            setX(getX()-1);
-            setY(getY()-1);
+            newX = getX() - 1;
+            newY = getY() - 1;
+            if(validPosition(newX, newY))
+            {
+                setX(newX);
+                setY(newY);
+                invalidMove = false;
+            }
+            else
+                continue;
             break;
         case left:
-            setX(getX()-1);
+            newX = getX() - 1;
+            if(validPosition(newX, getY()))
+            {
+                setX(newX);
+                invalidMove = false;
+            }    
+            else
+                continue;
             break;
         case upleft:
-            setX(getX()-1);
-            setY(getY()+1);
+            newX = getX() - 1;
+            newY = getY() + 1;
+            if(validPosition(newX, newY))
+            {
+                setX(newX);
+                setY(newY);
+                invalidMove = false;
+            }
+            else
+                continue;
+        }
     }
 }
