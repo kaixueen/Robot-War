@@ -265,3 +265,32 @@ void MovingRobot::move()
         }
     }
 }
+
+// SeeingRobot
+SeeingRobot::SeeingRobot(string n, string t, Battlefield* bt): Robot(n, t, bt) {}
+
+void SeeingRobot::look(int offsetX, int offsetY) const
+{
+    int centerX = getX() + offsetX;
+    int centerY = getY() + offsetY;
+
+    cout << "Looking around (" << centerX << ", " << centerY << "):" << endl;
+
+    for (int dy = -1; dy <= 1; dy++)
+    {
+        for (int dx = -1; dx <= 1; dx++)
+        {
+            int checkX = centerX + dx;
+            int checkY = centerY + dy;
+            if(battlefield->isValid(checkX,checkY))
+            {
+                cout<<battlefield->getCell(checkX, checkY)<< " ";
+            }
+            else
+            {
+                cout<<"* ";
+            }
+        }
+        cout<<endl;
+    }
+}
