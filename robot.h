@@ -81,6 +81,9 @@ class ShootingRobot : public Robot
 
 class SeeingRobot : public Robot
 {
+public:
+    SeeingRobot(string n, string t, Battlefield* bt);
+    virtual void look(int offsetX, int offsetY) const override;
 };
 
 class SteppingRobot : public Robot
