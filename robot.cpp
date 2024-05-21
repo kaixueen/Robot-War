@@ -137,7 +137,12 @@ void Robot::setY(int y)
 
 bool Robot::validPosition(int x, int y)
 {
-    battlefield->isValid(x, y);
+    return battlefield->isValid(x, y);
+}
+
+bool Robot::enemyExist(int x, int y)
+{
+    return !(battlefield->isEmpty(x, y));
 }
 
 bool Robot::isAlive() const
@@ -178,96 +183,80 @@ void MovingRobot::move()
         {
         case up:
             newY = getY() + 1;
-            if(validPosition(getX(), newY))
+            if (validPosition(getX(), newY))
             {
                 setY(newY);
                 invalidMove = false;
-            }    
-            else
-                continue;
+            }
             break;
         case upright:
             newX = getX() + 1;
             newY = getY() + 1;
-            if(validPosition(newX, newY))
+            if (validPosition(newX, newY))
             {
                 setX(newX);
                 setY(newY);
             }
-            else
-                continue;
             break;
         case right:
             newX = getX() + 1;
-            if(validPosition(newX, getY()))
+            if (validPosition(newX, getY()))
             {
                 setX(newX);
                 invalidMove = false;
-            }  
-            else
-                continue;
+            }
             break;
         case downright:
             newX = getX() + 1;
             newY = getY() - 1;
-            if(validPosition(newX, newY))
+            if (validPosition(newX, newY))
             {
                 setX(newX);
                 setY(newY);
                 invalidMove = false;
             }
-            else
-                continue;
             break;
         case down:
             newY = getY() - 1;
-            if(validPosition(getX(), newY))
+            if (validPosition(getX(), newY))
             {
                 setY(newY);
                 invalidMove = false;
-            }    
-            else
-                continue;
+            }
             break;
         case downleft:
             newX = getX() - 1;
             newY = getY() - 1;
-            if(validPosition(newX, newY))
+            if (validPosition(newX, newY))
             {
                 setX(newX);
                 setY(newY);
                 invalidMove = false;
             }
-            else
-                continue;
             break;
         case left:
             newX = getX() - 1;
-            if(validPosition(newX, getY()))
+            if (validPosition(newX, getY()))
             {
                 setX(newX);
                 invalidMove = false;
-            }    
-            else
-                continue;
+            }
             break;
         case upleft:
             newX = getX() - 1;
             newY = getY() + 1;
-            if(validPosition(newX, newY))
+            if (validPosition(newX, newY))
             {
                 setX(newX);
                 setY(newY);
                 invalidMove = false;
             }
-            else
-                continue;
         }
     }
 }
 
 // SeeingRobot
-SeeingRobot::SeeingRobot(string n, string t, Battlefield* bt): Robot(n, t, bt) {}
+SeeingRobot::SeeingRobot(string n, string t, Battlefield *bt) : Robot(n, t, bt) {}
 
 void SeeingRobot::look(int offsetX, int offsetY) const
 {
@@ -282,15 +271,15 @@ void SeeingRobot::look(int offsetX, int offsetY) const
         {
             int checkX = centerX + dx;
             int checkY = centerY + dy;
-            if(battlefield->isValid(checkX,checkY))
+            if (battlefield->isValid(checkX, checkY))
             {
-                cout<<battlefield->getCell(checkX, checkY)<< " ";
+                cout << battlefield->getCell(checkX, checkY) << " ";
             }
             else
             {
-                cout<<"* ";
+                cout << "* ";
             }
         }
-        cout<<endl;
+        cout << endl;
     }
 }

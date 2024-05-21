@@ -56,6 +56,7 @@ public:
     void setX(int x);
     void setY(int y);
     bool validPosition(int x, int y);
+    bool enemyExist(int x, int y);
 
     bool isAlive() const;
     bool stillGotLive() const;
