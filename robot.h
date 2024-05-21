@@ -7,7 +7,40 @@ using namespace std;
 
 class War
 {
+private:
+    Battlefield* battlefield;
+    int totalSteps;
+    int currentStep;
+    int totalRobots;
+    int robotsRemaining;
+    int robotsDied;
+    struct RobotPlaying
+    {
+        Robot& player;
+        RobotPlaying* next;
+    };
+    RobotPlaying* front;
+    RobotPlaying* rear;
+    int noOfRobotPlaying;
+    void enqueuePlaying(Robot& r);
+    void dequeuePlaying();
+
+    struct RobotWaiting
+    {
+        Robot& player;
+        RobotWaiting* next;
+    };
+    RobotWaiting* front;
+    RobotWaiting* rear;
+    int noOfRobotWaiting;
+    void enqueueWaiting(Robot& r);
+    void dequeueWaiting();
+
+public:
+    War();
+    ~War();
 };
+
 class Battlefield
 {
 private:
@@ -23,6 +56,7 @@ public:
     bool isEmpty(int x, int y) const;
     bool isValid(int x, int y) const;
     void removeRobot(const Robot &r);
+    Robot& getRobotAt(int x, int y);
 
     ~Battlefield();
 };
@@ -60,6 +94,7 @@ public:
 
     bool isAlive() const;
     bool stillGotLive() const;
+    void setRemainingLives();
 
     int getRemainingLives() const;
     int getRemainingHP() const;

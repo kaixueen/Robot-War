@@ -51,7 +51,7 @@ bool Battlefield::isEmpty(int x, int y) const
 
 bool Battlefield::isValid(int x, int y) const
 {
-    return x > 0 && x < width && y > 0 && y < length && isEmpty(x, y);
+    return x > 0 && x < width && y > 0 && y < length;
 }
 
 void Battlefield::removeRobot(const Robot &r)
@@ -183,7 +183,7 @@ void MovingRobot::move()
         {
         case up:
             newY = getY() + 1;
-            if (validPosition(getX(), newY))
+            if (validPosition(getX(), newY) && !enemyExist(getX(), newY))
             {
                 setY(newY);
                 invalidMove = false;
@@ -192,7 +192,7 @@ void MovingRobot::move()
         case upright:
             newX = getX() + 1;
             newY = getY() + 1;
-            if (validPosition(newX, newY))
+            if (validPosition(newX, newY) && !enemyExist(newX, newY))
             {
                 setX(newX);
                 setY(newY);
@@ -200,7 +200,7 @@ void MovingRobot::move()
             break;
         case right:
             newX = getX() + 1;
-            if (validPosition(newX, getY()))
+            if (validPosition(newX, getY()) && !enemyExist(newX, getY()))
             {
                 setX(newX);
                 invalidMove = false;
@@ -209,7 +209,7 @@ void MovingRobot::move()
         case downright:
             newX = getX() + 1;
             newY = getY() - 1;
-            if (validPosition(newX, newY))
+            if (validPosition(newX, newY) && !enemyExist(newX, newY))
             {
                 setX(newX);
                 setY(newY);
@@ -218,7 +218,7 @@ void MovingRobot::move()
             break;
         case down:
             newY = getY() - 1;
-            if (validPosition(getX(), newY))
+            if (validPosition(getX(), newY) && !enemyExist(getX(), newY))
             {
                 setY(newY);
                 invalidMove = false;
@@ -227,7 +227,7 @@ void MovingRobot::move()
         case downleft:
             newX = getX() - 1;
             newY = getY() - 1;
-            if (validPosition(newX, newY))
+            if (validPosition(newX, newY) && !enemyExist(newX, newY))
             {
                 setX(newX);
                 setY(newY);
@@ -236,7 +236,7 @@ void MovingRobot::move()
             break;
         case left:
             newX = getX() - 1;
-            if (validPosition(newX, getY()))
+            if (validPosition(newX, getY()) && !enemyExist(newX, getY()))
             {
                 setX(newX);
                 invalidMove = false;
@@ -245,7 +245,7 @@ void MovingRobot::move()
         case upleft:
             newX = getX() - 1;
             newY = getY() + 1;
-            if (validPosition(newX, newY))
+            if (validPosition(newX, newY) && !enemyExist(newX, newY))
             {
                 setX(newX);
                 setY(newY);
