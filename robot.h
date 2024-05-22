@@ -43,9 +43,9 @@ public:
     War(const string &filename);
     ~War();
 
-    void robotKilled(Robot& r);
+    void robotKilled(Robot &r);
     void startWar();
-    int 
+    int
 };
 
 class Battlefield
@@ -56,10 +56,10 @@ private:
     Robot ***cellArr;
 
 public:
-    Battlefield(int w, int l, Robot* r, int tr);  // initialize field
+    Battlefield(int w, int l, Robot *r[], int tr); // initialize field
 
     void displayField() const;
-    bool updatePosition(Robot *r, int x, int y);   // need to swap pointer
+    bool updatePosition(Robot *r, int x, int y); // need to swap pointer
     bool isEmpty(int x, int y) const;
     bool isValid(int x, int y) const;
     void removeRobot(const Robot &r);
@@ -79,9 +79,9 @@ private:
 public:
     Robot();
     Robot(string t, string n, int x, int y); // Parameterized constructor
-    Robot(const Robot &r);                      // Copy constructor
-    Robot &operator=(const Robot &right);       // Assignment operator overloading
-    virtual ~Robot() {}                         // Destructor
+    Robot(const Robot &r);                   // Copy constructor
+    Robot &operator=(const Robot &right);    // Assignment operator overloading
+    virtual ~Robot() {}                      // Destructor
 
     virtual void move() = 0;
     virtual void fire() = 0;
@@ -117,7 +117,7 @@ private:
 
 public:
     MovingRobot() : Robot() {}
-    MovingRobot(string n, string t);
+    MovingRobot(string n, string t, int x, int y);
     virtual void move(Battlefield *bt);
     virtual ~MovingRobot() {}
 };
@@ -127,9 +127,6 @@ class ShootingRobot : public Robot
 
 class SeeingRobot : public Robot
 {
-public:
-    SeeingRobot(string n, string t, Battlefield *bt);
-    virtual void look(int offsetX, int offsetY) const override;
 };
 
 class SteppingRobot : public Robot

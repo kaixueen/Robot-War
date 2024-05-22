@@ -31,7 +31,7 @@ War::War(const string &filename)
             break;
         }
     }
-    
+
     // Read number of steps
     getline(infile, line);
     ss.clear();
@@ -60,13 +60,13 @@ War::War(const string &filename)
     string tempName;
     string tempX;
     string tempY;
-    Robot* robots[numRobots];
+    Robot *robots[numRobots];
     int count = 0;
     while (getline(infile, line))
     {
         ss >> tempType >> tempName;
         ss >> tempX >> tempY;
-        Robot* newRobot = new Robot(tempType, tempName, tempX, tempY);  // will change to each robot type later
+        Robot *newRobot = new Robot(tempType, tempName, tempX, tempY); // will change to each robot type later
         robots[count] = newRobot;
         ss.clear();
         newRobot = nullptr;
@@ -97,18 +97,17 @@ War::War(const string &filename)
         robots[i] = nullptr;
         delete robots[i];
     }
-    delete [] robots;
+    delete[] robots;
 }
 
-void War::enqueuePlaying(Robot* r)
+void War::enqueuePlaying(Robot *r)
 {
-    RobotPlaying* newRobot = nullptr;
+    RobotPlaying *newRobot = nullptr;
     newRobot = new RobotPlaying;
-
 }
 
 // Battlefield class
-Battlefield::Battlefield(int w, int l, Robot* r, int tr)
+Battlefield::Battlefield(int w, int l, Robot *r[], int tr)
 {
     width = w;
     length = l;
@@ -121,18 +120,18 @@ Battlefield::Battlefield(int w, int l, Robot* r, int tr)
 
     for (int i = 0; i < length; i++)
     {
-        cellArr[i] = new Robot*[width];
+        cellArr[i] = new Robot *[width];
         for (int j = 0; j < width; j++)
         {
             cellArr[i][j] = nullptr;
         }
     }
-    for (int i = 0; i < tr; i++) 
+    for (int i = 0; i < tr; i++)
     {
-        tempY = r[i].getY();
-        tempX = r[i].getX();
+        tempY = r[i]->getY();
+        tempX = r[i]->getX();
         if (isValid(tempY, tempX) && isEmpty(tempY, tempX))
-            cellArr[tempY][tempX] = &r[i];
+            cellArr[tempY][tempX] = r[i];
     }
 }
 
@@ -295,7 +294,7 @@ void Robot::setRemainingLives(int l)
 }
 
 // MovingRobot
-MovingRobot::MovingRobot(string n, string t) : Robot(n, t)
+MovingRobot::MovingRobot(string n, string t, int x, int y) : Robot(n, t, x, y)
 {
 }
 
@@ -347,34 +346,5 @@ void MovingRobot::move(Battlefield *bt)
             invalidMove = false;
         }
     }
-    cout << getType() << " " << getName() << " move to (" << newX << ", " << newY << ").";  
-}
-
-// SeeingRobot
-SeeingRobot::SeeingRobot(string n, string t, Battlefield *bt) : Robot(n, t, bt) {}
-
-void SeeingRobot::look(int offsetX, int offsetY) const
-{
-    int centerX = getX() + offsetX;
-    int centerY = getY() + offsetY;
-
-    cout << "Looking around (" << centerX << ", " << centerY << "):" << endl;
-
-    for (int dy = -1; dy <= 1; dy++)
-    {
-        for (int dx = -1; dx <= 1; dx++)
-        {
-            int checkX = centerX + dx;
-            int checkY = centerY + dy;
-            if (battlefield->isValid(checkX, checkY))
-            {
-                cout << battlefield->getCell(checkX, checkY) << " ";
-            }
-            else
-            {
-                cout << "* ";
-            }
-        }
-        cout << endl;
-    }
+    cout << getType() << " " << getName() << " move to (" << newX << ", " << newY << ").";
 }
