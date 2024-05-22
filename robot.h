@@ -3,12 +3,13 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 using namespace std;
 
 class War
 {
 private:
-    Battlefield* battlefield;
+    Battlefield *battlefield;
     int totalSteps;
     int currentStep;
     int totalRobots;
@@ -16,29 +17,35 @@ private:
     int robotsDied;
     struct RobotPlaying
     {
-        Robot& player;
-        RobotPlaying* next;
+        Robot *player;
+        RobotPlaying *next;
     };
-    RobotPlaying* front;
-    RobotPlaying* rear;
+    RobotPlaying *frontPlaying;
+    RobotPlaying *rearPlaying;
     int noOfRobotPlaying;
-    void enqueuePlaying(Robot& r);
+    void enqueuePlaying(Robot *r);
     void dequeuePlaying();
+    bool isPlayingEmpty() const;
 
     struct RobotWaiting
     {
-        Robot& player;
-        RobotWaiting* next;
+        Robot *player;
+        RobotWaiting *next;
     };
-    RobotWaiting* front;
-    RobotWaiting* rear;
+    RobotWaiting *frontWaiting;
+    RobotWaiting *rearWaiting;
     int noOfRobotWaiting;
-    void enqueueWaiting(Robot& r);
+    void enqueueWaiting(Robot *r);
     void dequeueWaiting();
+    bool isWaitingEmpty() const;
 
 public:
-    War();
+    War(const string &filename);
     ~War();
+
+    void robotKilled(Robot& r);
+    void startWar();
+    int 
 };
 
 class Battlefield
@@ -46,17 +53,17 @@ class Battlefield
 private:
     int width, length;
     char emptyCell, robotCell, boundary;
-    char **cellArr;
+    Robot ***cellArr;
 
 public:
-    Battlefield(int w, int l);
+    Battlefield(int w, int l, Robot* r, int tr);  // initialize field
 
     void displayField() const;
-    void updateField(const Robot &r);
+    bool updatePosition(Robot *r, int x, int y);   // need to swap pointer
     bool isEmpty(int x, int y) const;
     bool isValid(int x, int y) const;
     void removeRobot(const Robot &r);
-    Robot& getRobotAt(int x, int y);
+    Robot &getRobotAt(int x, int y);
 
     ~Battlefield();
 };
@@ -68,14 +75,13 @@ private:
     string robotType;
     int robotPositionX, robotPositionY;
     int remainingLives;
-    int remainingHP;
-    Battlefield* battlefield;
 
 public:
-    Robot(string n, string t, Battlefield* bt);            // Parameterized constructor
-    Robot(const Robot &r);                // Copy constructor
-    Robot &operator=(const Robot &right); // Assignment operator overloading
-    virtual ~Robot() {}                   // Destructor
+    Robot();
+    Robot(string t, string n, int x, int y); // Parameterized constructor
+    Robot(const Robot &r);                      // Copy constructor
+    Robot &operator=(const Robot &right);       // Assignment operator overloading
+    virtual ~Robot() {}                         // Destructor
 
     virtual void move() = 0;
     virtual void fire() = 0;
@@ -89,28 +95,32 @@ public:
     int getY() const;
     void setX(int x);
     void setY(int y);
-    bool validPosition(int x, int y);
-    bool enemyExist(int x, int y);
+    bool validPosition(int x, int y, Battlefield *bt) const;
+    bool enemyExist(int x, int y, Battlefield *bt) const;
 
-    bool isAlive() const;
     bool stillGotLive() const;
-    void setRemainingLives();
-
+    void setRemainingLives(int l);
     int getRemainingLives() const;
-    int getRemainingHP() const;
 };
 
 class MovingRobot : public Robot
 {
 private:
-    const enum DIRECTION {up, upright, right, downright, down, downleft, left, upleft};
+    const enum DIRECTION { up,
+                           upright,
+                           right,
+                           downright,
+                           down,
+                           downleft,
+                           left,
+                           upleft };
 
 public:
-    MovingRobot(string n, string t, Battlefield* bt);
-    virtual void move();
+    MovingRobot() : Robot() {}
+    MovingRobot(string n, string t);
+    virtual void move(Battlefield *bt);
     virtual ~MovingRobot() {}
 };
-
 class ShootingRobot : public Robot
 {
 };
@@ -118,7 +128,7 @@ class ShootingRobot : public Robot
 class SeeingRobot : public Robot
 {
 public:
-    SeeingRobot(string n, string t, Battlefield* bt);
+    SeeingRobot(string n, string t, Battlefield *bt);
     virtual void look(int offsetX, int offsetY) const override;
 };
 
