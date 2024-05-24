@@ -43,14 +43,14 @@ War::War(const string &filename)
             break;
     }
 
-    // Read number of steps
+    // Read number of robots
     getline(infile, line);
     ss.clear();
-    int numRobots;
+
     while (!ss.eof())
     {
         ss >> temp;
-        if (stringstream(temp) >> numRobots)
+        if (stringstream(temp) >> noOfRobotPlaying)
             break;
     }
 
@@ -60,25 +60,15 @@ War::War(const string &filename)
     string tempName;
     string tempX;
     string tempY;
-    Robot *robots[numRobots];
-    int count = 0;
+
     while (getline(infile, line))
     {
         ss >> tempType >> tempName;
         ss >> tempX >> tempY;
         Robot *newRobot = new Robot(tempType, tempName, tempX, tempY); // will change to each robot type later
-        robots[count] = newRobot;
+        appendRobot(newRobot);
         ss.clear();
         newRobot = nullptr;
-        count++;
-    }
-
-    // Initialize playing queue
-    frontPlaying = rearPlaying = nullptr;
-    noOfRobotPlaying = numRobots;
-    for (int i = 0; i < numRobots; i++)
-    {
-        enqueuePlaying(robots[i]);
     }
 
     // Initialize waiting queue
@@ -86,28 +76,175 @@ War::War(const string &filename)
     noOfRobotWaiting = 0;
 
     // Initialize other data member
-    battlefield = new Battlefield(w, l, robots, numRobots);
+    battlefield = new Battlefield(w, l, this);
     totalSteps = steps;
     currentStep = 0;
-    totalRobots = robotsRemaining = numRobots;
+    totalRobots = robotsRemaining = noOfRobotPlaying;
     robotsDied = 0;
-
-    for (int i = 0; i < numRobots; i++)
-    {
-        robots[i] = nullptr;
-        delete robots[i];
-    }
-    delete[] robots;
 }
 
-void War::enqueuePlaying(Robot *r)
+void War::appendRobot(Robot *r)
 {
-    RobotPlaying *newRobot = nullptr;
+    RobotPlaying *newRobot;
+    RobotPlaying *robotPtr;
     newRobot = new RobotPlaying;
+    newRobot->rb = r;
+    newRobot->nextRobot = nullptr;
+
+    if (!headRobot)
+        headRobot = newRobot;
+    else
+    {
+        robotPtr = headRobot;
+        while (robotPtr->nextRobot)
+            robotPtr = robotPtr->nextRobot;
+        robotPtr->nextRobot = newRobot;
+    }
+}
+
+void War::deleteRobot(Robot *r)
+{
+    RobotPlaying *robotPtr;
+    RobotPlaying *previousRobot;
+
+    if (!headRobot)
+        return;
+    if (headRobot->rb == r)
+    {
+        headRobot = headRobot->nextRobot;
+        delete robotPtr;
+    }
+    else
+    {
+        robotPtr = headRobot;
+        while (robotPtr != nullptr && robotPtr->rb != r)
+        {
+            previousRobot = robotPtr;
+            robotPtr = robotPtr->nextRobot;
+        }
+        if (robotPtr)
+        {
+            previousRobot->nextRobot = robotPtr->nextRobot;
+            robotPtr = nullptr;
+            delete robotPtr;
+        }
+    }
+}
+
+bool War::isPlayingEmpty() const
+{
+    return headRobot == nullptr;
+}
+
+void War::enqueueWaiting(Robot *r)
+{
+    RobotWaiting *newRobot = nullptr;
+
+    newRobot = new RobotWaiting;
+    newRobot->rb = r;
+    newRobot->nextRobot = nullptr;
+
+    if (isWaitingEmpty())
+    {
+        frontWaiting = newRobot;
+        rearWaiting = newRobot;
+    }
+    else
+    {
+        rearWaiting->nextRobot = newRobot;
+        rearWaiting = newRobot;
+    }
+
+    noOfRobotWaiting++;
+}
+
+void War::dequeueWaiting(Robot &r)
+{
+    RobotWaiting *temp = nullptr;
+    r = *(frontWaiting->rb);
+    temp = frontWaiting;
+    frontWaiting = frontWaiting->nextRobot;
+    noOfRobotWaiting--;
+    temp = nullptr;
+    delete temp;
+}
+
+bool War::isWaitingEmpty() const
+{
+    return frontWaiting == nullptr;
+}
+
+Robot *War::getRobotPlaying(int i)
+{
+    if (i < 0 || i >= noOfRobotPlaying)
+        return nullptr;
+    else
+    {
+        RobotPlaying *robotPtr = headRobot;
+        int count = 0;
+        while (count < i)
+        {
+            robotPtr = robotPtr->nextRobot;
+            count++;
+        }
+        return robotPtr->rb;
+    }
+}
+
+void War::robotKilled(Robot *r)
+{
+    deleteRobot(r);
+    battlefield->removeRobot(*r);
+    r->setRemainingLives(r->getRemainingLives() - 1);
+    cout << r->getType() << " " << r->getName() << " has been killed.\n";
+    if (r->getRemainingLives() <= 0)
+    {
+        cout << r->getType() << " " << r->getName() << " doesn't have any lives remained.\n";
+        cout << r->getType() << " " << r->getName() << " out!!!\n";
+        delete r;
+    }
+    else
+    {
+        cout << r->getType() << " " << r->getName() << "'s lives reduced by 1\n";
+        cout << r->getType() << " " << r->getName() << " enter the waiting queue\n";
+        enqueueWaiting(r);
+    }
+}
+
+void War::startWar()
+{
+    while (currentStep < totalSteps && robotsRemaining > 1)
+    {
+        // will fill in later
+    }
+}
+
+War::~War()
+{
+    // Clean up the battlefield
+    delete battlefield;
+
+    // Clean up the robots in the playing list
+    RobotPlaying* currentRobot = headRobot;
+    while (currentRobot)
+    {
+        RobotPlaying* temp = currentRobot;
+        currentRobot = currentRobot->nextRobot;
+        delete temp->rb;
+        delete temp;
+    }
+
+    // Clean up the robots in the waiting queue
+    while (!isWaitingEmpty())
+    {
+        Robot* dummy;
+        dequeueWaiting((*dummy));
+        delete dummy;
+    }
 }
 
 // Battlefield class
-Battlefield::Battlefield(int w, int l, Robot *r[], int tr)
+Battlefield::Battlefield(int w, int l, War *wr)
 {
     width = w;
     length = l;
@@ -115,8 +252,6 @@ Battlefield::Battlefield(int w, int l, Robot *r[], int tr)
     robotCell = 'R';
     boundary = '*';
     cellArr = new Robot **[length];
-
-    int tempX, tempY;
 
     for (int i = 0; i < length; i++)
     {
@@ -126,12 +261,21 @@ Battlefield::Battlefield(int w, int l, Robot *r[], int tr)
             cellArr[i][j] = nullptr;
         }
     }
-    for (int i = 0; i < tr; i++)
+
+    int count = 0;
+    if (wr->getRobotPlaying(count) == nullptr)
+        return;
+
+    int tempX, tempY;
+    Robot *tempR;
+    while (wr->getRobotPlaying(count) != nullptr)
     {
-        tempY = r[i]->getY();
-        tempX = r[i]->getX();
+        tempR = wr->getRobotPlaying(count);
+        tempY = tempR->getY();
+        tempX = tempR->getX();
         if (isValid(tempY, tempX) && isEmpty(tempY, tempX))
-            cellArr[tempY][tempX] = r[i];
+            cellArr[tempY][tempX] = tempR;
+        count++;
     }
 }
 

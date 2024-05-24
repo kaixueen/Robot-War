@@ -13,39 +13,41 @@ private:
     int totalSteps;
     int currentStep;
     int totalRobots;
+    int noOfRobotPlaying;
     int robotsRemaining;
     int robotsDied;
+
     struct RobotPlaying
     {
-        Robot *player;
-        RobotPlaying *next;
+        Robot *rb;
+        RobotPlaying *nextRobot;
     };
-    RobotPlaying *frontPlaying;
-    RobotPlaying *rearPlaying;
-    int noOfRobotPlaying;
-    void enqueuePlaying(Robot *r);
-    void dequeuePlaying();
-    bool isPlayingEmpty() const;
-
+    RobotPlaying *headRobot;
     struct RobotWaiting
     {
-        Robot *player;
-        RobotWaiting *next;
+        Robot *rb;
+        RobotWaiting *nextRobot;
     };
     RobotWaiting *frontWaiting;
     RobotWaiting *rearWaiting;
     int noOfRobotWaiting;
-    void enqueueWaiting(Robot *r);
-    void dequeueWaiting();
-    bool isWaitingEmpty() const;
 
 public:
     War(const string &filename);
     ~War();
 
-    void robotKilled(Robot &r);
+    Robot *getRobotPlaying(int i);
+
+    void appendRobot(Robot *r);
+    void deleteRobot(Robot *r);
+    bool isPlayingEmpty() const;
+
+    void enqueueWaiting(Robot *r);
+    void dequeueWaiting(Robot &r);
+    bool isWaitingEmpty() const;
+
+    void robotKilled(Robot *r);
     void startWar();
-    int
 };
 
 class Battlefield
@@ -56,7 +58,7 @@ private:
     Robot ***cellArr;
 
 public:
-    Battlefield(int w, int l, Robot *r[], int tr); // initialize field
+    Battlefield(int w, int l, War *wr); // initialize field
 
     void displayField() const;
     bool updatePosition(Robot *r, int x, int y); // need to swap pointer
