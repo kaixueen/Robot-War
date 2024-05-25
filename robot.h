@@ -6,70 +6,7 @@
 #include <sstream>
 using namespace std;
 
-class War
-{
-private:
-    Battlefield *battlefield;
-    int totalSteps;
-    int currentStep;
-    int totalRobots;
-    int noOfRobotPlaying;
-    int robotsRemaining;
-    int robotsDied;
-
-    struct RobotPlaying
-    {
-        Robot *rb;
-        RobotPlaying *nextRobot;
-    };
-    RobotPlaying *headRobot;
-    struct RobotWaiting
-    {
-        Robot *rb;
-        RobotWaiting *nextRobot;
-    };
-    RobotWaiting *frontWaiting;
-    RobotWaiting *rearWaiting;
-    int noOfRobotWaiting;
-
-public:
-    War(const string &filename);
-    ~War();
-
-    Robot *getRobotPlaying(int i);
-
-    void appendRobot(Robot *r);
-    void deleteRobot(Robot *r);
-    bool isPlayingEmpty() const;
-
-    void enqueueWaiting(Robot *r);
-    void dequeueWaiting(Robot &r);
-    bool isWaitingEmpty() const;
-
-    void robotKilled(Robot *r);
-    void startWar();
-};
-
-class Battlefield
-{
-private:
-    int width, length;
-    char emptyCell, robotCell, boundary;
-    Robot ***cellArr;
-
-public:
-    Battlefield(int w, int l, War *wr); // initialize field
-
-    void displayField() const;
-    bool updatePosition(Robot *r, int x, int y); // need to swap pointer
-    bool isEmpty(int x, int y) const;
-    bool isValid(int x, int y) const;
-    void removeRobot(const Robot &r);
-    Robot &getRobotAt(int x, int y);
-
-    ~Battlefield();
-};
-
+// Robot class
 class Robot
 {
 private:
@@ -97,14 +34,45 @@ public:
     int getY() const;
     void setX(int x);
     void setY(int y);
-    bool validPosition(int x, int y, Battlefield *bt) const;
-    bool enemyExist(int x, int y, Battlefield *bt) const;
 
     bool stillGotLive() const;
     void setRemainingLives(int l);
     int getRemainingLives() const;
 };
 
+struct RobotNode // struct for making linked list & queue
+{
+    Robot *rb;
+    RobotNode *nextRobot;
+};
+
+// Battlefield class
+class Battlefield
+{
+private:
+    int width, length;
+    char emptyCell, robotCell, boundary;
+    Robot ***cellArr;
+
+public:
+    Battlefield(int w, int l, RobotNode *rn); // initialize field
+
+    int getWidth() const;
+    int getLength() const;
+
+    void displayField() const;
+    bool updatePosition(Robot *r, int x, int y); // need to swap pointer
+
+    bool isEmpty(int x, int y) const;
+    bool isValid(int x, int y) const;
+
+    void removeRobot(const Robot &r);
+    Robot *getRobotAt(int x, int y);
+
+    ~Battlefield();
+};
+
+// MovingRobot class
 class MovingRobot : public Robot
 {
 private:
@@ -123,44 +91,91 @@ public:
     virtual void move(Battlefield *bt);
     virtual ~MovingRobot() {}
 };
+
+// ShootingRobot class
 class ShootingRobot : public Robot
 {
 };
 
+// SeeingRobot class
 class SeeingRobot : public Robot
 {
 };
 
+// SteppingRobot class
 class SteppingRobot : public Robot
 {
 };
 
+// RoboCop class
 class RoboCop : public MovingRobot, public ShootingRobot, public SeeingRobot
 {
 };
 
+// Terminator class
 class Terminator : public MovingRobot, public SeeingRobot, public SteppingRobot
 {
 };
 
+// BigThunder class
 class BigThunder : public ShootingRobot
 {
 };
 
+// MadBot class
 class MadBot : public BigThunder
 {
 };
 
+// TerminatorRoboCop class
 class TerminatorRoboCop : public RoboCop, public Terminator
 {
 };
 
+// RoboTank class
 class RoboTank : public MadBot
 {
 };
 
+// UltimateRobot class
 class UltimateRobot : public TerminatorRoboCop, public RoboTank
 {
+};
+
+// War class
+class War
+{
+private:
+    Battlefield *battlefield;
+    int totalSteps;
+    int currentStep;
+    int totalRobots;
+    int noOfRobotPlaying;
+    int robotsRemaining;
+    int robotsDied;
+
+    RobotNode *headRobot; // linked list of robot playing
+
+    RobotNode *frontWaiting; // queue of robot waiting
+    RobotNode *rearWaiting;
+    int noOfRobotWaiting;
+
+public:
+    War(const string &filename);
+    ~War();
+
+    Robot *getRobotPlaying(int i);
+
+    void appendRobot(Robot *r);
+    void deleteRobot(Robot *r);
+    bool isPlayingEmpty() const;
+
+    void enqueueWaiting(Robot *r);
+    void dequeueWaiting(Robot &r);
+    bool isWaitingEmpty() const;
+
+    void robotKilled(Robot *r);
+    void startWar();
 };
 
 #endif
