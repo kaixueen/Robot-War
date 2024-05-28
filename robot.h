@@ -47,7 +47,7 @@ public:
 
 struct RobotNode // struct for making linked list & queue
 {
-    Robot *rb;
+    Robot* rb;
     RobotNode *nextRobot;
 };
 
@@ -93,7 +93,7 @@ private:
 public:
     MovingRobot() : Robot() {}
     MovingRobot(string n, string t, int x, int y);
-    virtual void move(Battlefield *bt);
+    virtual void move(Battlefield &bt);
     virtual ~MovingRobot() {}
 };
 
@@ -118,7 +118,7 @@ public:
     Robot &getRobotShot(int n) const; // return robot shot
     int getRobotShotCount() const;
 
-    virtual void fire(int offsetX, int offsetY, Battlefield *bt);
+    virtual void fire(int offsetX, int offsetY, Battlefield &bt);
     virtual ~ShootingRobot() {}
 };
 
@@ -136,7 +136,7 @@ public:
     int *getRobotCoordinateX() const;
     int *getRobotCoordinateY() const;
     bool getRobotDetected() const;
-    virtual void look(int offsetX, int offsetY, Battlefield *bt);
+    virtual void look(int offsetX, int offsetY, Battlefield &bt);
     virtual ~SeeingRobot() {}
 };
 
@@ -145,13 +145,13 @@ class SteppingRobot : virtual public Robot
 {
 private:
     Robot *robotStep;
-    void setRobotStep(Robot *r);
+    void setRobotStep(Robot &r);
     Robot *getRobotStep() const;
 
 public:
     SteppingRobot(string t, string n, int x, int y);
 
-    virtual void step(int coordinateX, int coordinateY, Battlefield *bt);
+    virtual void step(int coordinateX, int coordinateY, Battlefield &bt);
     virtual ~SteppingRobot() {}
 };
 
@@ -163,7 +163,7 @@ private:
 
 public:
     RoboCop(string n, int x, int y);
-    void takeTurn(Battlefield *bt); // need to modify
+    void takeTurn(Battlefield &bt); // need to modify
 };
 
 // Terminator class
@@ -208,7 +208,7 @@ class UltimateRobot : public TerminatorRoboCop, public RoboTank
 class War
 {
 private:
-    Battlefield *battlefield;
+    Battlefield battlefield;
     int totalSteps;
     int currentStep;
     int totalRobots;
@@ -228,15 +228,17 @@ public:
 
     Robot *getRobotPlaying(int i);
 
-    void appendRobot(Robot *r);
-    void deleteRobot(Robot *r);
+    void appendRobot(Robot &r);
+    void deleteRobot(Robot &r);
     bool isPlayingEmpty() const;
 
-    void enqueueWaiting(Robot *r);
+    void enqueueWaiting(Robot &r);
     void dequeueWaiting(Robot &r);
     bool isWaitingEmpty() const;
 
-    void robotKilled(Robot *r);
+    void robotKilled(Robot &r);
+    void promoteRobot(Robot& r);
+    void switchRobot(Robot& r1, Robot& r2);
     void startWar();
 };
 

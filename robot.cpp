@@ -225,7 +225,7 @@ MovingRobot::MovingRobot(string n, string t, int x, int y) : Robot(n, t, x, y)
 {
 }
 
-void MovingRobot::move(Battlefield *bt)
+void MovingRobot::move(Battlefield &bt)
 {
     int newX, newY;
     DIRECTION direction;
@@ -266,7 +266,7 @@ void MovingRobot::move(Battlefield *bt)
             newX -= 1;
             newY += 1;
         }
-        if (bt->isValid(newX, newY) && bt->isEmpty(newX, newY))
+        if (bt.isValid(newX, newY) && bt.isEmpty(newX, newY))
         {
             setX(newX);
             setY(newY);
@@ -299,12 +299,12 @@ int ShootingRobot::getFireCount() const
     return fireCount;
 }
 
-void ShootingRobot::setRobotShot(Robot& r)
+void ShootingRobot::setRobotShot(Robot &r)
 {
     robotShot[robotShotCount] = r;
 }
 
-Robot& ShootingRobot::getRobotShot(int n) const
+Robot &ShootingRobot::getRobotShot(int n) const
 {
     return robotShot[n];
 }
@@ -314,17 +314,17 @@ int ShootingRobot::getRobotShotCount() const
     return robotShotCount;
 }
 
-void ShootingRobot::fire(int offsetX, int offsetY, Battlefield *bt)
+void ShootingRobot::fire(int offsetX, int offsetY, Battlefield &bt)
 {
     int targetX = getX() + offsetX;
     int targetY = getY() + offsetY;
 
-    if ((offsetX != 0 && offsetY != 0) && bt->isValid(targetX, targetY))
+    if ((offsetX != 0 && offsetY != 0) && bt.isValid(targetX, targetY))
     {
-        if (!bt->isEmpty(targetX, targetY))
+        if (!bt.isEmpty(targetX, targetY))
         {
-            Robot* enemyRobot = bt->getRobotAt(targetX, targetY);
-            cout << getType() <<  " " << getName() << " fires at (" << targetX << ", " << targetY << ") and destroys " << enemyRobot->getType() << " " << enemyRobot->getName() << "!" << endl;
+            Robot *enemyRobot = bt.getRobotAt(targetX, targetY);
+            cout << getType() << " " << getName() << " fires at (" << targetX << ", " << targetY << ") and destroys " << enemyRobot->getType() << " " << enemyRobot->getName() << "!" << endl;
 
             setRobotShot(*enemyRobot);
             robotShotCount++;
@@ -369,7 +369,7 @@ bool SeeingRobot::getRobotDetected() const
     return RobotDetected;
 }
 
-void SeeingRobot::look(int offsetX, int offsetY, Battlefield *bt)
+void SeeingRobot::look(int offsetX, int offsetY, Battlefield &bt)
 {
     int centerX = getX() + offsetX;
     int centerY = getY() + offsetY;
@@ -383,10 +383,10 @@ void SeeingRobot::look(int offsetX, int offsetY, Battlefield *bt)
             int checkX = centerX + dx;
             int checkY = centerY + dy;
 
-            if (bt->isValid(checkX, checkY))
+            if (bt.isValid(checkX, checkY))
             {
                 cout << "Position (" << checkX << ", " << checkY << ") is within the battlefield and ";
-                if (bt->isEmpty(checkX, checkY))
+                if (bt.isEmpty(checkX, checkY))
                 {
                     cout << "is empty." << endl;
                 }
@@ -418,27 +418,27 @@ SteppingRobot::SteppingRobot(string t, string n, int x, int y) : Robot(t, n, x, 
 {
 }
 
-void SteppingRobot::setRobotStep(Robot* r)
+void SteppingRobot::setRobotStep(Robot &r)
 {
-    robotStep = r;
+    robotStep = &r;
 }
 
-Robot* SteppingRobot::getRobotStep() const
+Robot *SteppingRobot::getRobotStep() const
 {
     return robotStep;
 }
 
-void SteppingRobot::step(int coordinateX, int coordinateY, Battlefield *bt)
+void SteppingRobot::step(int coordinateX, int coordinateY, Battlefield &bt)
 {
 
-    if (bt->isValid(coordinateX, coordinateY) && !bt->isEmpty(coordinateX, coordinateY))
+    if (bt.isValid(coordinateX, coordinateY) && !bt.isEmpty(coordinateX, coordinateY))
     {
         cout << getType() << " " << getName() << " steps to (" << coordinateX << ", " << coordinateY << ") and kills the enemy!" << endl;
-        Robot* enemyRobot = bt->getRobotAt(coordinateX, coordinateY);
-        setRobotStep(enemyRobot);
+        Robot *enemyRobot = bt.getRobotAt(coordinateX, coordinateY);
+        setRobotStep(*enemyRobot);
         setX(coordinateX);
         setY(coordinateY);
-    }  
+    }
 }
 
 // RoboCop class
@@ -447,7 +447,7 @@ RoboCop::RoboCop(string n, int x, int y) : MovingRobot("RoboCop", n, x, y), Shoo
     fireCount = 0;
 }
 
-void RoboCop::takeTurn(Battlefield *bt)   // need to modify
+void RoboCop::takeTurn(Battlefield &bt) // need to modify
 {
     int offsetX, offsetY, targetX, targetY;
     look(0, 0, bt); // Look at current position
@@ -458,7 +458,7 @@ void RoboCop::takeTurn(Battlefield *bt)   // need to modify
         offsetY = rand() % 21 - 10;
         targetX = getX() + offsetX;
         targetY = getY() + offsetY;
-        if (abs(offsetX) + abs(offsetY) <= 10 && bt->isValid(targetX, targetY))
+        if (abs(offsetX) + abs(offsetY) <= 10 && bt.isValid(targetX, targetY))
         {
             fire(targetX, targetY, bt);
             if (getRobotShotCount() >= 3)
@@ -646,7 +646,7 @@ War::War(const string &filename)
             stringstream(temp) >> tempY; */
         // ss >> tempX >> tempY;
         Robot *newRobot = new Robot(tempType, tempName, tempX, tempY); // will change to each robot type later
-        appendRobot(newRobot);
+        appendRobot(*newRobot);
     }
     infile.close();
 
@@ -655,19 +655,19 @@ War::War(const string &filename)
     noOfRobotWaiting = 0;
 
     // Initialize other data member
-    battlefield = new Battlefield(w, l, headRobot);
+    battlefield = Battlefield(w, l, headRobot);
     totalSteps = steps;
     currentStep = 0;
     totalRobots = robotsRemaining = noOfRobotPlaying;
     robotsDied = 0;
 }
 
-void War::appendRobot(Robot *r)
+void War::appendRobot(Robot &r)
 {
     RobotNode *newRobot;
     RobotNode *robotPtr;
     newRobot = new RobotNode;
-    newRobot->rb = r;
+    newRobot->rb = &r;
     newRobot->nextRobot = nullptr;
 
     if (!headRobot)
@@ -683,22 +683,23 @@ void War::appendRobot(Robot *r)
     }
 }
 
-void War::deleteRobot(Robot *r)
+void War::deleteRobot(Robot &r)
 {
-    RobotNode *robotPtr;
-    RobotNode *previousRobot;
+    RobotNode *robotPtr = nullptr;
+    RobotNode *previousRobot = nullptr;
 
     if (!headRobot)
         return;
-    if (headRobot->rb == r)
+    if (headRobot->rb == &r)
     {
+        robotPtr = headRobot;
         headRobot = headRobot->nextRobot;
         delete robotPtr;
     }
     else
     {
         robotPtr = headRobot;
-        while (robotPtr != nullptr && robotPtr->rb != r)
+        while (robotPtr != nullptr && robotPtr->rb != &r)
         {
             previousRobot = robotPtr;
             robotPtr = robotPtr->nextRobot;
@@ -717,12 +718,12 @@ bool War::isPlayingEmpty() const
     return headRobot == nullptr;
 }
 
-void War::enqueueWaiting(Robot *r)
+void War::enqueueWaiting(Robot &r)
 {
     RobotNode *newRobot = nullptr;
 
     newRobot = new RobotNode;
-    newRobot->rb = r;
+    newRobot->rb = &r;
     newRobot->nextRobot = nullptr;
 
     if (isWaitingEmpty())
@@ -772,23 +773,61 @@ Robot *War::getRobotPlaying(int i)
     }
 }
 
-void War::robotKilled(Robot *r)
+void War::robotKilled(Robot &r)
 {
     deleteRobot(r);
-    battlefield->removeRobot(*r);
-    r->setRemainingLives(r->getRemainingLives() - 1);
-    cout << r->getType() << " " << r->getName() << " has been killed.\n";
-    if (r->getRemainingLives() <= 0)
+    battlefield.removeRobot(r);
+    r.setRemainingLives(r.getRemainingLives() - 1);
+    cout << r.getType() << " " << r.getName() << " has been killed.\n";
+    if (r.getRemainingLives() <= 0)
     {
-        cout << r->getType() << " " << r->getName() << " doesn't have any lives remained.\n";
-        cout << r->getType() << " " << r->getName() << " out!!!\n";
-        delete r;
+        cout << r.getType() << " " << r.getName() << " doesn't have any lives remained.\n";
+        cout << r.getType() << " " << r.getName() << " out!!!\n";
+        deleteRobot(r);
+        delete &r;
     }
     else
     {
-        cout << r->getType() << " " << r->getName() << "'s lives reduced by 1\n";
-        cout << r->getType() << " " << r->getName() << " enter the waiting queue\n";
+        cout << r.getType() << " " << r.getName() << "'s lives reduced by 1\n";
+        cout << r.getType() << " " << r.getName() << " enter the waiting queue\n";
         enqueueWaiting(r);
+    }
+}
+
+void War::promoteRobot(Robot &r)
+{
+    Robot *promotedRobot = nullptr;
+    if (r.getType() == "RoboCop" || r.getType() == "Terminator")
+    {
+        promotedRobot = new TerminatorRoboCop(r.getName(), r.getX(), r.getY());
+    }
+    else if (r.getType() == "BlueThunder")
+    {
+        promotedRobot = new MadBot(r.getName(), r.getX(), r.getY());
+    }
+    else if (r.getType() == "MadBot")
+    {
+        promotedRobot = new RoboTank(r.getName(), r.getX(), r.getY());
+    }
+    else if (r.getType() == "TerminatorRoboCop" || r.getType() == "RoboTank")
+    {
+        promotedRobot = new UltimateRobot(r.getName(), r.getX(), r.getY());
+    }
+    switchRobot(r, *promotedRobot);
+    delete &r;
+}
+
+void War::switchRobot(Robot &r1, Robot &r2)
+{
+    RobotNode *currentPtr = headRobot;
+    while (currentPtr != nullptr)
+    {
+        if (currentPtr->rb == &r1)
+        {
+            currentPtr->rb = &r2;
+            break;
+        }
+        currentPtr = currentPtr->nextRobot;
     }
 }
 
@@ -798,13 +837,13 @@ void War::startWar()
     //{
     //  will fill in later
     //}
-    battlefield->displayField();
+    battlefield.displayField();
 }
 
 War::~War()
 {
     // Clean up the battlefield
-    delete battlefield;
+    delete &battlefield;
 
     // Clean up the robots in the playing list
     RobotNode *currentRobot = headRobot;
