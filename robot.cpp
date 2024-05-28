@@ -11,6 +11,7 @@ Robot::Robot()
     robotType = "";
     robotPositionX = robotPositionY = -1;
     remainingLives = 3;
+    upgradePermission = false;
 }
 
 Robot::Robot(string t, string n, int x, int y) // Parameterized constructor
@@ -20,6 +21,7 @@ Robot::Robot(string t, string n, int x, int y) // Parameterized constructor
     robotPositionX = x;
     robotPositionY = y;
     remainingLives = 3;
+    upgradePermission = false;
 }
 
 Robot::Robot(const Robot &r) // Copy constructor
@@ -29,6 +31,7 @@ Robot::Robot(const Robot &r) // Copy constructor
     robotPositionX = r.robotPositionX;
     robotPositionY = r.robotPositionY;
     remainingLives = r.remainingLives;
+    upgradePermission = r.upgradePermission;
 }
 
 Robot &Robot::operator=(const Robot &right) // Assignment operator overloading
@@ -40,6 +43,7 @@ Robot &Robot::operator=(const Robot &right) // Assignment operator overloading
         robotPositionX = right.robotPositionX;
         robotPositionY = right.robotPositionY;
         remainingLives = right.remainingLives;
+        upgradePermission = right.upgradePermission;
     }
     return *this;
 }
@@ -89,60 +93,14 @@ void Robot::setRemainingLives(int l)
     remainingLives = l;
 }
 
-// MovingRobot
-MovingRobot::MovingRobot(string n, string t, int x, int y) : Robot(n, t, x, y)
+bool Robot::getUpgradePermission() const
 {
+    return upgradePermission;
 }
 
-void MovingRobot::move(Battlefield *bt)
+void Robot::setUpgradePermission(bool p)
 {
-    int newX, newY;
-    DIRECTION direction;
-    bool invalidMove = true;
-    srand(time(0));
-    while (invalidMove)
-    {
-        newX = getX();
-        newY = getY();
-        direction = static_cast<DIRECTION>(rand() % 8);
-        switch (direction)
-        {
-        case up:
-            newY += 1;
-            break;
-        case upright:
-            newX += 1;
-            newY += 1;
-            break;
-        case right:
-            newX += 1;
-            break;
-        case downright:
-            newX += 1;
-            newY -= 1;
-            break;
-        case down:
-            newY -= 1;
-            break;
-        case downleft:
-            newX -= 1;
-            newY -= 1;
-            break;
-        case left:
-            newX -= 1;
-            break;
-        case upleft:
-            newX -= 1;
-            newY += 1;
-        }
-        if (bt->isValid(newX, newY) && bt->isEmpty(newX, newY))
-        {
-            setX(newX);
-            setY(newY);
-            invalidMove = false;
-        }
-    }
-    cout << getType() << " " << getName() << " move to (" << newX << ", " << newY << ").";
+    upgradePermission = p;
 }
 
 // Battlefield class
@@ -260,6 +218,305 @@ Battlefield::~Battlefield()
         delete[] cellArr[i];
     }
     delete[] cellArr;
+}
+
+// MovingRobot class
+MovingRobot::MovingRobot(string n, string t, int x, int y) : Robot(n, t, x, y)
+{
+}
+
+void MovingRobot::move(Battlefield *bt)
+{
+    int newX, newY;
+    DIRECTION direction;
+    bool invalidMove = true;
+    srand(time(0));
+    while (invalidMove)
+    {
+        newX = getX();
+        newY = getY();
+        direction = static_cast<DIRECTION>(rand() % 8);
+        switch (direction)
+        {
+        case up:
+            newY += 1;
+            break;
+        case upright:
+            newX += 1;
+            newY += 1;
+            break;
+        case right:
+            newX += 1;
+            break;
+        case downright:
+            newX += 1;
+            newY -= 1;
+            break;
+        case down:
+            newY -= 1;
+            break;
+        case downleft:
+            newX -= 1;
+            newY -= 1;
+            break;
+        case left:
+            newX -= 1;
+            break;
+        case upleft:
+            newX -= 1;
+            newY += 1;
+        }
+        if (bt->isValid(newX, newY) && bt->isEmpty(newX, newY))
+        {
+            setX(newX);
+            setY(newY);
+            invalidMove = false;
+        }
+    }
+    cout << getType() << " " << getName() << " move to (" << newX << ", " << newY << ").";
+}
+
+// ShootingRobot class
+ShootingRobot::ShootingRobot(string t, string n, int x, int y) : Robot(t, n, x, y)
+{
+    notValid = false;
+    fireCount = 0;
+    robotShotCount = 0;
+}
+
+bool ShootingRobot::fireNotValid() const
+{
+    return notValid;
+}
+
+void ShootingRobot::incFireCount()
+{
+    fireCount++;
+}
+
+int ShootingRobot::getFireCount() const
+{
+    return fireCount;
+}
+
+void ShootingRobot::setRobotShot(Robot& r)
+{
+    robotShot[robotShotCount] = r;
+}
+
+Robot& ShootingRobot::getRobotShot(int n) const
+{
+    return robotShot[n];
+}
+
+int ShootingRobot::getRobotShotCount() const
+{
+    return robotShotCount;
+}
+
+void ShootingRobot::fire(int offsetX, int offsetY, Battlefield *bt)
+{
+    int targetX = getX() + offsetX;
+    int targetY = getY() + offsetY;
+
+    if ((offsetX != 0 && offsetY != 0) && bt->isValid(targetX, targetY))
+    {
+        if (!bt->isEmpty(targetX, targetY))
+        {
+            Robot* enemyRobot = bt->getRobotAt(targetX, targetY);
+            cout << getType() <<  " " << getName() << " fires at (" << targetX << ", " << targetY << ") and destroys " << enemyRobot->getType() << " " << enemyRobot->getName() << "!" << endl;
+
+            setRobotShot(*enemyRobot);
+            robotShotCount++;
+        }
+        else
+        {
+            cout << getType() << " " << getName() << " fires at (" << targetX << ", " << targetY << ") but the position is empty." << endl;
+        }
+    }
+    else
+    {
+        notValid = true;
+    }
+}
+
+// SeeingRobot class
+SeeingRobot::SeeingRobot(string t, string n, int x, int y) : Robot(t, n, x, y)
+{
+    RobotDetected = false;
+    RobotCoordinateX = new int[9];
+    RobotCoordinateY = new int[9];
+
+    for (int i = 0; i < 9; i++)
+    {
+        RobotCoordinateX[i] = -1;
+        RobotCoordinateY[i] = -1;
+    }
+}
+
+int *SeeingRobot::getRobotCoordinateX() const
+{
+    return RobotCoordinateX;
+}
+
+int *SeeingRobot::getRobotCoordinateY() const
+{
+    return RobotCoordinateY;
+}
+
+bool SeeingRobot::getRobotDetected() const
+{
+    return RobotDetected;
+}
+
+void SeeingRobot::look(int offsetX, int offsetY, Battlefield *bt)
+{
+    int centerX = getX() + offsetX;
+    int centerY = getY() + offsetY;
+    int count = 0;
+
+    cout << getType() << " " << getName() << " is looking around:" << endl;
+    for (int dy = -1; dy <= 1; ++dy)
+    {
+        for (int dx = -1; dx <= 1; ++dx)
+        {
+            int checkX = centerX + dx;
+            int checkY = centerY + dy;
+
+            if (bt->isValid(checkX, checkY))
+            {
+                cout << "Position (" << checkX << ", " << checkY << ") is within the battlefield and ";
+                if (bt->isEmpty(checkX, checkY))
+                {
+                    cout << "is empty." << endl;
+                }
+                else
+                {
+                    cout << "contains an enemy robot." << endl;
+                    RobotDetected = true;
+                    RobotCoordinateX[count] = checkX;
+                    RobotCoordinateY[count] = checkY;
+                    count++;
+                }
+            }
+            else
+            {
+                cout << "Position (" << checkX << ", " << checkY << ") is outside the battlefield." << endl;
+            }
+        }
+    }
+}
+
+SeeingRobot::~SeeingRobot()
+{
+    delete[] RobotCoordinateX;
+    delete[] RobotCoordinateY;
+}
+
+// SteppingRobot class
+SteppingRobot::SteppingRobot(string t, string n, int x, int y) : Robot(t, n, x, y)
+{
+}
+
+void SteppingRobot::setRobotStep(Robot* r)
+{
+    robotStep = r;
+}
+
+Robot* SteppingRobot::getRobotStep() const
+{
+    return robotStep;
+}
+
+void SteppingRobot::step(int coordinateX, int coordinateY, Battlefield *bt)
+{
+
+    if (bt->isValid(coordinateX, coordinateY) && !bt->isEmpty(coordinateX, coordinateY))
+    {
+        cout << getType() << " " << getName() << " steps to (" << coordinateX << ", " << coordinateY << ") and kills the enemy!" << endl;
+        Robot* enemyRobot = bt->getRobotAt(coordinateX, coordinateY);
+        setRobotStep(enemyRobot);
+        setX(coordinateX);
+        setY(coordinateY);
+    }  
+}
+
+// RoboCop class
+RoboCop::RoboCop(string n, int x, int y) : MovingRobot("RoboCop", n, x, y), ShootingRobot("RoboCop", n, x, y), SeeingRobot("RoboCop", n, x, y)
+{
+    fireCount = 0;
+}
+
+void RoboCop::takeTurn(Battlefield *bt)   // need to modify
+{
+    int offsetX, offsetY, targetX, targetY;
+    look(0, 0, bt); // Look at current position
+    move(bt);
+    while (getFireCount() < 3)
+    {
+        offsetX = rand() % 21 - 10; // Random offset between -10 and 10
+        offsetY = rand() % 21 - 10;
+        targetX = getX() + offsetX;
+        targetY = getY() + offsetY;
+        if (abs(offsetX) + abs(offsetY) <= 10 && bt->isValid(targetX, targetY))
+        {
+            fire(targetX, targetY, bt);
+            if (getRobotShotCount() >= 3)
+                setUpgradePermission(true);
+            incFireCount;
+        }
+    }
+    if (getUpgradePermission)
+        cout << getType() << " " << getName() << " has been upgraded to TerminatorRoboCop!" << endl;
+}
+
+// Terminator class
+Terminator::Terminator(string t, string n, int x, int y) : Robot(t, n, x, y), MovingRobot(t, n, x, y), SeeingRobot(t, n, x, y), SteppingRobot(t, n, x, y)
+{
+    robotsTerminated = 0;
+    upgrade = false;
+}
+
+bool Terminator::getUpgrade() const
+{
+    return upgrade;
+}
+
+void Terminator::turn(Battlefield *bt, War *war)
+{
+    look(0, 0, bt); // Look around the 3x3 neighborhood
+
+    int *robotCoordinateX = getRobotCoordinateX();
+    int *robotCoordinateY = getRobotCoordinateY();
+    bool robotDetected = getRobotDetected();
+
+    if (robotDetected)
+    {
+        for (int i = 0; i < 9; i++)
+        {
+            int targetX = robotCoordinateX[i];
+            int targetY = robotCoordinateY[i];
+
+            if (targetX != -1 && targetY != -1)
+            {
+                // Move to and terminate the enemy robot
+                step(targetX, targetY, bt, war);
+                robotsTerminated++;
+                break; // Only step one enemy per turn
+            }
+        }
+    }
+    else
+    {
+        // No enemies in neighborhood, move randomly
+        move(bt);
+    }
+
+    if (robotsTerminated >= 3 && !upgrade)
+    {
+        upgrade = true;
+        cout << getType() << " " << getName() << " has been upgraded to TerminatorRoboCop!" << endl;
+    }
 }
 
 // War class
