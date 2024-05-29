@@ -14,6 +14,8 @@ private:
     string robotType;
     int robotPositionX, robotPositionY;
     int remainingLives;
+    Robot *robotTerminated[3];
+    int numOfRobotTerminated;
     bool upgradePermission;
 
 public:
@@ -23,24 +25,29 @@ public:
     Robot &operator=(const Robot &right);    // Assignment operator overloading
     virtual ~Robot() {}                      // Destructor
 
-    string getName() const;                 // Return robot name
-    string getType() const;                 // Return robot type
+    string getName() const; // Return robot name
+    string getType() const; // Return robot type
 
-    int getX() const;                       // Return robot x coordinate
-    int getY() const;                       // Return robot y coordinate
-    void setX(int x);                       // Set robot x coordinate
-    void setY(int y);                       // Set robot y coordinate
+    int getX() const; // Return robot x coordinate
+    int getY() const; // Return robot y coordinate
+    void setX(int x); // Set robot x coordinate
+    void setY(int y); // Set robot y coordinate
 
-    bool stillGotLive() const;              // Remaining lives > 0?
-    void setRemainingLives(int l);          // Set remaining lives
-    int getRemainingLives() const;          // Return remaining lives
+    bool stillGotLive() const;     // Remaining lives > 0?
+    void setRemainingLives(int l); // Set remaining lives
+    int getRemainingLives() const; // Return remaining lives
 
-    virtual void takeTurn(Battlefield &bt) = 0;          // Pure virtual function
-    bool getUpgradePermission() const;      // Valid for upgrade?
-    void setUpgradePermission(bool p);      // Set upgradePermission
+    void setRobotTerminated(Robot &r);      // store robot terminated
+    Robot &getRobotTerminated(int n) const; // return robot terminated
+    int getNumOfRobotTerminated() const;    // return number of robot terminated
+    void resetRobotTerminated();            // reset robot terminated to nullptr
+
+    virtual void takeTurn(Battlefield &bt) = 0; // Pure virtual function
+    bool getUpgradePermission() const;          // Valid for upgrade?
+    void setUpgradePermission(bool p);          // Set upgradePermission
 };
 
-struct RobotNode                            // struct for making linked list & queue
+struct RobotNode // struct for making linked list & queue
 {
     Robot *rb;
     RobotNode *nextRobot;
@@ -90,7 +97,7 @@ public:
     MovingRobot() : Robot() {}
     MovingRobot(string n, string t, int x, int y);
     virtual void move(Battlefield &bt);
-    virtual void takeTurn(Battlefield &bt) = 0;          // Pure virtual function
+    virtual void takeTurn(Battlefield &bt) = 0; // Pure virtual function
     virtual ~MovingRobot() {}
 };
 
@@ -99,24 +106,14 @@ class ShootingRobot : virtual public Robot
 {
 private:
     bool notValid;
-    Robot *robotShot;
-    int robotShotCount;
-    int fireCount;
 
 public:
     ShootingRobot() : Robot() {}
     ShootingRobot(string t, string n, int x, int y);
     bool fireNotValid() const;
 
-    void incFireCount();
-    int getFireCount() const;
-
-    void setRobotShot(Robot &r);      // store robot shot
-    Robot &getRobotShot(int n) const; // return robot shot
-    int getRobotShotCount() const;
-
     virtual void fire(int offsetX, int offsetY, Battlefield &bt);
-    virtual void takeTurn(Battlefield &bt) = 0;          // Pure virtual function
+    virtual void takeTurn(Battlefield &bt) = 0; // Pure virtual function
     virtual ~ShootingRobot() {}
 };
 
@@ -138,7 +135,7 @@ public:
     int getNumOfRobotDetected() const;
     void resetDetection();
     virtual void look(int offsetX, int offsetY, Battlefield &bt);
-    virtual void takeTurn(Battlefield &bt) = 0;          // Pure virtual function
+    virtual void takeTurn(Battlefield &bt) = 0; // Pure virtual function
     virtual ~SeeingRobot() {}
 };
 
@@ -147,28 +144,21 @@ class SteppingRobot : virtual public Robot
 {
 private:
     Robot *robotStep;
-    void setRobotStep(Robot &r);
-    Robot *getRobotStep() const;
     int robotStepCount;
 
 public:
     SteppingRobot(string t, string n, int x, int y);
-    int getStepCount() const;
-    void incStepCount();
     virtual void step(int coordinateX, int coordinateY, Battlefield &bt);
-    virtual void takeTurn(Battlefield &bt) = 0;          // Pure virtual function
+    virtual void takeTurn(Battlefield &bt) = 0; // Pure virtual function
     virtual ~SteppingRobot() {}
 };
 
 // RoboCop class
 class RoboCop : public MovingRobot, public ShootingRobot, public SeeingRobot
 {
-private:
-    int fireCount;
-
 public:
     RoboCop(string t, string n, int x, int y);
-    virtual void takeTurn(Battlefield &bt); 
+    virtual void takeTurn(Battlefield &bt);
 };
 
 // Terminator class
@@ -247,7 +237,7 @@ public:
     void dequeueWaiting(Robot &r);
     bool isWaitingEmpty() const;
 
-    void robotKilled(Robot &r);
+    void terminateRobot(Robot &r);
     void promoteRobot(Robot &r);
     void switchRobot(Robot &r1, Robot &r2);
     void startWar();

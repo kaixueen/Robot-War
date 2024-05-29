@@ -12,6 +12,9 @@ Robot::Robot()
     robotPositionX = robotPositionY = -1;
     remainingLives = 3;
     upgradePermission = false;
+    numOfRobotTerminated = 0;
+    for (int i = 0; i < 3; i++)
+        robotTerminated[i] = nullptr;
 }
 
 Robot::Robot(string t, string n, int x, int y) // Parameterized constructor
@@ -22,6 +25,9 @@ Robot::Robot(string t, string n, int x, int y) // Parameterized constructor
     robotPositionY = y;
     remainingLives = 3;
     upgradePermission = false;
+    numOfRobotTerminated = 0;
+    for (int i = 0; i < 3; i++)
+        robotTerminated[i] = nullptr;
 }
 
 Robot::Robot(const Robot &r) // Copy constructor
@@ -32,6 +38,9 @@ Robot::Robot(const Robot &r) // Copy constructor
     robotPositionY = r.robotPositionY;
     remainingLives = r.remainingLives;
     upgradePermission = r.upgradePermission;
+    numOfRobotTerminated = r.numOfRobotTerminated;
+    for (int i = 0; i < 3; i++)
+        robotTerminated[i] = r.robotTerminated[i];
 }
 
 Robot &Robot::operator=(const Robot &right) // Assignment operator overloading
@@ -44,6 +53,9 @@ Robot &Robot::operator=(const Robot &right) // Assignment operator overloading
         robotPositionY = right.robotPositionY;
         remainingLives = right.remainingLives;
         upgradePermission = right.upgradePermission;
+        numOfRobotTerminated = right.numOfRobotTerminated;
+        for (int i = 0; i < 3; i++)
+            robotTerminated[i] = right.robotTerminated[i];
     }
     return *this;
 }
@@ -91,6 +103,29 @@ int Robot::getRemainingLives() const
 void Robot::setRemainingLives(int l)
 {
     remainingLives = l;
+}
+
+void Robot::setRobotTerminated(Robot &r)
+{
+    robotTerminated[numOfRobotTerminated] = &r;
+    numOfRobotTerminated++;
+}
+
+Robot &Robot::getRobotTerminated(int n) const
+{
+    return *robotTerminated[n];
+}
+
+int Robot::getNumOfRobotTerminated() const
+{
+    return numOfRobotTerminated;
+}
+
+void Robot::resetRobotTerminated()
+{
+    numOfRobotTerminated = 0;
+    for (int i = 0; i < 3; i++)
+        robotTerminated[i] = nullptr;
 }
 
 bool Robot::getUpgradePermission() const
@@ -287,38 +322,11 @@ void MovingRobot::move(Battlefield &bt)
 ShootingRobot::ShootingRobot(string t, string n, int x, int y) : Robot(t, n, x, y)
 {
     notValid = false;
-    fireCount = 0;
-    robotShotCount = 0;
 }
 
 bool ShootingRobot::fireNotValid() const
 {
     return notValid;
-}
-
-void ShootingRobot::incFireCount()
-{
-    fireCount++;
-}
-
-int ShootingRobot::getFireCount() const
-{
-    return fireCount;
-}
-
-void ShootingRobot::setRobotShot(Robot &r)
-{
-    robotShot[robotShotCount] = r;
-}
-
-Robot &ShootingRobot::getRobotShot(int n) const
-{
-    return robotShot[n];
-}
-
-int ShootingRobot::getRobotShotCount() const
-{
-    return robotShotCount;
 }
 
 void ShootingRobot::fire(int offsetX, int offsetY, Battlefield &bt)
@@ -332,9 +340,7 @@ void ShootingRobot::fire(int offsetX, int offsetY, Battlefield &bt)
         {
             Robot *enemyRobot = bt.getRobotAt(targetX, targetY);
             cout << getType() << " " << getName() << " fires at (" << targetX << ", " << targetY << ") and destroys " << enemyRobot->getType() << " " << enemyRobot->getName() << "!" << endl;
-
-            setRobotShot(*enemyRobot);
-            robotShotCount++;
+            setRobotTerminated(*enemyRobot);
         }
         else
         {
@@ -441,43 +447,22 @@ SteppingRobot::SteppingRobot(string t, string n, int x, int y) : Robot(t, n, x, 
     robotStepCount = 0;
 }
 
-void SteppingRobot::setRobotStep(Robot &r)
-{
-    robotStep = &r;
-}
-
-Robot *SteppingRobot::getRobotStep() const
-{
-    return robotStep;
-}
-
-void SteppingRobot::incStepCount()
-{
-    robotStepCount++;
-}
-
-int SteppingRobot::getStepCount() const
-{
-    return robotStepCount;
-}
-
 void SteppingRobot::step(int coordinateX, int coordinateY, Battlefield &bt)
 {
-
     if (bt.isValid(coordinateX, coordinateY) && !bt.isEmpty(coordinateX, coordinateY))
     {
         cout << getType() << " " << getName() << " steps to (" << coordinateX << ", " << coordinateY << ") and kills the enemy!" << endl;
         Robot *enemyRobot = bt.getRobotAt(coordinateX, coordinateY);
-        setRobotStep(*enemyRobot);
+        setRobotTerminated(*enemyRobot);
         setX(coordinateX);
         setY(coordinateY);
+        robotStepCount++;
     }
 }
 
 // RoboCop class
 RoboCop::RoboCop(string t, string n, int x, int y) : MovingRobot(t, n, x, y), ShootingRobot(t, n, x, y), SeeingRobot(t, n, x, y)
 {
-    fireCount = 0;
 }
 
 void RoboCop::takeTurn(Battlefield &bt) // need to modify
@@ -495,9 +480,8 @@ void RoboCop::takeTurn(Battlefield &bt) // need to modify
         if (abs(offsetX) + abs(offsetY) <= 10 && bt.isValid(targetX, targetY))
         {
             fire(targetX, targetY, bt);
-            if (getRobotShotCount() >= 3)
+            if (getNumOfRobotTerminated() >= 3)
                 setUpgradePermission(true);
-            incFireCount();
             count++;
         }
     }
@@ -528,8 +512,7 @@ void Terminator::takeTurn(Battlefield &bt)
             {
                 // Move to and terminate the enemy robot
                 step(targetX, targetY, bt);
-                incStepCount();
-                if (getStepCount() >= 3)
+                if (getNumOfRobotTerminated() >= 3)
                     setUpgradePermission(true);
                 break; // Only step one enemy per turn
             }
@@ -569,7 +552,7 @@ void BlueThunder::takeTurn(Battlefield &bt)
         if (bt.isValid(targetX, targetY))
         {
             fire(targetX, targetY, bt);
-            if (getRobotShotCount() >= 3)
+            if (getNumOfRobotTerminated() >= 3)
                 setUpgradePermission(true);
             directionCount++;
             break;
@@ -602,7 +585,7 @@ void MadBot::takeTurn(Battlefield &bt)
         if (bt.isValid(targetX, targetY))
         {
             fire(targetX, targetY, bt);
-            if (getRobotShotCount() >= 3)
+            if (getNumOfRobotTerminated() >= 3)
                 setUpgradePermission(true);
             break;
         }
@@ -724,8 +707,7 @@ War::War(const string &filename)
                 robotPtr = robotPtr->nextRobot;
             }
         }
-        Robot *newRobot = new Robot(tempType, tempName, tempX, tempY); // will change to each robot type later
-        appendRobot(*newRobot);
+        initializeRobot(tempType, tempName, tempX, tempY);
     }
     infile.close();
 
@@ -777,7 +759,7 @@ void War::initializeRobot(string tt, string tn, int tx, int ty)
         cout << "Invalid Robot Type \"" << tt << "\"\n";
         exit(EXIT_FAILURE);
     }
-    appendRobot(*newRobot)
+    appendRobot(*newRobot);
 }
 
 void War::appendRobot(Robot &r)
@@ -891,7 +873,7 @@ Robot *War::getRobotPlaying(int i)
     }
 }
 
-void War::robotKilled(Robot &r)
+void War::terminateRobot(Robot &r)
 {
     deleteRobot(r);
     battlefield.removeRobot(r);
@@ -951,16 +933,29 @@ void War::switchRobot(Robot &r1, Robot &r2)
 
 void War::startWar()
 {
-    while (currentStep < totalSteps && robotsRemaining > 1)
+    while (currentStep < totalSteps && !isPlayingEmpty())
     {
         cout << "Current step: " << currentStep <<  endl << endl;
         battlefield.displayField();
         RobotNode* currentPtr = headRobot;
-        while (currentPtr != nullptr)
+        while (currentPtr != nullptr && !isPlayingEmpty())
         {
+            cout << "Action:\n";
             Robot* currentRobot = currentPtr->rb;
+            currentRobot->takeTurn(battlefield);
+
+            cout << "Result:\n";
+            for (int i = 0; i < 3; i++)
+            {
+                if (&currentRobot->getRobotTerminated(i) == nullptr)
+                    break;
+                else
+                    terminateRobot(currentRobot->getRobotTerminated(i));
+            }
+            if (currentRobot->getUpgradePermission())
+                promoteRobot(*currentRobot);
             
-            if()
+            currentPtr = currentPtr->nextRobot;
         }
     }
 }
