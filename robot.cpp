@@ -392,7 +392,7 @@ void SeeingRobot::resetDetection()
     numOfRobotDetected = 0;
 }
 
-void SeeingRobot::look(int offsetX, int offsetY, Battlefield &bt)   // need to reset the robot detected every turn
+void SeeingRobot::look(int offsetX, int offsetY, Battlefield &bt)   // need to reset the robot detected every turn, does it look at the offset position, if not only immediate neighbourhood
 {
     int centerX = getX() + offsetX;
     int centerY = getY() + offsetY;

@@ -17,35 +17,30 @@ private:
     bool upgradePermission;
 
 public:
-    Robot();
+    Robot();                                 // Default constructor
     Robot(string t, string n, int x, int y); // Parameterized constructor
     Robot(const Robot &r);                   // Copy constructor
     Robot &operator=(const Robot &right);    // Assignment operator overloading
     virtual ~Robot() {}                      // Destructor
 
-    virtual void move() = 0;
-    virtual void fire() = 0;
-    virtual void look() = 0;
-    virtual void step() = 0;
+    string getName() const;                 // Return robot name
+    string getType() const;                 // Return robot type
 
-    string getName() const;
-    string getType() const;
+    int getX() const;                       // Return robot x coordinate
+    int getY() const;                       // Return robot y coordinate
+    void setX(int x);                       // Set robot x coordinate
+    void setY(int y);                       // Set robot y coordinate
 
-    int getX() const;
-    int getY() const;
-    void setX(int x);
-    void setY(int y);
+    bool stillGotLive() const;              // Remaining lives > 0?
+    void setRemainingLives(int l);          // Set remaining lives
+    int getRemainingLives() const;          // Return remaining lives
 
-    bool stillGotLive() const;
-    void setRemainingLives(int l);
-    int getRemainingLives() const;
-
-    virtual void takeAction() = 0; // new pure virtual function
-    bool getUpgradePermission() const;
-    void setUpgradePermission(bool p);
+    virtual void takeAction(Battlefield &bt) = 0;          // Pure virtual function
+    bool getUpgradePermission() const;      // Valid for upgrade?
+    void setUpgradePermission(bool p);      // Set upgradePermission
 };
 
-struct RobotNode // struct for making linked list & queue
+struct RobotNode                            // struct for making linked list & queue
 {
     Robot *rb;
     RobotNode *nextRobot;
@@ -61,7 +56,7 @@ private:
 
 public:
     Battlefield();
-    Battlefield(int w, int l, RobotNode *rn); // initialize field
+    Battlefield(int w, int l, RobotNode *rn); // initialize field using linked list
 
     int getWidth() const;
     int getLength() const;
@@ -95,6 +90,7 @@ public:
     MovingRobot() : Robot() {}
     MovingRobot(string n, string t, int x, int y);
     virtual void move(Battlefield &bt);
+    virtual void takeTurn(Battlefield &bt) = 0;          // Pure virtual function
     virtual ~MovingRobot() {}
 };
 
@@ -102,7 +98,7 @@ public:
 class ShootingRobot : virtual public Robot
 {
 private:
-    bool notValid; // need to rename
+    bool notValid;
     Robot *robotShot;
     int robotShotCount;
     int fireCount;
@@ -110,7 +106,7 @@ private:
 public:
     ShootingRobot() : Robot() {}
     ShootingRobot(string t, string n, int x, int y);
-    bool fireNotValid() const; // need to rename
+    bool fireNotValid() const;
 
     void incFireCount();
     int getFireCount() const;
@@ -120,6 +116,7 @@ public:
     int getRobotShotCount() const;
 
     virtual void fire(int offsetX, int offsetY, Battlefield &bt);
+    virtual void takeTurn(Battlefield &bt) = 0;          // Pure virtual function
     virtual ~ShootingRobot() {}
 };
 
@@ -129,7 +126,7 @@ class SeeingRobot : virtual public Robot
 private:
     int *RobotDetectedX;
     int *RobotDetectedY;
-    bool isRobotDetected; 
+    bool isRobotDetected;
     int numOfRobotDetected;
 
 public:
@@ -141,6 +138,7 @@ public:
     int getNumOfRobotDetected() const;
     void resetDetection();
     virtual void look(int offsetX, int offsetY, Battlefield &bt);
+    virtual void takeTurn(Battlefield &bt) = 0;          // Pure virtual function
     virtual ~SeeingRobot() {}
 };
 
@@ -158,6 +156,7 @@ public:
     int getStepCount() const;
     void incStepCount();
     virtual void step(int coordinateX, int coordinateY, Battlefield &bt);
+    virtual void takeTurn(Battlefield &bt) = 0;          // Pure virtual function
     virtual ~SteppingRobot() {}
 };
 
@@ -169,7 +168,7 @@ private:
 
 public:
     RoboCop(string t, string n, int x, int y);
-    void takeTurn(Battlefield &bt); // need to modify
+    virtual void takeTurn(Battlefield &bt); 
 };
 
 // Terminator class
@@ -178,7 +177,7 @@ class Terminator : public MovingRobot, public SeeingRobot, public SteppingRobot
 private:
 public:
     Terminator(string t, string n, int x, int y);
-    void takeTurn(Battlefield &bt);
+    virtual void takeTurn(Battlefield &bt);
 };
 
 // BlueThunder class
@@ -189,7 +188,7 @@ private:
 
 public:
     BlueThunder(string t, string n, int x, int y);
-    void takeTurn(Battlefield &bt);
+    virtual void takeTurn(Battlefield &bt);
 };
 
 // MadBot class
@@ -197,7 +196,7 @@ class MadBot : public BlueThunder
 {
 public:
     MadBot(string t, string n, int x, int y);
-    void takeTurn(Battlefield &bt);
+    virtual void takeTurn(Battlefield &bt);
 };
 
 // TerminatorRoboCop class
