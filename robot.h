@@ -47,7 +47,7 @@ public:
 
 struct RobotNode // struct for making linked list & queue
 {
-    Robot* rb;
+    Robot *rb;
     RobotNode *nextRobot;
 };
 
@@ -60,6 +60,7 @@ private:
     Robot ***cellArr;
 
 public:
+    Battlefield();
     Battlefield(int w, int l, RobotNode *rn); // initialize field
 
     int getWidth() const;
@@ -126,16 +127,19 @@ public:
 class SeeingRobot : virtual public Robot
 {
 private:
-    int *RobotCoordinateX;
-    int *RobotCoordinateY;
-    bool RobotDetected; // need to rename
+    int *RobotDetectedX;
+    int *RobotDetectedY;
+    bool isRobotDetected; 
+    int numOfRobotDetected;
 
 public:
     SeeingRobot() : Robot() {}
     SeeingRobot(string t, string n, int x, int y);
-    int *getRobotCoordinateX() const;
-    int *getRobotCoordinateY() const;
-    bool getRobotDetected() const;
+    int *getRobotDetectedX() const;
+    int *getRobotDetectedY() const;
+    bool getIsRobotDetected() const;
+    int getNumOfRobotDetected() const;
+    void resetDetection();
     virtual void look(int offsetX, int offsetY, Battlefield &bt);
     virtual ~SeeingRobot() {}
 };
@@ -147,10 +151,12 @@ private:
     Robot *robotStep;
     void setRobotStep(Robot &r);
     Robot *getRobotStep() const;
+    int robotStepCount;
 
 public:
     SteppingRobot(string t, string n, int x, int y);
-
+    int getStepCount() const;
+    void incStepCount();
     virtual void step(int coordinateX, int coordinateY, Battlefield &bt);
     virtual ~SteppingRobot() {}
 };
@@ -162,7 +168,7 @@ private:
     int fireCount;
 
 public:
-    RoboCop(string n, int x, int y);
+    RoboCop(string t, string n, int x, int y);
     void takeTurn(Battlefield &bt); // need to modify
 };
 
@@ -170,23 +176,28 @@ public:
 class Terminator : public MovingRobot, public SeeingRobot, public SteppingRobot
 {
 private:
-    int robotsTerminated;
-    bool upgrade;
-
 public:
     Terminator(string t, string n, int x, int y);
-    void turn(Battlefield *bt, War *war);
-    bool getUpgrade() const;
+    void takeTurn(Battlefield &bt);
 };
 
 // BlueThunder class
 class BlueThunder : public ShootingRobot
 {
+private:
+    int directionCount;
+
+public:
+    BlueThunder(string t, string n, int x, int y);
+    void takeTurn(Battlefield &bt);
 };
 
 // MadBot class
 class MadBot : public BlueThunder
 {
+public:
+    MadBot(string t, string n, int x, int y);
+    void takeTurn(Battlefield &bt);
 };
 
 // TerminatorRoboCop class
@@ -237,8 +248,8 @@ public:
     bool isWaitingEmpty() const;
 
     void robotKilled(Robot &r);
-    void promoteRobot(Robot& r);
-    void switchRobot(Robot& r1, Robot& r2);
+    void promoteRobot(Robot &r);
+    void switchRobot(Robot &r1, Robot &r2);
     void startWar();
 };
 
