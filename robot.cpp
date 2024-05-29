@@ -452,7 +452,8 @@ void RoboCop::takeTurn(Battlefield &bt) // need to modify
     int offsetX, offsetY, targetX, targetY;
     look(0, 0, bt); // Look at current position
     move(bt);
-    while (getFireCount() < 3)
+    int count = 0;
+    while (count < 3)
     {
         offsetX = rand() % 21 - 10; // Random offset between -10 and 10
         offsetY = rand() % 21 - 10;
@@ -463,7 +464,8 @@ void RoboCop::takeTurn(Battlefield &bt) // need to modify
             fire(targetX, targetY, bt);
             if (getRobotShotCount() >= 3)
                 setUpgradePermission(true);
-            incFireCount;
+            incFireCount();
+            count++;
         }
     }
     if (getUpgradePermission)
