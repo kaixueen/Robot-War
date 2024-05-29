@@ -35,7 +35,7 @@ public:
     void setRemainingLives(int l);          // Set remaining lives
     int getRemainingLives() const;          // Return remaining lives
 
-    virtual void takeAction(Battlefield &bt) = 0;          // Pure virtual function
+    virtual void takeTurn(Battlefield &bt) = 0;          // Pure virtual function
     bool getUpgradePermission() const;      // Valid for upgrade?
     void setUpgradePermission(bool p);      // Set upgradePermission
 };
@@ -234,6 +234,7 @@ private:
 
 public:
     War(const string &filename);
+    void initializeRobot(string tt, string tn, int tx, int ty);
     ~War();
 
     Robot *getRobotPlaying(int i);

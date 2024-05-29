@@ -741,6 +741,45 @@ War::War(const string &filename)
     robotsDied = 0;
 }
 
+void War::initializeRobot(string tt, string tn, int tx, int ty)
+{
+    Robot* newRobot = nullptr;
+    if (tt == "RoboCop")
+    {
+        newRobot = new RoboCop(tt, tn, tx, ty);
+    }
+    else if (tt == "Terminator")
+    {
+        newRobot = new Terminator(tt, tn, tx, ty);
+    }
+    else if (tt == "TerminatorRobocop")
+    {
+        newRobot = new TerminatorRoboCop(tt, tn, tx, ty);
+    }
+    else if (tt == "BlueThunder")
+    {
+        newRobot = new BlueThunder(tt, tn, tx, ty);
+    }
+    else if (tt == "MadBot")
+    {
+        newRobot = new MadBot(tt, tn, tx, ty);
+    }
+    else if (tt == "RoboTank")
+    {
+        newRobot = new RoboTank(tt, tn, tx, ty);
+    }
+    else if (tt == "UltimateRobot")
+    {
+        newRobot = new UltimateRobot(tt, tn, tx, ty);
+    }
+    else 
+    {
+        cout << "Invalid Robot Type \"" << tt << "\"\n";
+        exit(EXIT_FAILURE);
+    }
+    appendRobot(*newRobot)
+}
+
 void War::appendRobot(Robot &r)
 {
     RobotNode *newRobot;
@@ -858,7 +897,7 @@ void War::robotKilled(Robot &r)
     battlefield.removeRobot(r);
     r.setRemainingLives(r.getRemainingLives() - 1);
     cout << r.getType() << " " << r.getName() << " has been killed.\n";
-    if (r.getRemainingLives() <= 0)
+    if (!r.stillGotLive())
     {
         cout << r.getType() << " " << r.getName() << " doesn't have any lives remained.\n";
         cout << r.getType() << " " << r.getName() << " out!!!\n";
@@ -878,19 +917,19 @@ void War::promoteRobot(Robot &r)
     Robot *promotedRobot = nullptr;
     if (r.getType() == "RoboCop" || r.getType() == "Terminator")
     {
-        promotedRobot = new TerminatorRoboCop(r.getName(), r.getX(), r.getY());
+        promotedRobot = new TerminatorRoboCop("TerminatorRoboCop", r.getName(), r.getX(), r.getY());
     }
     else if (r.getType() == "BlueThunder")
     {
-        promotedRobot = new MadBot(r.getName(), r.getX(), r.getY());
+        promotedRobot = new MadBot("MadBot", r.getName(), r.getX(), r.getY());
     }
     else if (r.getType() == "MadBot")
     {
-        promotedRobot = new RoboTank(r.getName(), r.getX(), r.getY());
+        promotedRobot = new RoboTank("RoboTank", r.getName(), r.getX(), r.getY());
     }
     else if (r.getType() == "TerminatorRoboCop" || r.getType() == "RoboTank")
     {
-        promotedRobot = new UltimateRobot(r.getName(), r.getX(), r.getY());
+        promotedRobot = new UltimateRobot("UltimateRobot", r.getName(), r.getX(), r.getY());
     }
     switchRobot(r, *promotedRobot);
     delete &r;
@@ -912,11 +951,18 @@ void War::switchRobot(Robot &r1, Robot &r2)
 
 void War::startWar()
 {
-    // while (currentStep < totalSteps && robotsRemaining > 1)
-    //{
-    //  will fill in later
-    //}
-    battlefield.displayField();
+    while (currentStep < totalSteps && robotsRemaining > 1)
+    {
+        cout << "Current step: " << currentStep <<  endl << endl;
+        battlefield.displayField();
+        RobotNode* currentPtr = headRobot;
+        while (currentPtr != nullptr)
+        {
+            Robot* currentRobot = currentPtr->rb;
+            
+            if()
+        }
+    }
 }
 
 War::~War()
