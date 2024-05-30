@@ -23,7 +23,7 @@ public:
     Robot(string t, string n, int x, int y); // Parameterized constructor
     Robot(const Robot &r);                   // Copy constructor
     Robot &operator=(const Robot &right);    // Assignment operator overloading
-    virtual ~Robot() {}                      // Destructor
+    virtual ~Robot();                        // Destructor
 
     string getName() const; // Return robot name
     string getType() const; // Return robot type
@@ -104,13 +104,9 @@ public:
 // ShootingRobot class
 class ShootingRobot : virtual public Robot
 {
-private:
-    bool notValid;
-
 public:
     ShootingRobot() : Robot() {}
     ShootingRobot(string t, string n, int x, int y);
-    bool fireNotValid() const;
 
     virtual void fire(int offsetX, int offsetY, Battlefield &bt);
     virtual void takeTurn(Battlefield &bt) = 0; // Pure virtual function
@@ -143,7 +139,6 @@ public:
 class SteppingRobot : virtual public Robot
 {
 private:
-    Robot *robotStep;
     int robotStepCount;
 
 public:

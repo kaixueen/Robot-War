@@ -138,6 +138,11 @@ void Robot::setUpgradePermission(bool p)
     upgradePermission = p;
 }
 
+Robot::~Robot()
+{
+    delete[] robotTerminated;
+}
+
 // Battlefield class
 Battlefield::Battlefield()
 {
@@ -321,12 +326,6 @@ void MovingRobot::move(Battlefield &bt)
 // ShootingRobot class
 ShootingRobot::ShootingRobot(string t, string n, int x, int y) : Robot(t, n, x, y)
 {
-    notValid = false;
-}
-
-bool ShootingRobot::fireNotValid() const
-{
-    return notValid;
 }
 
 void ShootingRobot::fire(int offsetX, int offsetY, Battlefield &bt)
@@ -334,7 +333,7 @@ void ShootingRobot::fire(int offsetX, int offsetY, Battlefield &bt)
     int targetX = getX() + offsetX;
     int targetY = getY() + offsetY;
 
-    if ((offsetX != 0 && offsetY != 0) && bt.isValid(targetX, targetY))
+    if (!(offsetX == 0 && offsetY == 0) && bt.isValid(targetX, targetY))
     {
         if (!bt.isEmpty(targetX, targetY))
         {
@@ -346,10 +345,6 @@ void ShootingRobot::fire(int offsetX, int offsetY, Battlefield &bt)
         {
             cout << getType() << " " << getName() << " fires at (" << targetX << ", " << targetY << ") but the position is empty." << endl;
         }
-    }
-    else
-    {
-        notValid = true;
     }
 }
 
@@ -398,7 +393,7 @@ void SeeingRobot::resetDetection()
     numOfRobotDetected = 0;
 }
 
-void SeeingRobot::look(int offsetX, int offsetY, Battlefield &bt)   // need to reset the robot detected every turn, does it look at the offset position, if not only immediate neighbourhood
+void SeeingRobot::look(int offsetX, int offsetY, Battlefield &bt) // need to reset the robot detected every turn, does it look at the offset position, if not only immediate neighbourhood
 {
     int centerX = getX() + offsetX;
     int centerY = getY() + offsetY;
@@ -485,6 +480,7 @@ void RoboCop::takeTurn(Battlefield &bt) // need to modify
             count++;
         }
     }
+    resetDetection();
     if (getUpgradePermission)
         cout << getType() << " " << getName() << " has been upgraded to TerminatorRoboCop!" << endl;
 }
@@ -503,28 +499,22 @@ void Terminator::takeTurn(Battlefield &bt)
 
     if (getIsRobotDetected())
     {
-        for (int i = 0; i < getNumOfRobotDetected(); i++)
-        {
-            int targetX = robotCoordinateX[i];
-            int targetY = robotCoordinateY[i];
+        int targetX = robotCoordinateX[0];
+        int targetY = robotCoordinateY[0];
 
-            if (targetX != -1 && targetY != -1)
-            {
-                // Move to and terminate the enemy robot
-                step(targetX, targetY, bt);
-                if (getNumOfRobotTerminated() >= 3)
-                    setUpgradePermission(true);
-                break; // Only step one enemy per turn
-            }
-        }
+        // Move to and terminate the enemy robot
+        step(targetX, targetY, bt);
+        if (getNumOfRobotTerminated() >= 3)
+            setUpgradePermission(true);
         resetDetection();
+        // Only step one enemy per turn
     }
     else
     {
         // No enemies in neighborhood, move randomly
         move(bt);
     }
-    if (getUpgradePermission)
+    if (getUpgradePermission())
         cout << getType() << " " << getName() << " has been upgraded to TerminatorRoboCop!" << endl;
 }
 
@@ -551,21 +541,20 @@ void BlueThunder::takeTurn(Battlefield &bt)
 
         if (bt.isValid(targetX, targetY))
         {
-            fire(targetX, targetY, bt);
+            fire(directions[directionIndex][0], directions[directionIndex][1], bt);
             if (getNumOfRobotTerminated() >= 3)
                 setUpgradePermission(true);
             directionCount++;
             break;
         }
     }
-    if (getUpgradePermission)
+    if (getUpgradePermission())
         cout << getType() << " " << getName() << " has been upgraded to MadBot!" << endl;
 }
 
 // MadBot class
 MadBot::MadBot(string t, string n, int x, int y) : BlueThunder(t, n, x, y)
-{   
-
+{
 }
 
 void MadBot::takeTurn(Battlefield &bt)
@@ -578,19 +567,19 @@ void MadBot::takeTurn(Battlefield &bt)
 
     while (true)
     {
-        directionIndex = rand() % 8; //random number 0-7
+        directionIndex = rand() % 8; // random number 0-7
         targetX = getX() + directions[directionIndex][0];
         targetY = getY() + directions[directionIndex][1];
 
         if (bt.isValid(targetX, targetY))
         {
-            fire(targetX, targetY, bt);
+            fire(directions[directionIndex][0], directions[directionIndex][1], bt);
             if (getNumOfRobotTerminated() >= 3)
                 setUpgradePermission(true);
             break;
         }
     }
-    if (getUpgradePermission)
+    if (getUpgradePermission())
         cout << getType() << " " << getName() << " has been upgraded to RoboTank!" << endl;
 }
 
@@ -725,7 +714,7 @@ War::War(const string &filename)
 
 void War::initializeRobot(string tt, string tn, int tx, int ty)
 {
-    Robot* newRobot = nullptr;
+    Robot *newRobot = nullptr;
     if (tt == "RoboCop")
     {
         newRobot = new RoboCop(tt, tn, tx, ty);
@@ -754,7 +743,7 @@ void War::initializeRobot(string tt, string tn, int tx, int ty)
     {
         newRobot = new UltimateRobot(tt, tn, tx, ty);
     }
-    else 
+    else
     {
         cout << "Invalid Robot Type \"" << tt << "\"\n";
         exit(EXIT_FAILURE);
@@ -764,8 +753,8 @@ void War::initializeRobot(string tt, string tn, int tx, int ty)
 
 void War::appendRobot(Robot &r)
 {
-    RobotNode *newRobot;
-    RobotNode *robotPtr;
+    RobotNode *newRobot = nullptr;
+    RobotNode *robotPtr = nullptr;
     newRobot = new RobotNode;
     newRobot->rb = &r;
     newRobot->nextRobot = nullptr;
@@ -935,13 +924,14 @@ void War::startWar()
 {
     while (currentStep < totalSteps && robotsRemaining > 0)
     {
-        cout << "Current step: " << currentStep <<  endl << endl;
+        cout << "Current step: " << currentStep << endl
+             << endl;
         battlefield.displayField();
-        RobotNode* currentPtr = headRobot;
+        RobotNode *currentPtr = headRobot;
         while (currentPtr != nullptr && !isPlayingEmpty())
         {
             cout << "Action:\n";
-            Robot* currentRobot = currentPtr->rb;
+            Robot *currentRobot = currentPtr->rb;
             currentRobot->takeTurn(battlefield);
 
             cout << "Result:\n";
@@ -954,12 +944,12 @@ void War::startWar()
             }
             if (currentRobot->getUpgradePermission())
                 promoteRobot(*currentRobot);
-            
+
             currentPtr = currentPtr->nextRobot;
         }
         while (!isWaitingEmpty() && robotsRemaining > 0)
         {
-            Robot* returnRobot;
+            Robot *returnRobot;
             dequeueWaiting(*returnRobot);
             appendRobot(*returnRobot);
         }
