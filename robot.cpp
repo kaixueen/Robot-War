@@ -406,25 +406,28 @@ void SeeingRobot::look(int offsetX, int offsetY, Battlefield &bt) // need to res
             int checkX = centerX + dx;
             int checkY = centerY + dy;
 
-            if (bt.isValid(checkX, checkY))
+            if (checkX != getX() && checkY != getY())
             {
-                cout << "Position (" << checkX << ", " << checkY << ") is within the battlefield and ";
-                if (bt.isEmpty(checkX, checkY))
+                if (bt.isValid(checkX, checkY))
                 {
-                    cout << "is empty." << endl;
+                    cout << "Position (" << checkX << ", " << checkY << ") is within the battlefield and ";
+                    if (bt.isEmpty(checkX, checkY))
+                    {
+                        cout << "is empty." << endl;
+                    }
+                    else
+                    {
+                        cout << "contains an enemy robot." << endl;
+                        isRobotDetected = true;
+                        RobotDetectedX[numOfRobotDetected] = checkX;
+                        RobotDetectedY[numOfRobotDetected] = checkY;
+                        numOfRobotDetected++;
+                    }
                 }
                 else
                 {
-                    cout << "contains an enemy robot." << endl;
-                    isRobotDetected = true;
-                    RobotDetectedX[numOfRobotDetected] = checkX;
-                    RobotDetectedY[numOfRobotDetected] = checkY;
-                    numOfRobotDetected++;
+                    cout << "Position (" << checkX << ", " << checkY << ") is outside the battlefield." << endl;
                 }
-            }
-            else
-            {
-                cout << "Position (" << checkX << ", " << checkY << ") is outside the battlefield." << endl;
             }
         }
     }
@@ -438,6 +441,16 @@ SeeingRobot::~SeeingRobot()
 
 // SteppingRobot class
 SteppingRobot::SteppingRobot(string t, string n, int x, int y) : Robot(t, n, x, y)
+{
+    robotStepCount = 0;
+}
+
+int SteppingRobot::getRobotStepCount() const
+{
+    return robotStepCount;
+}
+
+void SteppingRobot::resetRobotStepCount()
 {
     robotStepCount = 0;
 }
@@ -481,8 +494,6 @@ void RoboCop::takeTurn(Battlefield &bt) // need to modify
         }
     }
     resetDetection();
-    if (getUpgradePermission)
-        cout << getType() << " " << getName() << " has been upgraded to TerminatorRoboCop!" << endl;
 }
 
 // Terminator class
@@ -514,8 +525,6 @@ void Terminator::takeTurn(Battlefield &bt)
         // No enemies in neighborhood, move randomly
         move(bt);
     }
-    if (getUpgradePermission())
-        cout << getType() << " " << getName() << " has been upgraded to TerminatorRoboCop!" << endl;
 }
 
 // BlueThunder class
@@ -548,8 +557,6 @@ void BlueThunder::takeTurn(Battlefield &bt)
             break;
         }
     }
-    if (getUpgradePermission())
-        cout << getType() << " " << getName() << " has been upgraded to MadBot!" << endl;
 }
 
 // MadBot class
@@ -579,8 +586,68 @@ void MadBot::takeTurn(Battlefield &bt)
             break;
         }
     }
+}
+
+// TerminatorRoboCop class
+TerminatorRoboCop::TerminatorRoboCop(string t, string n, int x, int y) : RoboCop(t, n, x, y), Terminator(t, n, x, y)
+{
+}
+
+void TerminatorRoboCop::takeTurn(Battlefield &bt)
+{
+    Terminator::takeTurn(bt);
+
     if (getUpgradePermission())
-        cout << getType() << " " << getName() << " has been upgraded to RoboTank!" << endl;
+        return;
+
+    if (getRobotStepCount() >= 1)
+    {
+        resetRobotStepCount();
+        return;
+    }
+    RoboCop::takeTurn(bt);
+
+    if (getUpgradePermission())
+        return;
+}
+
+// RoboTank class
+RoboTank::RoboTank(string t, string n, int x, int y) : MadBot(t, n, x, y)
+{
+}
+
+void RoboTank::takeTurn(Battlefield &bt)
+{
+    int offsetX, offsetY, targetX, targetY;
+
+    while (true)
+    {
+        offsetX = rand() % 21 - 10; // Random offset between -10 and 10
+        offsetY = rand() % 21 - 10;
+        targetX = getX() + offsetX;
+        targetY = getY() + offsetY;
+        if (abs(offsetX) + abs(offsetY) <= 10 && bt.isValid(targetX, targetY))
+        {
+            fire(targetX, targetY, bt);
+            if (getNumOfRobotTerminated() >= 3)
+                setUpgradePermission(true);
+            break;
+        }
+    }
+}
+
+// UltimateRobot class
+UltimateRobot::UltimateRobot(string t, string n, int x, int y) : TerminatorRoboCop(t, n, x, y), RoboTank(t, n, x, y)
+{
+}
+
+void UltimateRobot::takeTurn(Battlefield &bt)
+{
+    TerminatorRoboCop::Terminator::takeTurn(bt);
+    for (int i = 0; i < 3; i++)
+    {
+        RoboTank::takeTurn(bt);
+    }
 }
 
 // War class
@@ -888,18 +955,22 @@ void War::promoteRobot(Robot &r)
     Robot *promotedRobot = nullptr;
     if (r.getType() == "RoboCop" || r.getType() == "Terminator")
     {
+        cout << r.getType() << " " << r.getName() << " has been upgraded to TerminatorRoboCop!" << endl;
         promotedRobot = new TerminatorRoboCop("TerminatorRoboCop", r.getName(), r.getX(), r.getY());
     }
     else if (r.getType() == "BlueThunder")
     {
+        cout << r.getType() << " " << r.getName() << " has been upgraded to MadBot!" << endl;
         promotedRobot = new MadBot("MadBot", r.getName(), r.getX(), r.getY());
     }
     else if (r.getType() == "MadBot")
     {
+        cout << r.getType() << " " << r.getName() << " has been upgraded to RoboTank!" << endl;
         promotedRobot = new RoboTank("RoboTank", r.getName(), r.getX(), r.getY());
     }
     else if (r.getType() == "TerminatorRoboCop" || r.getType() == "RoboTank")
     {
+        cout << r.getType() << " " << r.getName() << " has been upgraded to UltimateRobot!" << endl;
         promotedRobot = new UltimateRobot("UltimateRobot", r.getName(), r.getX(), r.getY());
     }
     switchRobot(r, *promotedRobot);
@@ -942,7 +1013,7 @@ void War::startWar()
                 else
                     terminateRobot(currentRobot->getRobotTerminated(i));
             }
-            if (currentRobot->getUpgradePermission())
+            if (currentRobot->getUpgradePermission() && currentRobot->getType() != "UltimateRobot")
                 promoteRobot(*currentRobot);
 
             currentPtr = currentPtr->nextRobot;

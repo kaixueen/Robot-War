@@ -144,6 +144,8 @@ private:
 public:
     SteppingRobot(string t, string n, int x, int y);
     virtual void step(int coordinateX, int coordinateY, Battlefield &bt);
+    int getRobotStepCount() const;
+    void resetRobotStepCount();
     virtual void takeTurn(Battlefield &bt) = 0; // Pure virtual function
     virtual ~SteppingRobot() {}
 };
@@ -187,16 +189,25 @@ public:
 // TerminatorRoboCop class
 class TerminatorRoboCop : public RoboCop, public Terminator
 {
+public:
+    TerminatorRoboCop(string t, string n, int x, int y);
+    virtual void takeTurn(Battlefield &bt);
 };
 
 // RoboTank class
 class RoboTank : public MadBot
 {
+public:
+    RoboTank(string t, string n, int x, int y);
+    virtual void takeTurn(Battlefield &bt);
 };
 
 // UltimateRobot class
 class UltimateRobot : public TerminatorRoboCop, public RoboTank
 {
+public:
+    UltimateRobot(string t, string n, int x, int y);
+    virtual void takeTurn(Battlefield &bt);
 };
 
 // War class
