@@ -933,7 +933,7 @@ void War::switchRobot(Robot &r1, Robot &r2)
 
 void War::startWar()
 {
-    while (currentStep < totalSteps && !isPlayingEmpty())
+    while (currentStep < totalSteps && robotsRemaining > 0)
     {
         cout << "Current step: " << currentStep <<  endl << endl;
         battlefield.displayField();
@@ -957,6 +957,24 @@ void War::startWar()
             
             currentPtr = currentPtr->nextRobot;
         }
+        while (!isWaitingEmpty() && robotsRemaining > 0)
+        {
+            Robot* returnRobot;
+            dequeueWaiting(*returnRobot);
+            appendRobot(*returnRobot);
+        }
+    }
+    if (robotsRemaining <= 0)
+    {
+        cout << "All robots have been terminated!\n Game Over!!!\n";
+    }
+    else if (currentStep >= totalSteps && robotsRemaining > 1)
+    {
+        cout << "The war has reached the maximum number of steps.\nDraw!!!\n";
+    }
+    else
+    {
+        cout << "War end.\nThe winner is " << headRobot->rb->getName() << "!!!\n Congratulations!!!\n";
     }
 }
 
