@@ -6,6 +6,8 @@
 #include <sstream>
 using namespace std;
 
+class Battlefield; // forward declaration
+
 // Robot class
 class Robot
 {
@@ -51,6 +53,7 @@ struct RobotNode // struct for making linked list & queue
 {
     Robot *rb;
     RobotNode *nextRobot;
+    RobotNode() : rb(nullptr), nextRobot(nullptr) {}
 };
 
 // Battlefield class
@@ -84,20 +87,23 @@ public:
 class MovingRobot : virtual public Robot
 {
 private:
-    const enum DIRECTION { up,
-                           upright,
-                           right,
-                           downright,
-                           down,
-                           downleft,
-                           left,
-                           upleft };
+    enum DIRECTION
+    {
+        up,
+        upright,
+        right,
+        downright,
+        down,
+        downleft,
+        left,
+        upleft
+    };
 
 public:
     MovingRobot() : Robot() {}
     MovingRobot(string n, string t, int x, int y);
     virtual void move(Battlefield &bt);
-    virtual void takeTurn(Battlefield &bt) = 0; // Pure virtual function
+    virtual void takeTurn(Battlefield &bt) {} // Pure virtual function
     virtual ~MovingRobot() {}
 };
 
@@ -132,7 +138,7 @@ public:
     void resetDetection();
     virtual void look(int offsetX, int offsetY, Battlefield &bt);
     virtual void takeTurn(Battlefield &bt) = 0; // Pure virtual function
-    virtual ~SeeingRobot() {}
+    virtual ~SeeingRobot();
 };
 
 // SteppingRobot class
@@ -151,7 +157,7 @@ public:
 };
 
 // RoboCop class
-class RoboCop : public MovingRobot, public ShootingRobot, public SeeingRobot
+class RoboCop : virtual public MovingRobot, virtual public ShootingRobot, virtual public SeeingRobot
 {
 public:
     RoboCop(string t, string n, int x, int y);
@@ -159,7 +165,7 @@ public:
 };
 
 // Terminator class
-class Terminator : public MovingRobot, public SeeingRobot, public SteppingRobot
+class Terminator : virtual public MovingRobot, virtual public SeeingRobot, virtual public SteppingRobot
 {
 private:
 public:
@@ -168,7 +174,7 @@ public:
 };
 
 // BlueThunder class
-class BlueThunder : public ShootingRobot
+class BlueThunder : virtual public ShootingRobot
 {
 private:
     int directionCount;
@@ -178,16 +184,16 @@ public:
     virtual void takeTurn(Battlefield &bt);
 };
 
-// MadBot class
-class MadBot : public BlueThunder
+// Madbot class
+class Madbot : virtual public BlueThunder
 {
 public:
-    MadBot(string t, string n, int x, int y);
+    Madbot(string t, string n, int x, int y);
     virtual void takeTurn(Battlefield &bt);
 };
 
 // TerminatorRoboCop class
-class TerminatorRoboCop : public RoboCop, public Terminator
+class TerminatorRoboCop : virtual public RoboCop, virtual public Terminator
 {
 public:
     TerminatorRoboCop(string t, string n, int x, int y);
@@ -195,7 +201,7 @@ public:
 };
 
 // RoboTank class
-class RoboTank : public MadBot
+class RoboTank : virtual public Madbot
 {
 public:
     RoboTank(string t, string n, int x, int y);

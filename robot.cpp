@@ -140,7 +140,8 @@ void Robot::setUpgradePermission(bool p)
 
 Robot::~Robot()
 {
-    delete[] robotTerminated;
+    for (int i = 0; i < 3; i++)
+        delete robotTerminated[i];
 }
 
 // Battlefield class
@@ -161,9 +162,13 @@ Battlefield::Battlefield(int w, int l, RobotNode *rn)
     boundary = '*';
     cellArr = new Robot **[length];
 
-    for (int i = 0; i < length; i++)
+    for (int i = 0; i < length; ++i)
     {
         cellArr[i] = new Robot *[width];
+    }
+
+    for (int i = 0; i < length; i++)
+    {
         for (int j = 0; j < width; j++)
         {
             cellArr[i][j] = nullptr;
@@ -174,15 +179,16 @@ Battlefield::Battlefield(int w, int l, RobotNode *rn)
         return;
 
     int tempX, tempY;
+    RobotNode *tempPtr = rn;
     Robot *tempR;
-    while (rn != nullptr)
+    while (tempPtr != nullptr)
     {
-        tempR = rn->rb;
+        tempR = tempPtr->rb;
         tempY = tempR->getY();
         tempX = tempR->getX();
-        if (isValid(tempY, tempX) && isEmpty(tempY, tempX))
+        if (isValid(tempX, tempY) && isEmpty(tempX, tempY))
             cellArr[tempY][tempX] = tempR;
-        rn = rn->nextRobot;
+        tempPtr = tempPtr->nextRobot;
     }
 }
 
@@ -469,7 +475,7 @@ void SteppingRobot::step(int coordinateX, int coordinateY, Battlefield &bt)
 }
 
 // RoboCop class
-RoboCop::RoboCop(string t, string n, int x, int y) : MovingRobot(t, n, x, y), ShootingRobot(t, n, x, y), SeeingRobot(t, n, x, y)
+RoboCop::RoboCop(string t, string n, int x, int y) : MovingRobot(t, n, x, y), ShootingRobot(t, n, x, y), SeeingRobot(t, n, x, y), Robot(t, n, x, y)
 {
 }
 
@@ -497,7 +503,7 @@ void RoboCop::takeTurn(Battlefield &bt) // need to modify
 }
 
 // Terminator class
-Terminator::Terminator(string t, string n, int x, int y) : MovingRobot(t, n, x, y), SeeingRobot(t, n, x, y), SteppingRobot(t, n, x, y)
+Terminator::Terminator(string t, string n, int x, int y) : MovingRobot(t, n, x, y), SeeingRobot(t, n, x, y), SteppingRobot(t, n, x, y), Robot(t, n, x, y)
 {
 }
 
@@ -528,7 +534,7 @@ void Terminator::takeTurn(Battlefield &bt)
 }
 
 // BlueThunder class
-BlueThunder::BlueThunder(string t, string n, int x, int y) : ShootingRobot(t, n, x, y)
+BlueThunder::BlueThunder(string t, string n, int x, int y) : ShootingRobot(t, n, x, y), Robot(t, n, x, y)
 {
     directionCount = 0;
 }
@@ -559,12 +565,12 @@ void BlueThunder::takeTurn(Battlefield &bt)
     }
 }
 
-// MadBot class
-MadBot::MadBot(string t, string n, int x, int y) : BlueThunder(t, n, x, y)
+// Madbot class
+Madbot::Madbot(string t, string n, int x, int y) : BlueThunder(t, n, x, y), ShootingRobot(t, n, x, y), Robot(t, n, x, y)
 {
 }
 
-void MadBot::takeTurn(Battlefield &bt)
+void Madbot::takeTurn(Battlefield &bt)
 {
     int targetX;
     int targetY;
@@ -589,7 +595,7 @@ void MadBot::takeTurn(Battlefield &bt)
 }
 
 // TerminatorRoboCop class
-TerminatorRoboCop::TerminatorRoboCop(string t, string n, int x, int y) : RoboCop(t, n, x, y), Terminator(t, n, x, y)
+TerminatorRoboCop::TerminatorRoboCop(string t, string n, int x, int y) : RoboCop(t, n, x, y), Terminator(t, n, x, y), MovingRobot(t, n, x, y), SeeingRobot(t, n, x, y), SteppingRobot(t, n, x, y), Robot(t, n, x, y)
 {
 }
 
@@ -612,7 +618,7 @@ void TerminatorRoboCop::takeTurn(Battlefield &bt)
 }
 
 // RoboTank class
-RoboTank::RoboTank(string t, string n, int x, int y) : MadBot(t, n, x, y)
+RoboTank::RoboTank(string t, string n, int x, int y) : Madbot(t, n, x, y), BlueThunder(t, n, x, y), ShootingRobot(t, n, x, y), Robot(t, n, x, y)
 {
 }
 
@@ -637,7 +643,7 @@ void RoboTank::takeTurn(Battlefield &bt)
 }
 
 // UltimateRobot class
-UltimateRobot::UltimateRobot(string t, string n, int x, int y) : TerminatorRoboCop(t, n, x, y), RoboTank(t, n, x, y)
+UltimateRobot::UltimateRobot(string t, string n, int x, int y) : TerminatorRoboCop(t, n, x, y), RoboTank(t, n, x, y), RoboCop(t, n, x, y), Terminator(t, n, x, y), Madbot(t, n, x, y), BlueThunder(t, n, x, y), MovingRobot(t, n, x, y), SeeingRobot(t, n, x, y), SteppingRobot(t, n, x, y), Robot(t, n, x, y)
 {
 }
 
@@ -746,7 +752,7 @@ War::War(const string &filename)
         {
             if (randomValueX)
                 tempX = rand() % w;
-            else
+            if (randomValueY)
                 tempY = rand() % l;
 
             validPosition = true;
@@ -771,8 +777,15 @@ War::War(const string &filename)
     frontWaiting = rearWaiting = nullptr;
     noOfRobotWaiting = 0;
 
+    RobotNode *robotPtr = headRobot;
+    while (robotPtr != nullptr)
+    {
+        cout << robotPtr->rb->getX() << " " << robotPtr->rb->getY() << endl;
+        robotPtr = robotPtr->nextRobot;
+    }
+
     // Initialize other data member
-    Battlefield battlefield(w, l, headRobot);
+    battlefield = Battlefield(w, l, headRobot);
     totalSteps = steps;
     currentStep = 0;
     totalRobots = robotsRemaining = noOfRobotPlaying;
@@ -790,7 +803,7 @@ void War::initializeRobot(string tt, string tn, int tx, int ty)
     {
         newRobot = new Terminator(tt, tn, tx, ty);
     }
-    else if (tt == "TerminatorRobocop")
+    else if (tt == "TerminatorRoboCop")
     {
         newRobot = new TerminatorRoboCop(tt, tn, tx, ty);
     }
@@ -798,9 +811,9 @@ void War::initializeRobot(string tt, string tn, int tx, int ty)
     {
         newRobot = new BlueThunder(tt, tn, tx, ty);
     }
-    else if (tt == "MadBot")
+    else if (tt == "Madbot")
     {
-        newRobot = new MadBot(tt, tn, tx, ty);
+        newRobot = new Madbot(tt, tn, tx, ty);
     }
     else if (tt == "RoboTank")
     {
@@ -820,9 +833,8 @@ void War::initializeRobot(string tt, string tn, int tx, int ty)
 
 void War::appendRobot(Robot &r)
 {
-    RobotNode *newRobot = nullptr;
     RobotNode *robotPtr = nullptr;
-    newRobot = new RobotNode;
+    RobotNode *newRobot = new RobotNode();
     newRobot->rb = &r;
     newRobot->nextRobot = nullptr;
 
@@ -961,9 +973,9 @@ void War::promoteRobot(Robot &r)
     else if (r.getType() == "BlueThunder")
     {
         cout << r.getType() << " " << r.getName() << " has been upgraded to MadBot!" << endl;
-        promotedRobot = new MadBot("MadBot", r.getName(), r.getX(), r.getY());
+        promotedRobot = new Madbot("Madbot", r.getName(), r.getX(), r.getY());
     }
-    else if (r.getType() == "MadBot")
+    else if (r.getType() == "Madbot")
     {
         cout << r.getType() << " " << r.getName() << " has been upgraded to RoboTank!" << endl;
         promotedRobot = new RoboTank("RoboTank", r.getName(), r.getX(), r.getY());
@@ -995,6 +1007,7 @@ void War::startWar()
 {
     while (currentStep < totalSteps && robotsRemaining > 0)
     {
+        currentStep++;
         cout << "Current step: " << currentStep << endl
              << endl;
         battlefield.displayField();
