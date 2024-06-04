@@ -27,26 +27,26 @@ public:
     Robot &operator=(const Robot &right);    // Assignment operator overloading
     virtual ~Robot();                        // Destructor
 
-    string getName() const; // Return robot name
-    string getType() const; // Return robot type
+    string getName() const { return robotName; } // Return robot name
+    string getType() const { return robotType; } // Return robot type
 
-    int getX() const; // Return robot x coordinate
-    int getY() const; // Return robot y coordinate
-    void setX(int x); // Set robot x coordinate
-    void setY(int y); // Set robot y coordinate
+    int getX() const { return robotPositionX; } // Return robot x coordinate
+    int getY() const { return robotPositionY; } // Return robot y coordinate
+    void setX(int x) { robotPositionX = x; }    // Set robot x coordinate
+    void setY(int y) { robotPositionY = y; }    // Set robot y coordinate
 
-    bool stillGotLive() const;     // Remaining lives > 0?
-    void setRemainingLives(int l); // Set remaining lives
-    int getRemainingLives() const; // Return remaining lives
+    bool stillGotLive() const { return remainingLives > 0; } // Remaining lives > 0?
+    int getRemainingLives() const { return remainingLives; } // Return remaining lives
+    void setRemainingLives(int l) { remainingLives = l; }    // Set remaining lives
 
-    void setRobotTerminated(Robot &r);      // store robot terminated
-    Robot &getRobotTerminated(int n) const; // return robot terminated
-    int getNumOfRobotTerminated() const;    // return number of robot terminated
-    void resetRobotTerminated();            // reset robot terminated to nullptr
+    void setRobotTerminated(Robot &r);                                     // store robot terminated
+    Robot &getRobotTerminated(int n) const { return *robotTerminated[n]; } // return robot terminated
+    int getNumOfRobotTerminated() const { return numOfRobotTerminated; }   // return number of robot terminated
+    void resetRobotTerminated();                                           // reset robot terminated to nullptr
 
-    virtual void takeTurn(Battlefield &bt) = 0; // Pure virtual function
-    bool getUpgradePermission() const;          // Valid for upgrade?
-    void setUpgradePermission(bool p);          // Set upgradePermission
+    virtual void takeTurn(Battlefield &bt) = 0;                     // Pure virtual function
+    bool getUpgradePermission() const { return upgradePermission; } // Valid for upgrade?
+    void setUpgradePermission(bool p) { upgradePermission = p; }    // Set upgradePermission
 };
 
 struct RobotNode // struct for making linked list & queue
@@ -67,19 +67,19 @@ private:
 public:
     Battlefield();
     Battlefield(int w, int l, RobotNode *rn); // initialize field using linked list
-    Battlefield& operator=(const Battlefield& right);
+    Battlefield &operator=(const Battlefield &right);
 
-    int getWidth() const;
-    int getLength() const;
+    int getWidth() const { return width; }
+    int getLength() const { return length; }
 
     void displayField() const;
     bool updatePosition(Robot *r, int x, int y); // need to swap pointer
 
-    bool isEmpty(int x, int y) const;
-    bool isValid(int x, int y) const;
+    bool isEmpty(int x, int y) const { return cellArr[y][x] == nullptr; }
+    bool isValid(int x, int y) const { return x >= 0 && x < width && y >= 0 && y < length; }
 
-    void removeRobot(const Robot &r);
-    void removeRobot(int x, int y);
+    void removeRobot(const Robot &r) { cellArr[r.getY()][r.getX()] = nullptr; }
+    void removeRobot(int x, int y) { cellArr[y][x] = nullptr; }
     Robot *getRobotAt(int x, int y);
 
     ~Battlefield();
@@ -133,10 +133,10 @@ private:
 public:
     SeeingRobot() : Robot() {}
     SeeingRobot(string t, string n, int x, int y);
-    int *getRobotDetectedX() const;
-    int *getRobotDetectedY() const;
-    bool getIsRobotDetected() const;
-    int getNumOfRobotDetected() const;
+    int *getRobotDetectedX() const { return RobotDetectedX; }
+    int *getRobotDetectedY() const { return RobotDetectedY; }
+    bool getIsRobotDetected() const { return isRobotDetected; }
+    int getNumOfRobotDetected() const { return numOfRobotDetected; }
     void resetDetection();
     virtual void look(int offsetX, int offsetY, Battlefield &bt);
     virtual void takeTurn(Battlefield &bt) = 0; // Pure virtual function
@@ -152,8 +152,8 @@ private:
 public:
     SteppingRobot(string t, string n, int x, int y);
     virtual void step(int coordinateX, int coordinateY, Battlefield &bt);
-    int getRobotStepCount() const;
-    void resetRobotStepCount();
+    int getRobotStepCount() const { return robotStepCount; }
+    void resetRobotStepCount() { robotStepCount = 0; }
     virtual void takeTurn(Battlefield &bt) = 0; // Pure virtual function
     virtual ~SteppingRobot() {}
 };
@@ -253,7 +253,7 @@ public:
 
     void terminateRobot(Robot &r);
     void promoteRobot(Robot &r);
-    void switchRobot(Robot &r1, Robot &r2);
+    void replaceRobot(Robot &r1, Robot &r2);    // from switchRobot change to replaceRobot
     void startWar();
 };
 

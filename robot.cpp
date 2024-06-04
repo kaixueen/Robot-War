@@ -60,65 +60,10 @@ Robot &Robot::operator=(const Robot &right) // Assignment operator overloading
     return *this;
 }
 
-string Robot::getName() const
-{
-    return robotName;
-}
-
-string Robot::getType() const
-{
-    return robotType;
-}
-
-int Robot::getX() const
-{
-    return robotPositionX;
-}
-
-int Robot::getY() const
-{
-    return robotPositionY;
-}
-
-void Robot::setX(int x)
-{
-    robotPositionX = x;
-}
-
-void Robot::setY(int y)
-{
-    robotPositionY = y;
-}
-
-bool Robot::stillGotLive() const
-{
-    return remainingLives > 0;
-}
-
-int Robot::getRemainingLives() const
-{
-    return remainingLives;
-}
-
-void Robot::setRemainingLives(int l)
-{
-    remainingLives = l;
-}
-
 void Robot::setRobotTerminated(Robot &r)
 {
     robotTerminated[numOfRobotTerminated] = &r;
     numOfRobotTerminated++;
-}
-
-Robot &Robot::getRobotTerminated(int n) const
-{
-    return *robotTerminated[n];
-}
-
-int Robot::getNumOfRobotTerminated() const
-{
-    return numOfRobotTerminated;
 }
 
 void Robot::resetRobotTerminated()
@@ -126,16 +71,6 @@ void Robot::resetRobotTerminated()
     numOfRobotTerminated = 0;
     for (int i = 0; i < 3; i++)
         robotTerminated[i] = nullptr;
-}
-
-bool Robot::getUpgradePermission() const
-{
-    return upgradePermission;
-}
-
-void Robot::setUpgradePermission(bool p)
-{
-    upgradePermission = p;
 }
 
 Robot::~Robot()
@@ -212,16 +147,6 @@ Battlefield &Battlefield::operator=(const Battlefield &right)
     return *this;
 }
 
-int Battlefield::getWidth() const
-{
-    return width;
-}
-
-int Battlefield::getLength() const
-{
-    return length;
-}
-
 void Battlefield::displayField() const
 {
     for (int i = 0; i < width + 2; i++)
@@ -262,27 +187,6 @@ bool Battlefield::updatePosition(Robot *r, int x, int y)
     }
     return false;
 }
-
-bool Battlefield::isEmpty(int x, int y) const
-{
-    return cellArr[y][x] == nullptr;
-}
-
-bool Battlefield::isValid(int x, int y) const
-{
-    return x >= 0 && x < width && y >= 0 && y < length;
-}
-
-void Battlefield::removeRobot(const Robot &r)
-{
-    cellArr[r.getY()][r.getX()] = nullptr;
-}
-
-void Battlefield::removeRobot(int x, int y)
-{
-    cellArr[y][x] = nullptr;
-}
-
 
 Robot *Battlefield::getRobotAt(int x, int y)
 {
@@ -395,26 +299,6 @@ SeeingRobot::SeeingRobot(string t, string n, int x, int y) : Robot(t, n, x, y)
     }
 }
 
-int *SeeingRobot::getRobotDetectedX() const
-{
-    return RobotDetectedX;
-}
-
-int *SeeingRobot::getRobotDetectedY() const
-{
-    return RobotDetectedY;
-}
-
-bool SeeingRobot::getIsRobotDetected() const
-{
-    return isRobotDetected;
-}
-
-int SeeingRobot::getNumOfRobotDetected() const
-{
-    return numOfRobotDetected;
-}
-
 void SeeingRobot::resetDetection()
 {
     for (int i = 0; i < 9; i++)
@@ -465,16 +349,6 @@ SeeingRobot::~SeeingRobot()
 
 // SteppingRobot class
 SteppingRobot::SteppingRobot(string t, string n, int x, int y) : Robot(t, n, x, y)
-{
-    robotStepCount = 0;
-}
-
-int SteppingRobot::getRobotStepCount() const
-{
-    return robotStepCount;
-}
-
-void SteppingRobot::resetRobotStepCount()
 {
     robotStepCount = 0;
 }
@@ -873,7 +747,7 @@ void War::appendRobot(Robot &r)
     trackRobot++;
 }
 
-void War::deleteRobot(Robot &r)
+void War::deleteRobot(Robot &r) // remove terminatedRobot from linked list *need to redo a bit
 {
     RobotNode *robotPtr = nullptr;
     RobotNode *previousRobot = nullptr;
@@ -965,18 +839,17 @@ Robot *War::getRobotPlaying(int i)
 
 void War::terminateRobot(Robot &r)
 {
-    deleteRobot(r);
-    battlefield.removeRobot(r);
-    r.setRemainingLives(r.getRemainingLives() - 1);
+    deleteRobot(r); // remove from linked list
+    battlefield.removeRobot(r); // remove from battlefield
+    r.setRemainingLives(r.getRemainingLives() - 1); // reduce remaining lives
     cout << r.getType() << " " << r.getName() << " has been killed.\n";
-    if (!r.stillGotLive())
+    if (!r.stillGotLive())  // if no lives remained, the robot is game over
     {
         cout << r.getType() << " " << r.getName() << " doesn't have any lives remained.\n";
         cout << r.getType() << " " << r.getName() << " out!!!\n";
-        deleteRobot(r);
         delete &r;
     }
-    else
+    else // if got lives remained, enter waiting queue
     {
         cout << r.getType() << " " << r.getName() << "'s lives reduced by 1\n";
         cout << r.getType() << " " << r.getName() << " enter the waiting queue\n";
@@ -1007,13 +880,13 @@ void War::promoteRobot(Robot &r)
         cout << r.getType() << " " << r.getName() << " has been upgraded to UltimateRobot!" << endl;
         promotedRobot = new UltimateRobot("UltimateRobot", r.getName(), r.getX(), r.getY());
     }
-    switchRobot(r, *promotedRobot);
+    replaceRobot(r, *promotedRobot);
     battlefield.removeRobot(r);
     battlefield.updatePosition(promotedRobot, promotedRobot->getX(), promotedRobot->getY());
     delete &r;
 }
 
-void War::switchRobot(Robot &r1, Robot &r2)
+void War::replaceRobot(Robot &r1, Robot &r2)
 {
     RobotNode *currentPtr = headRobot;
     while (currentPtr != nullptr)
@@ -1029,6 +902,7 @@ void War::switchRobot(Robot &r1, Robot &r2)
 
 void War::startWar()
 {
+    
     while (currentStep < totalSteps && robotsRemaining > 0)
     {
         currentStep++;
@@ -1051,14 +925,16 @@ void War::startWar()
                 if (&currentRobot->getRobotTerminated(i) == nullptr)
                     break;
                 else
+                {
                     terminateRobot(currentRobot->getRobotTerminated(i));
+                }     
             }
             if (currentRobot->getUpgradePermission() && currentRobot->getType() != "UltimateRobot")
                 promoteRobot(*currentRobot);
 
             currentPtr = currentPtr->nextRobot;
         }
-        while (!isWaitingEmpty() && robotsRemaining > 0)
+        if (!isWaitingEmpty() && robotsRemaining > 0)
         {
             Robot *returnRobot;
             dequeueWaiting(*returnRobot);
