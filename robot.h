@@ -67,6 +67,7 @@ private:
 public:
     Battlefield();
     Battlefield(int w, int l, RobotNode *rn); // initialize field using linked list
+    Battlefield& operator=(const Battlefield& right);
 
     int getWidth() const;
     int getLength() const;
@@ -78,6 +79,7 @@ public:
     bool isValid(int x, int y) const;
 
     void removeRobot(const Robot &r);
+    void removeRobot(int x, int y);
     Robot *getRobotAt(int x, int y);
 
     ~Battlefield();
@@ -167,7 +169,6 @@ public:
 // Terminator class
 class Terminator : virtual public MovingRobot, virtual public SeeingRobot, virtual public SteppingRobot
 {
-private:
 public:
     Terminator(string t, string n, int x, int y);
     virtual void takeTurn(Battlefield &bt);
@@ -233,6 +234,7 @@ private:
     RobotNode *frontWaiting; // queue of robot waiting
     RobotNode *rearWaiting;
     int noOfRobotWaiting;
+    int trackRobot;
 
 public:
     War(const string &filename);

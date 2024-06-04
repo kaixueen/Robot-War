@@ -162,13 +162,9 @@ Battlefield::Battlefield(int w, int l, RobotNode *rn)
     boundary = '*';
     cellArr = new Robot **[length];
 
-    for (int i = 0; i < length; ++i)
-    {
-        cellArr[i] = new Robot *[width];
-    }
-
     for (int i = 0; i < length; i++)
     {
+        cellArr[i] = new Robot *[width];
         for (int j = 0; j < width; j++)
         {
             cellArr[i][j] = nullptr;
@@ -190,6 +186,30 @@ Battlefield::Battlefield(int w, int l, RobotNode *rn)
             cellArr[tempY][tempX] = tempR;
         tempPtr = tempPtr->nextRobot;
     }
+}
+
+Battlefield &Battlefield::operator=(const Battlefield &right)
+{
+    if (this != &right)
+    {
+        width = right.width;
+        length = right.length;
+        emptyCell = right.emptyCell;
+        robotCell = right.robotCell;
+        boundary = right.boundary;
+        delete cellArr;
+        cellArr = new Robot **[length];
+
+        for (int i = 0; i < length; i++)
+        {
+            cellArr[i] = new Robot *[width];
+            for (int j = 0; j < width; j++)
+            {
+                cellArr[i][j] = right.cellArr[i][j];
+            }
+        }
+    }
+    return *this;
 }
 
 int Battlefield::getWidth() const
@@ -257,6 +277,12 @@ void Battlefield::removeRobot(const Robot &r)
 {
     cellArr[r.getY()][r.getX()] = nullptr;
 }
+
+void Battlefield::removeRobot(int x, int y)
+{
+    cellArr[y][x] = nullptr;
+}
+
 
 Robot *Battlefield::getRobotAt(int x, int y)
 {
@@ -416,23 +442,15 @@ void SeeingRobot::look(int offsetX, int offsetY, Battlefield &bt) // need to res
             {
                 if (bt.isValid(checkX, checkY))
                 {
-                    cout << "Position (" << checkX << ", " << checkY << ") is within the battlefield and ";
-                    if (bt.isEmpty(checkX, checkY))
+                    if (!bt.isEmpty(checkX, checkY))
                     {
-                        cout << "is empty." << endl;
-                    }
-                    else
-                    {
-                        cout << "contains an enemy robot." << endl;
+                        cout << "Position (" << checkX << ", " << checkY;
+                        cout << ") contains an enemy robot." << endl;
                         isRobotDetected = true;
                         RobotDetectedX[numOfRobotDetected] = checkX;
                         RobotDetectedY[numOfRobotDetected] = checkY;
                         numOfRobotDetected++;
                     }
-                }
-                else
-                {
-                    cout << "Position (" << checkX << ", " << checkY << ") is outside the battlefield." << endl;
                 }
             }
         }
@@ -479,7 +497,7 @@ RoboCop::RoboCop(string t, string n, int x, int y) : MovingRobot(t, n, x, y), Sh
 {
 }
 
-void RoboCop::takeTurn(Battlefield &bt) // need to modify
+void RoboCop::takeTurn(Battlefield &bt)
 {
     int offsetX, offsetY, targetX, targetY;
     look(0, 0, bt); // Look at current position
@@ -493,7 +511,7 @@ void RoboCop::takeTurn(Battlefield &bt) // need to modify
         targetY = getY() + offsetY;
         if (abs(offsetX) + abs(offsetY) <= 10 && bt.isValid(targetX, targetY))
         {
-            fire(targetX, targetY, bt);
+            fire(offsetX, offsetY, bt);
             if (getNumOfRobotTerminated() >= 3)
                 setUpgradePermission(true);
             count++;
@@ -602,21 +620,23 @@ TerminatorRoboCop::TerminatorRoboCop(string t, string n, int x, int y) : RoboCop
 void TerminatorRoboCop::takeTurn(Battlefield &bt)
 {
     Terminator::takeTurn(bt);
-
-    if (getUpgradePermission())
-        return;
-
-    if (getRobotStepCount() >= 1)
+    int offsetX, offsetY, targetX, targetY;
+    int count = 0;
+    while (count < 3)
     {
-        resetRobotStepCount();
-        return;
+        offsetX = rand() % 21 - 10; // Random offset between -10 and 10
+        offsetY = rand() % 21 - 10;
+        targetX = getX() + offsetX;
+        targetY = getY() + offsetY;
+        if (abs(offsetX) + abs(offsetY) <= 10 && bt.isValid(targetX, targetY))
+        {
+            fire(offsetX, offsetY, bt);
+            if (getNumOfRobotTerminated() >= 3)
+                setUpgradePermission(true);
+            count++;
+        }
     }
-    RoboCop::takeTurn(bt);
-
-    if (getUpgradePermission())
-        return;
 }
-
 // RoboTank class
 RoboTank::RoboTank(string t, string n, int x, int y) : Madbot(t, n, x, y), BlueThunder(t, n, x, y), ShootingRobot(t, n, x, y), Robot(t, n, x, y)
 {
@@ -628,13 +648,13 @@ void RoboTank::takeTurn(Battlefield &bt)
 
     while (true)
     {
-        offsetX = rand() % 21 - 10; // Random offset between -10 and 10
-        offsetY = rand() % 21 - 10;
+        offsetX = rand();
+        offsetY = rand();
         targetX = getX() + offsetX;
         targetY = getY() + offsetY;
-        if (abs(offsetX) + abs(offsetY) <= 10 && bt.isValid(targetX, targetY))
+        if (bt.isValid(targetX, targetY))
         {
-            fire(targetX, targetY, bt);
+            fire(offsetX, offsetY, bt);
             if (getNumOfRobotTerminated() >= 3)
                 setUpgradePermission(true);
             break;
@@ -649,7 +669,7 @@ UltimateRobot::UltimateRobot(string t, string n, int x, int y) : TerminatorRoboC
 
 void UltimateRobot::takeTurn(Battlefield &bt)
 {
-    TerminatorRoboCop::Terminator::takeTurn(bt);
+    Terminator::takeTurn(bt);
     for (int i = 0; i < 3; i++)
     {
         RoboTank::takeTurn(bt);
@@ -714,6 +734,7 @@ War::War(const string &filename)
     int tempX;
     int tempY;
     headRobot = nullptr;
+    trackRobot = 0;
 
     while (getline(infile, line))
     {
@@ -849,6 +870,7 @@ void War::appendRobot(Robot &r)
             robotPtr = robotPtr->nextRobot;
         robotPtr->nextRobot = newRobot;
     }
+    trackRobot++;
 }
 
 void War::deleteRobot(Robot &r)
@@ -872,7 +894,7 @@ void War::deleteRobot(Robot &r)
             previousRobot = robotPtr;
             robotPtr = robotPtr->nextRobot;
         }
-        if (robotPtr)
+        if (robotPtr != nullptr)
         {
             previousRobot->nextRobot = robotPtr->nextRobot;
             robotPtr = nullptr;
@@ -986,6 +1008,8 @@ void War::promoteRobot(Robot &r)
         promotedRobot = new UltimateRobot("UltimateRobot", r.getName(), r.getX(), r.getY());
     }
     switchRobot(r, *promotedRobot);
+    battlefield.removeRobot(r);
+    battlefield.updatePosition(promotedRobot, promotedRobot->getX(), promotedRobot->getY());
     delete &r;
 }
 
@@ -1016,9 +1040,12 @@ void War::startWar()
         {
             cout << "Action:\n";
             Robot *currentRobot = currentPtr->rb;
+            int prevX = currentRobot->getX();
+            int prevY = currentRobot->getY();
             currentRobot->takeTurn(battlefield);
+            battlefield.removeRobot(prevX, prevY);
+            battlefield.updatePosition(currentRobot, currentRobot->getX(), currentRobot->getY());
 
-            cout << "Result:\n";
             for (int i = 0; i < 3; i++)
             {
                 if (&currentRobot->getRobotTerminated(i) == nullptr)
