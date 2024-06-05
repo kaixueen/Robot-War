@@ -56,6 +56,45 @@ struct RobotNode // struct for making linked list & queue
     RobotNode() : rb(nullptr), nextRobot(nullptr) {}
 };
 
+// RobotNode class (for linked list and queue implementation)
+class RobotNode
+{
+private:
+    Robot *robot;
+    RobotNode *next;
+
+public:
+    RobotNode() : robot(nullptr), next(nullptr) {}      // default constructor
+    RobotNode(Robot &rb) : robot(&rb), next(nullptr) {} // parameterized constructor
+    // need to add copy, move constructor and assignment operator
+    RobotNode(Robot &rb, RobotNode *nextPtr) : robot(&rb), next(nextPtr) {} // parameterized constructor
+    void setRobot(Robot &rb) { robot = &rb; }
+    void setNext(RobotNode *nextPtr) { next = nextPtr; }
+    Robot &getRobot() const { return *robot; }
+    RobotNode *getNext() const { return next; }
+};
+
+// RobotList (linked list)
+class RobotList
+{
+private:
+    RobotNode *headPtr;
+    int robotCount;
+    RobotNode *getNodeAt(int position) const; // will see whether need to delete or not
+
+public:
+    RobotList() : headPtr(nullptr), robotCount(0) {} // default constructor
+    RobotList(const RobotList &rl);                  // copy constructor
+    ~RobotList();                                    // destructor
+
+    bool isListEmpty() const { return robotCount == 0; }
+    int getListLength() const { return robotCount; }
+    void appendRobot(Robot &newRobot);
+    bool removeRobot(Robot &newRobot);
+    bool replace(Robot &oldRobot, Robot &newRobot);
+    void displayList() const; // testing function
+};
+
 // Battlefield class
 class Battlefield
 {
@@ -253,7 +292,7 @@ public:
 
     void terminateRobot(Robot &r);
     void promoteRobot(Robot &r);
-    void replaceRobot(Robot &r1, Robot &r2);    // from switchRobot change to replaceRobot
+    void replaceRobot(Robot &r1, Robot &r2); // from switchRobot change to replaceRobot
     void startWar();
 };
 

@@ -79,6 +79,147 @@ Robot::~Robot()
         delete robotTerminated[i];
 }
 
+// RobotList class
+RobotList::RobotList(const RobotList &rl) // copy constructor
+{
+    RobotNode *origListPtr = rl.headPtr;
+
+    if (origListPtr == nullptr)
+        headPtr = nullptr;
+    else
+    {
+        headPtr = new RobotNode();
+        headPtr->setRobot(origListPtr->getRobot()); // copy first node
+
+        // copy remaining nodes
+        RobotNode *newListPtr = headPtr;
+        origListPtr = origListPtr->getNext();
+        while (origListPtr != nullptr)
+        {
+            Robot *nextRobot = &origListPtr->getRobot();
+            RobotNode *newNodePtr = new RobotNode(*nextRobot);
+            newListPtr->setNext(newNodePtr);
+            newListPtr = newListPtr->getNext();
+        }
+        newListPtr->setNext(nullptr);
+    }
+}
+
+RobotList::~RobotList()
+{
+    RobotNode *nodePtr;
+    RobotNode *nextNode;
+    nodePtr = headPtr;
+
+    while (nodePtr != nullptr)
+    {
+        nextNode = nodePtr->getNext();
+        delete nodePtr;
+        nodePtr = nextNode;
+    }
+}
+
+void RobotList::appendRobot(Robot &newRobot)
+{
+    RobotNode *newNode; // To point to a new node
+    RobotNode *nodePtr; // To move through the list
+
+    newNode = new RobotNode(newRobot);
+    newNode->setRobot(newRobot);
+
+    if (!headPtr)
+        headPtr = newNode;
+    else
+    {
+        nodePtr = headPtr;
+        while (nodePtr->getNext())
+            nodePtr = nodePtr->getNext();
+        nodePtr->setNext(newNode);
+    }
+    robotCount++;
+}
+
+bool RobotList::removeRobot(Robot &newRobot)
+{
+    RobotNode *nodePtr;  // To traverse the list
+    RobotNode *prevNode; // To point to the previous node
+
+    if (!headPtr)
+        return false;
+
+    if (&headPtr->getRobot() == &newRobot)
+    {
+        nodePtr = headPtr->getNext();
+        headPtr = nodePtr;
+        robotCount--;
+        return true;
+    }
+    else
+    {
+        nodePtr = headPtr;
+        while (nodePtr != nullptr && &nodePtr->getRobot() != &newRobot)
+        {
+            prevNode = nodePtr;
+            nodePtr = nodePtr->getNext();
+        }
+        if (nodePtr)
+        {
+            prevNode->setNext(nodePtr->getNext());
+            robotCount--;
+            return true;
+        }
+        return false;
+    }
+}
+
+bool RobotList::replace(Robot &oldRobot, Robot &newRobot) // replace war replaceRobot function
+{
+    RobotNode *nodePtr;
+    RobotNode *prevNode;
+    RobotNode *newNode = new RobotNode(newRobot);
+
+    if (!headPtr)
+        return false;
+
+    if (&headPtr->getRobot() == &oldRobot)
+    {
+        nodePtr = headPtr->getNext();
+        delete headPtr;
+        headPtr = newNode;
+        newNode->setNext(nodePtr);
+        return true;
+    }
+    else
+    {
+        nodePtr = headPtr;
+        while (nodePtr != nullptr && &nodePtr->getRobot() != &oldRobot)
+        {
+            prevNode = nodePtr;
+            nodePtr = nodePtr->getNext();
+        }
+        if (nodePtr)
+        {
+            prevNode->setNext(newNode);
+            newNode->setNext(nodePtr->getNext());
+            delete nodePtr;
+            return true;
+        }
+    }
+    return false;
+}
+
+void RobotList::displayList() const // testing function
+{
+    RobotNode* nodePtr;
+    nodePtr = headPtr;
+    while (nodePtr)
+    {
+        Robot* rb = &nodePtr->getRobot();
+        cout << rb->getType() << " " << rb->getName() << endl;
+        nodePtr = nodePtr->getNext();
+    }
+}
+
 // Battlefield class
 Battlefield::Battlefield()
 {
@@ -839,11 +980,11 @@ Robot *War::getRobotPlaying(int i)
 
 void War::terminateRobot(Robot &r)
 {
-    deleteRobot(r); // remove from linked list
-    battlefield.removeRobot(r); // remove from battlefield
+    deleteRobot(r);                                 // remove from linked list
+    battlefield.removeRobot(r);                     // remove from battlefield
     r.setRemainingLives(r.getRemainingLives() - 1); // reduce remaining lives
     cout << r.getType() << " " << r.getName() << " has been killed.\n";
-    if (!r.stillGotLive())  // if no lives remained, the robot is game over
+    if (!r.stillGotLive()) // if no lives remained, the robot is game over
     {
         cout << r.getType() << " " << r.getName() << " doesn't have any lives remained.\n";
         cout << r.getType() << " " << r.getName() << " out!!!\n";
@@ -902,7 +1043,7 @@ void War::replaceRobot(Robot &r1, Robot &r2)
 
 void War::startWar()
 {
-    
+
     while (currentStep < totalSteps && robotsRemaining > 0)
     {
         currentStep++;
@@ -927,7 +1068,7 @@ void War::startWar()
                 else
                 {
                     terminateRobot(currentRobot->getRobotTerminated(i));
-                }     
+                }
             }
             if (currentRobot->getUpgradePermission() && currentRobot->getType() != "UltimateRobot")
                 promoteRobot(*currentRobot);
