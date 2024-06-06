@@ -49,13 +49,6 @@ public:
     void setUpgradePermission(bool p) { upgradePermission = p; }    // Set upgradePermission
 };
 
-struct RobotNode // struct for making linked list & queue
-{
-    Robot *rb;
-    RobotNode *nextRobot;
-    RobotNode() : rb(nullptr), nextRobot(nullptr) {}
-};
-
 // RobotNode class (for linked list and queue implementation)
 class RobotNode
 {
@@ -64,10 +57,16 @@ private:
     RobotNode *next;
 
 public:
-    RobotNode() : robot(nullptr), next(nullptr) {}      // default constructor
-    RobotNode(Robot &rb) : robot(&rb), next(nullptr) {} // parameterized constructor
-    // need to add copy, move constructor and assignment operator
+    RobotNode() : robot(nullptr), next(nullptr) {}                          // default constructor
+    RobotNode(Robot &rb) : robot(&rb), next(nullptr) {}                     // parameterized constructor
     RobotNode(Robot &rb, RobotNode *nextPtr) : robot(&rb), next(nextPtr) {} // parameterized constructor
+
+    RobotNode(const RobotNode &rn) : robot(rn.robot), next(rn.next) {} // copy constructor
+    RobotNode(RobotNode &&rn);                                         // move constructor
+    RobotNode &operator=(const RobotNode &rn);                         // copy assignment operator
+
+    ~RobotNode() {}
+
     void setRobot(Robot &rb) { robot = &rb; }
     void setNext(RobotNode *nextPtr) { next = nextPtr; }
     Robot &getRobot() const { return *robot; }
@@ -80,18 +79,21 @@ class RobotList
 private:
     RobotNode *headPtr;
     int robotCount;
-    RobotNode *getNodeAt(int position) const; // will see whether need to delete or not
 
 public:
     RobotList() : headPtr(nullptr), robotCount(0) {} // default constructor
     RobotList(const RobotList &rl);                  // copy constructor
-    ~RobotList();                                    // destructor
+    RobotList(RobotList &&rl);                       // move constructor
+    RobotList &operator=(const RobotList &rl);       // copy assignment operator
+
+    ~RobotList(); // destructor
 
     bool isListEmpty() const { return robotCount == 0; }
     int getListLength() const { return robotCount; }
-    void appendRobot(Robot &newRobot);
-    bool removeRobot(Robot &newRobot);
-    bool replace(Robot &oldRobot, Robot &newRobot);
+    RobotNode *getNodeAt(int position);
+    void appendRobot(Robot &rb);
+    bool removeRobot(Robot &rb);
+    bool replaceRobot(Robot &oldRobot, Robot &newRobot);
     void displayList() const; // testing function
 };
 
@@ -105,7 +107,7 @@ private:
 
 public:
     Battlefield();
-    Battlefield(int w, int l, RobotNode *rn); // initialize field using linked list
+    Battlefield(int w, int l, RobotList *rn); // initialize field using linked list
     Battlefield &operator=(const Battlefield &right);
 
     int getWidth() const { return width; }
@@ -268,22 +270,17 @@ private:
     int robotsRemaining;
     int robotsDied;
 
-    RobotNode *headRobot; // linked list of robot playing
+    RobotList *robotPlaying;
 
     RobotNode *frontWaiting; // queue of robot waiting
     RobotNode *rearWaiting;
     int noOfRobotWaiting;
-    int trackRobot;
 
 public:
     War(const string &filename);
     void initializeRobot(string tt, string tn, int tx, int ty);
     ~War();
 
-    Robot *getRobotPlaying(int i);
-
-    void appendRobot(Robot &r);
-    void deleteRobot(Robot &r);
     bool isPlayingEmpty() const;
 
     void enqueueWaiting(Robot &r);
@@ -292,7 +289,7 @@ public:
 
     void terminateRobot(Robot &r);
     void promoteRobot(Robot &r);
-    void replaceRobot(Robot &r1, Robot &r2); // from switchRobot change to replaceRobot
+
     void startWar();
 };
 

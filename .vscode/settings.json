@@ -4,6 +4,10 @@
     "ostream": "cpp",
     "iostream": "cpp",
     "sstream": "cpp",
-    "fstream": "cpp"
+    "fstream": "cpp",
+    "*.tcc": "cpp",
+    "compare": "cpp",
+    "memory_resource": "cpp",
+    "type_traits": "cpp"
   }
 }
