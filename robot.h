@@ -128,7 +128,7 @@ private:
 
 public:
     Battlefield();
-    Battlefield(int w, int l, RobotList *rn); // initialize field using linked list
+    Battlefield(int w, int l, RobotList &rl); // initialize field using linked list
     Battlefield &operator=(const Battlefield &right);
 
     int getWidth() const { return width; }
@@ -291,7 +291,7 @@ private:
     int robotsRemaining;
     int robotsDied;
 
-    RobotList *robotPlaying;
+    RobotList robotPlaying;
 
     RobotQueue robotWaiting;
     int noOfRobotWaiting;
@@ -299,12 +299,9 @@ private:
 public:
     War(const string &filename);
     void initializeRobot(string tt, string tn, int tx, int ty);
-    ~War();
+    ~War() {}
 
     bool isPlayingEmpty() const;
-
-    void enqueueWaiting(Robot &r);
-    void dequeueWaiting(Robot &r);
     bool isWaitingEmpty() const;
 
     void terminateRobot(Robot &r);
