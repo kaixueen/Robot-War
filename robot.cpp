@@ -297,6 +297,79 @@ void RobotList::displayList() const // testing function
     }
 }
 
+// RobotQueue class
+RobotQueue::RobotQueue()
+{
+    front = nullptr;
+    rear = nullptr;
+    numRobots = 0;
+}
+
+RobotQueue::~RobotQueue()
+{
+    clear();
+}
+
+void RobotQueue::enqueue(Robot *rb)
+{
+    RobotNode *newNode = nullptr;
+
+    newNode = new RobotNode(*rb);
+
+    if (isEmpty())
+    {
+        front = newNode;
+        rear = newNode;
+    }
+    else
+    {
+        rear->setNext(newNode);
+        rear = newNode;
+    }
+
+    numRobots++;
+}
+
+void RobotQueue::dequeue(Robot &rb)
+{
+    RobotNode *temp = nullptr;
+
+    if (isEmpty())
+    {
+        cout << "The queue is empty.\n";
+    }
+    else
+    {
+        rb = front->getRobot();
+
+        // Remove the front node and delete it.
+        temp = front;
+        front = front->getNext();
+        delete temp;
+
+        numRobots--;
+    }
+}
+
+bool RobotQueue::isEmpty() const
+{
+    bool status;
+
+    if (numRobots > 0)
+        status = false;
+    else
+        status = true;
+    return status;
+}
+
+void RobotQueue::clear()
+{
+    Robot *rb;
+
+    while (!isEmpty())
+        dequeue(*rb);
+}
+
 // Battlefield class
 Battlefield::Battlefield()
 {
@@ -899,7 +972,6 @@ War::War(const string &filename)
     infile.close();
 
     // Initialize waiting queue
-    frontWaiting = rearWaiting = nullptr;
     noOfRobotWaiting = 0;
 
     // Initialize other data member
@@ -954,43 +1026,9 @@ bool War::isPlayingEmpty() const
     return robotPlaying->getListLength() == 0;
 }
 
-void War::enqueueWaiting(Robot &r)
-{
-    RobotNode *newRobot = nullptr;
-
-    newRobot = new RobotNode;
-    newRobot->rb = &r;
-    newRobot->nextRobot = nullptr;
-
-    if (isWaitingEmpty())
-    {
-        frontWaiting = newRobot;
-        rearWaiting = newRobot;
-    }
-    else
-    {
-        rearWaiting->nextRobot = newRobot;
-        rearWaiting = newRobot;
-    }
-
-    noOfRobotWaiting++;
-}
-
-void War::dequeueWaiting(Robot &r)
-{
-    RobotNode *temp = nullptr;
-    r = *(frontWaiting->rb);
-    temp = frontWaiting;
-    frontWaiting = frontWaiting->nextRobot;
-    noOfRobotPlaying++;
-    noOfRobotWaiting--;
-    temp = nullptr;
-    delete temp;
-}
-
 bool War::isWaitingEmpty() const
 {
-    return frontWaiting == nullptr;
+    return robotWaiting.getQueueLength() == 0;
 }
 
 void War::terminateRobot(Robot &r)
@@ -1014,7 +1052,8 @@ void War::terminateRobot(Robot &r)
     {
         cout << r.getType() << " " << r.getName() << "'s lives reduced by 1\n";
         cout << r.getType() << " " << r.getName() << " enter the waiting queue\n";
-        enqueueWaiting(r);
+        robotWaiting.enqueue(&r);
+        noOfRobotWaiting++;
     }
 }
 
@@ -1082,8 +1121,10 @@ void War::startWar()
         if (!isWaitingEmpty() && robotsRemaining > 0)
         {
             Robot *returnRobot;
-            dequeueWaiting(*returnRobot);
-            robotPlaying->appendRobot(*returnRobot);
+            robotWaiting.dequeue(*returnRobot);
+            noOfRobotWaiting--;
+            robotPlaying->appendRobot(*returnRobot);    // need to add a function for random position
+            noOfRobotPlaying++;
         }
     }
     if (robotsRemaining <= 0)

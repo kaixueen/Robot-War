@@ -97,6 +97,27 @@ public:
     void displayList() const; // testing function
 };
 
+// RobotQueue class
+class RobotQueue
+{
+private:
+    RobotNode *front;
+    RobotNode *rear;
+    int numRobots;
+
+public:
+    RobotQueue();
+
+    ~RobotQueue();
+
+    // Queue operations
+    void enqueue(Robot *);
+    void dequeue(Robot &);
+    bool isEmpty() const;
+    int getQueueLength() const {return numRobots;}
+    void clear();
+};
+
 // Battlefield class
 class Battlefield
 {
@@ -272,8 +293,7 @@ private:
 
     RobotList *robotPlaying;
 
-    RobotNode *frontWaiting; // queue of robot waiting
-    RobotNode *rearWaiting;
+    RobotQueue robotWaiting;
     int noOfRobotWaiting;
 
 public:
