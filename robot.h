@@ -24,6 +24,7 @@ public:
     Robot();                                 // Default constructor
     Robot(string t, string n, int x, int y); // Parameterized constructor
     Robot(const Robot &r);                   // Copy constructor
+    Robot(Robot &&r) noexcept;               // move constructor
     Robot &operator=(const Robot &right);    // Assignment operator overloading
     virtual ~Robot();                        // Destructor
 
@@ -43,6 +44,7 @@ public:
     Robot &getRobotTerminated(int n) const { return *robotTerminated[n]; } // return robot terminated
     int getNumOfRobotTerminated() const { return numOfRobotTerminated; }   // return number of robot terminated
     void resetRobotTerminated();                                           // reset robot terminated to nullptr
+    void resetNumOfRobotTerminated() { numOfRobotTerminated = 0; }
 
     virtual void takeTurn(Battlefield &bt) = 0;                     // Pure virtual function
     bool getUpgradePermission() const { return upgradePermission; } // Valid for upgrade?
@@ -57,9 +59,9 @@ private:
     RobotNode *next;
 
 public:
-    RobotNode() : robot(nullptr), next(nullptr) {}                          // default constructor
-    RobotNode(Robot &rb) : robot(&rb), next(nullptr) {}                     // parameterized constructor
-    RobotNode(Robot &rb, RobotNode *nextPtr) : robot(&rb), next(nextPtr) {} // parameterized constructor
+    RobotNode() : robot(nullptr), next(nullptr) {}                         // default constructor
+    RobotNode(Robot *rb) : robot(rb), next(nullptr) {}                     // parameterized constructor
+    RobotNode(Robot *rb, RobotNode *nextPtr) : robot(rb), next(nextPtr) {} // parameterized constructor
 
     RobotNode(const RobotNode &rn) : robot(rn.robot), next(rn.next) {} // copy constructor
     RobotNode(RobotNode &&rn);                                         // move constructor
@@ -67,9 +69,9 @@ public:
 
     ~RobotNode() {}
 
-    void setRobot(Robot &rb) { robot = &rb; }
+    void setRobot(Robot *rb) { robot = rb; }
     void setNext(RobotNode *nextPtr) { next = nextPtr; }
-    Robot &getRobot() const { return *robot; }
+    Robot *getRobot() const { return robot; }
     RobotNode *getNext() const { return next; }
 };
 
@@ -91,14 +93,14 @@ public:
     bool isListEmpty() const { return robotCount == 0; }
     int getListLength() const { return robotCount; }
     RobotNode *getNodeAt(int position);
-    void appendRobot(Robot &rb);
+    void appendRobot(Robot *rb);
     bool removeRobot(Robot &rb);
     bool replaceRobot(Robot &oldRobot, Robot &newRobot);
     void displayList() const; // testing function
 };
 
 // RobotQueue class
-class RobotQueue
+class RobotQueue // have some bug, need to be fixed
 {
 private:
     RobotNode *front;
@@ -112,9 +114,9 @@ public:
 
     // Queue operations
     void enqueue(Robot *);
-    void dequeue(Robot &);
+    void dequeue(Robot *);
     bool isEmpty() const;
-    int getQueueLength() const {return numRobots;}
+    int getQueueLength() const { return numRobots; }
     void clear();
 };
 
@@ -129,6 +131,7 @@ private:
 public:
     Battlefield();
     Battlefield(int w, int l, RobotList &rl); // initialize field using linked list
+
     Battlefield &operator=(const Battlefield &right);
 
     int getWidth() const { return width; }
@@ -167,7 +170,7 @@ public:
     MovingRobot() : Robot() {}
     MovingRobot(string n, string t, int x, int y);
     virtual void move(Battlefield &bt);
-    virtual void takeTurn(Battlefield &bt) {} // Pure virtual function
+    virtual void takeTurn(Battlefield &bt) = 0; // Pure virtual function
     virtual ~MovingRobot() {}
 };
 
@@ -304,6 +307,7 @@ public:
     bool isPlayingEmpty() const;
     bool isWaitingEmpty() const;
 
+    void changePosition(Robot &r);
     void terminateRobot(Robot &r);
     void promoteRobot(Robot &r);
 

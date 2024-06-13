@@ -43,6 +43,17 @@ Robot::Robot(const Robot &r) // Copy constructor
         robotTerminated[i] = r.robotTerminated[i];
 }
 
+Robot::Robot(Robot &&r) noexcept : robotName(r.robotName), robotType(r.robotType), robotPositionX(r.robotPositionX), robotPositionY(r.robotPositionY), remainingLives(r.remainingLives), upgradePermission(r.upgradePermission), numOfRobotTerminated(r.numOfRobotTerminated) // move constructor
+{
+    // Transfer ownership of terminated robots
+    for (int i = 0; i < 3; ++i)
+    {
+        robotTerminated[i] = r.robotTerminated[i];
+        r.robotTerminated[i] = nullptr;
+    }
+    r.numOfRobotTerminated = 0; // Reset the number of terminated robots
+}
+
 Robot &Robot::operator=(const Robot &right) // Assignment operator overloading
 {
     if (this != &right)
@@ -68,7 +79,6 @@ void Robot::setRobotTerminated(Robot &r)
 
 void Robot::resetRobotTerminated()
 {
-    numOfRobotTerminated = 0;
     for (int i = 0; i < 3; i++)
         robotTerminated[i] = nullptr;
 }
@@ -92,6 +102,8 @@ RobotNode &RobotNode::operator=(const RobotNode &rn) // copy assignment operator
 {
     if (this != &rn)
     {
+        delete robot;
+        delete next;
         robot = rn.robot;
         next = rn.next;
     }
@@ -115,8 +127,8 @@ RobotList::RobotList(const RobotList &rl) // copy constructor
         origListPtr = origListPtr->getNext();
         while (origListPtr != nullptr)
         {
-            Robot *nextRobot = &origListPtr->getRobot();
-            RobotNode *newNodePtr = new RobotNode(*nextRobot);
+            Robot *nextRobot = origListPtr->getRobot();
+            RobotNode *newNodePtr = new RobotNode(nextRobot);
             newListPtr->setNext(newNodePtr);
             newListPtr = newListPtr->getNext();
         }
@@ -159,8 +171,8 @@ RobotList &RobotList::operator=(const RobotList &rl)
             origListPtr = origListPtr->getNext();
             while (origListPtr != nullptr)
             {
-                Robot *nextRobot = &origListPtr->getRobot();
-                RobotNode *newNodePtr = new RobotNode(*nextRobot);
+                Robot *nextRobot = origListPtr->getRobot();
+                RobotNode *newNodePtr = new RobotNode(nextRobot);
                 newListPtr->setNext(newNodePtr);
                 newListPtr = newListPtr->getNext();
             }
@@ -198,23 +210,22 @@ RobotNode *RobotList::getNodeAt(int position)
     return nullptr;
 }
 
-void RobotList::appendRobot(Robot &rb)
+void RobotList::appendRobot(Robot *rb)
 {
-    RobotNode *newNode; // To point to a new node
-    RobotNode *nodePtr; // To move through the list
+    RobotNode *newNode = new RobotNode(rb); // To point to a new node
 
-    newNode = new RobotNode(rb);
-    
     if (headPtr == nullptr)
         headPtr = newNode;
     else
     {
-        nodePtr = headPtr;
+        RobotNode *nodePtr = headPtr;
         while (nodePtr->getNext())
             nodePtr = nodePtr->getNext();
         nodePtr->setNext(newNode);
+        nodePtr = nullptr;
     }
     robotCount++;
+    newNode = nullptr;
 }
 
 bool RobotList::removeRobot(Robot &rb)
@@ -225,7 +236,7 @@ bool RobotList::removeRobot(Robot &rb)
     if (!headPtr)
         return false;
 
-    if (&headPtr->getRobot() == &rb)
+    if (headPtr->getRobot() == &rb)
     {
         nodePtr = headPtr->getNext();
         headPtr = nodePtr;
@@ -235,7 +246,7 @@ bool RobotList::removeRobot(Robot &rb)
     else
     {
         nodePtr = headPtr;
-        while (nodePtr != nullptr && &nodePtr->getRobot() != &rb)
+        while (nodePtr != nullptr && nodePtr->getRobot() != &rb)
         {
             prevNode = nodePtr;
             nodePtr = nodePtr->getNext();
@@ -254,12 +265,12 @@ bool RobotList::replaceRobot(Robot &oldRobot, Robot &newRobot) // replace war re
 {
     RobotNode *nodePtr;
     RobotNode *prevNode;
-    RobotNode *newNode = new RobotNode(newRobot);
+    RobotNode *newNode = new RobotNode(&newRobot);
 
     if (!headPtr)
         return false;
 
-    if (&headPtr->getRobot() == &oldRobot)
+    if (headPtr->getRobot() == &oldRobot)
     {
         nodePtr = headPtr->getNext();
         delete headPtr;
@@ -270,7 +281,7 @@ bool RobotList::replaceRobot(Robot &oldRobot, Robot &newRobot) // replace war re
     else
     {
         nodePtr = headPtr;
-        while (nodePtr != nullptr && &nodePtr->getRobot() != &oldRobot)
+        while (nodePtr != nullptr && nodePtr->getRobot() != &oldRobot)
         {
             prevNode = nodePtr;
             nodePtr = nodePtr->getNext();
@@ -292,7 +303,7 @@ void RobotList::displayList() const // testing function
     nodePtr = headPtr;
     while (nodePtr)
     {
-        Robot *rb = &nodePtr->getRobot();
+        Robot *rb = nodePtr->getRobot();
         cout << rb->getType() << " " << rb->getName() << endl;
         nodePtr = nodePtr->getNext();
     }
@@ -315,7 +326,7 @@ void RobotQueue::enqueue(Robot *rb)
 {
     RobotNode *newNode = nullptr;
 
-    newNode = new RobotNode(*rb);
+    newNode = new RobotNode(rb);
 
     if (isEmpty())
     {
@@ -331,8 +342,9 @@ void RobotQueue::enqueue(Robot *rb)
     numRobots++;
 }
 
-void RobotQueue::dequeue(Robot &rb)
+void RobotQueue::dequeue(Robot *rb)
 {
+
     RobotNode *temp = nullptr;
 
     if (isEmpty())
@@ -346,6 +358,8 @@ void RobotQueue::dequeue(Robot &rb)
         // Remove the front node and delete it.
         temp = front;
         front = front->getNext();
+        temp->setRobot(nullptr);
+        temp->setNext(nullptr);
         delete temp;
 
         numRobots--;
@@ -368,7 +382,7 @@ void RobotQueue::clear()
     Robot *rb;
 
     while (!isEmpty())
-        dequeue(*rb);
+        dequeue(rb);
 }
 
 // Battlefield class
@@ -402,17 +416,16 @@ Battlefield::Battlefield(int w, int l, RobotList &rl)
         return;
 
     int tempX, tempY;
-    Robot *tempR;
+    Robot *tempR = nullptr;
     for (int i = 0; i < rl.getListLength(); i++)
     {
-        tempR = &rl.getNodeAt(i)->getRobot();
+        tempR = rl.getNodeAt(i)->getRobot();
+
         tempY = tempR->getY();
         tempX = tempR->getX();
         if (isValid(tempX, tempY) && isEmpty(tempX, tempY))
             cellArr[tempY][tempX] = tempR;
     }
-    tempR = nullptr;
-    delete tempR;
 }
 
 Battlefield &Battlefield::operator=(const Battlefield &right)
@@ -444,7 +457,9 @@ Battlefield &Battlefield::operator=(const Battlefield &right)
             {
                 cellArr[i][j] = nullptr;
                 if (right.cellArr[i][j] != nullptr)
+                {
                     cellArr[i][j] = right.cellArr[i][j];
+                }
             }
         }
     }
@@ -481,6 +496,9 @@ void Battlefield::displayField() const
 
 bool Battlefield::updatePosition(Robot *r, int x, int y)
 {
+    if (r == nullptr)
+        return false;
+        
     if (isValid(x, y) && isEmpty(x, y))
     {
         cellArr[r->getY()][r->getX()] = nullptr;
@@ -505,7 +523,7 @@ Battlefield::~Battlefield()
     {
         for (int j = 0; j < width; ++j)
         {
-            delete cellArr[i][j];
+            cellArr[i][j] = nullptr;
         }
         delete[] cellArr[i];
     }
@@ -564,7 +582,7 @@ void MovingRobot::move(Battlefield &bt)
             invalidMove = false;
         }
     }
-    cout << getType() << " " << getName() << " move to (" << newX << ", " << newY << ").";
+    cout << getType() << " " << getName() << " move to (" << newX << ", " << newY << ").\n";
 }
 
 // ShootingRobot class
@@ -648,6 +666,8 @@ void SeeingRobot::look(int offsetX, int offsetY, Battlefield &bt) // need to res
             }
         }
     }
+    if (numOfRobotDetected == 0)
+        cout << "No robot has been detected.\n";
 }
 
 SeeingRobot::~SeeingRobot()
@@ -750,7 +770,6 @@ void BlueThunder::takeTurn(Battlefield &bt)
 
     // Define the firing directions in a clockwise sequence starting from up
     const int directions[8][2] = {{0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1}, {-1, 0}, {-1, 1}};
-
     while (true)
     {
         directionIndex = (directionCount) % 8;
@@ -966,7 +985,7 @@ War::War(const string &filename)
                 break;
             for (int i = 0; i < robotPlaying.getListLength(); i++)
             {
-                if (robotPlaying.getNodeAt(i)->getRobot().getX() == tempX && robotPlaying.getNodeAt(i)->getRobot().getY() == tempY)
+                if (robotPlaying.getNodeAt(i)->getRobot()->getX() == tempX && robotPlaying.getNodeAt(i)->getRobot()->getY() == tempY)
                 {
                     validPosition = false;
                     break;
@@ -982,15 +1001,39 @@ War::War(const string &filename)
 
     // Initialize other data member
     battlefield = Battlefield(w, l, robotPlaying);
+
     totalSteps = steps;
     currentStep = 0;
     totalRobots = robotsRemaining = noOfRobotPlaying;
     robotsDied = 0;
 }
 
+void War::changePosition(Robot &r)
+{
+    int tempX, tempY;
+    bool valid_position = false;
+    while (!valid_position)
+    {
+        valid_position = true;
+        tempX = rand() % battlefield.getWidth();
+        tempY = rand() % battlefield.getLength();
+        for (int i = 0; i < robotPlaying.getListLength(); i++)
+        {
+            if (robotPlaying.getNodeAt(i)->getRobot()->getX() == tempX && robotPlaying.getNodeAt(i)->getRobot()->getY() == tempY)
+            {
+                valid_position = false;
+                break;
+            }
+        }
+    }
+    r.setX(tempX);
+    r.setY(tempY);
+}
+
 void War::initializeRobot(string tt, string tn, int tx, int ty)
 {
     Robot *newRobot = nullptr;
+
     if (tt == "RoboCop")
     {
         newRobot = new RoboCop(tt, tn, tx, ty);
@@ -1024,7 +1067,10 @@ void War::initializeRobot(string tt, string tn, int tx, int ty)
         cout << "Invalid Robot Type \"" << tt << "\"\n";
         exit(EXIT_FAILURE);
     }
-    robotPlaying.appendRobot(*newRobot);
+
+    robotPlaying.appendRobot(newRobot);
+
+    newRobot = nullptr;
 }
 
 bool War::isPlayingEmpty() const
@@ -1040,7 +1086,7 @@ bool War::isWaitingEmpty() const
 void War::terminateRobot(Robot &r)
 {
     robotPlaying.removeRobot(r); // remove from linked list
-    battlefield.removeRobot(r);   // remove from battlefield
+    battlefield.removeRobot(r);  // remove from battlefield
 
     r.setRemainingLives(r.getRemainingLives() - 1); // reduce remaining lives
     cout << r.getType() << " " << r.getName() << " has been killed.\n";
@@ -1100,11 +1146,11 @@ void War::startWar()
         cout << "Current step: " << currentStep << endl
              << endl;
         battlefield.displayField();
-
+        cout << "Action:\n";
         for (int i = 0; i < robotPlaying.getListLength(); i++)
         {
-            cout << "Action:\n";
-            Robot *currentRobot = &robotPlaying.getNodeAt(i)->getRobot();
+            
+            Robot *currentRobot = robotPlaying.getNodeAt(i)->getRobot();
 
             int prevX = currentRobot->getX();
             int prevY = currentRobot->getY();
@@ -1123,18 +1169,24 @@ void War::startWar()
                     terminateRobot(currentRobot->getRobotTerminated(i));
                 }
             }
+            currentRobot->resetRobotTerminated();
             if (currentRobot->getUpgradePermission() && currentRobot->getType() != "UltimateRobot")
                 promoteRobot(*currentRobot);
         }
         if (!isWaitingEmpty() && robotsRemaining > 0)
         {
-            Robot *returnRobot;
-            robotWaiting.dequeue(*returnRobot);
+            Robot *returnRobot = nullptr;
+            robotWaiting.dequeue(returnRobot);
+            cout << returnRobot->getName();
             noOfRobotWaiting--;
-            robotPlaying.appendRobot(*returnRobot);    // need to add a function for random position
+            robotPlaying.appendRobot(returnRobot);
+            
+            changePosition(*returnRobot);
             battlefield.updatePosition(returnRobot, returnRobot->getX(), returnRobot->getY());
             noOfRobotPlaying++;
+
         }
+        cout << "\n\n";
     }
     if (robotsRemaining <= 0)
     {
@@ -1146,7 +1198,6 @@ void War::startWar()
     }
     else
     {
-        cout << "War end.\nThe winner is " << robotPlaying.getNodeAt(0)->getRobot().getName() << "!!!\n Congratulations!!!\n";
+        cout << "War end.\nThe winner is " << robotPlaying.getNodeAt(0)->getRobot()->getName() << "!!!\n Congratulations!!!\n";
     }
 }
-
