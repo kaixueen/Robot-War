@@ -13,6 +13,7 @@ Robot::Robot()
     remainingLives = 3;
     upgradePermission = false;
     numOfRobotTerminated = 0;
+    currentNumOfRobotTerminated = 0;
     for (int i = 0; i < 3; i++)
         robotTerminated[i] = nullptr;
 }
@@ -26,6 +27,7 @@ Robot::Robot(string t, string n, int x, int y) // Parameterized constructor
     remainingLives = 3;
     upgradePermission = false;
     numOfRobotTerminated = 0;
+    currentNumOfRobotTerminated = 0;
     for (int i = 0; i < 3; i++)
         robotTerminated[i] = nullptr;
 }
@@ -39,11 +41,12 @@ Robot::Robot(const Robot &r) // Copy constructor
     remainingLives = r.remainingLives;
     upgradePermission = r.upgradePermission;
     numOfRobotTerminated = r.numOfRobotTerminated;
+    currentNumOfRobotTerminated = r.currentNumOfRobotTerminated;
     for (int i = 0; i < 3; i++)
         robotTerminated[i] = r.robotTerminated[i];
 }
 
-Robot::Robot(Robot &&r) noexcept : robotName(r.robotName), robotType(r.robotType), robotPositionX(r.robotPositionX), robotPositionY(r.robotPositionY), remainingLives(r.remainingLives), upgradePermission(r.upgradePermission), numOfRobotTerminated(r.numOfRobotTerminated) // move constructor
+Robot::Robot(Robot &&r) noexcept : robotName(r.robotName), robotType(r.robotType), robotPositionX(r.robotPositionX), robotPositionY(r.robotPositionY), remainingLives(r.remainingLives), upgradePermission(r.upgradePermission), numOfRobotTerminated(r.numOfRobotTerminated), currentNumOfRobotTerminated(r.currentNumOfRobotTerminated) // move constructor
 {
     // Transfer ownership of terminated robots
     for (int i = 0; i < 3; ++i)
@@ -52,6 +55,7 @@ Robot::Robot(Robot &&r) noexcept : robotName(r.robotName), robotType(r.robotType
         r.robotTerminated[i] = nullptr;
     }
     r.numOfRobotTerminated = 0; // Reset the number of terminated robots
+    r.currentNumOfRobotTerminated = 0;
 }
 
 Robot &Robot::operator=(const Robot &right) // Assignment operator overloading
@@ -65,6 +69,7 @@ Robot &Robot::operator=(const Robot &right) // Assignment operator overloading
         remainingLives = right.remainingLives;
         upgradePermission = right.upgradePermission;
         numOfRobotTerminated = right.numOfRobotTerminated;
+        currentNumOfRobotTerminated = right.currentNumOfRobotTerminated;
         for (int i = 0; i < 3; i++)
             robotTerminated[i] = right.robotTerminated[i];
     }
@@ -73,14 +78,16 @@ Robot &Robot::operator=(const Robot &right) // Assignment operator overloading
 
 void Robot::setRobotTerminated(Robot &r)
 {
-    robotTerminated[numOfRobotTerminated] = &r;
+    robotTerminated[currentNumOfRobotTerminated] = &r;
     numOfRobotTerminated++;
+    currentNumOfRobotTerminated++;
 }
 
 void Robot::resetRobotTerminated()
 {
     for (int i = 0; i < 3; i++)
         robotTerminated[i] = nullptr;
+    resetCurrentNumOfRobotTerminated();
 }
 
 Robot::~Robot()
@@ -238,8 +245,12 @@ bool RobotList::removeRobot(Robot &rb)
 
     if (headPtr->getRobot() == &rb)
     {
-        nodePtr = headPtr->getNext();
-        headPtr = nodePtr;
+        // headPtr = headPtr->getNext();
+        // headPtr = nodePtr;
+        nodePtr = headPtr;
+        headPtr = headPtr->getNext();
+        nodePtr->setRobot(nullptr);
+        nodePtr->setNext(nullptr);
         robotCount--;
         return true;
     }
@@ -256,6 +267,8 @@ bool RobotList::removeRobot(Robot &rb)
             prevNode->setNext(nodePtr->getNext());
             robotCount--;
             return true;
+            nodePtr->setRobot(nullptr);
+            nodePtr->setNext(nullptr);
         }
         return false;
     }
@@ -317,6 +330,44 @@ RobotQueue::RobotQueue()
     numRobots = 0;
 }
 
+// Copy constructor
+RobotQueue::RobotQueue(const RobotQueue &rq)
+{
+    RobotNode *current = rq.front;
+    while (current != nullptr)
+    {
+        enqueue(current->getRobot());
+        current = current->getNext();
+    }
+}
+
+// Move constructor
+RobotQueue::RobotQueue(RobotQueue &&rq)
+{
+    front = rq.front;
+    rear = rq.rear;
+    numRobots = rq.numRobots;
+    rq.front = nullptr;
+    rq.rear = nullptr;
+    rq.numRobots = 0;
+}
+
+// Copy assignment operator
+RobotQueue &RobotQueue::operator=(const RobotQueue &rq)
+{
+    if (this != &rq)
+    {
+        clear();
+        RobotNode *current = rq.front;
+        while (current != nullptr)
+        {
+            enqueue(current->getRobot());
+            current = current->getNext();
+        }
+    }
+    return *this;
+}
+
 RobotQueue::~RobotQueue()
 {
     clear();
@@ -324,44 +375,45 @@ RobotQueue::~RobotQueue()
 
 void RobotQueue::enqueue(Robot *rb)
 {
-    RobotNode *newNode = nullptr;
-
-    newNode = new RobotNode(rb);
-
+    RobotNode *newNode = new RobotNode(rb);
     if (isEmpty())
     {
-        front = newNode;
-        rear = newNode;
+        front = rear = newNode;
     }
     else
     {
         rear->setNext(newNode);
         rear = newNode;
     }
-
+    newNode = nullptr;
+    delete newNode;
     numRobots++;
 }
 
-void RobotQueue::dequeue(Robot *rb)
+void RobotQueue::dequeue(Robot *&rb)
 {
-
-    RobotNode *temp = nullptr;
-
     if (isEmpty())
     {
         cout << "The queue is empty.\n";
     }
     else
     {
+        RobotNode *temp = nullptr;
         rb = front->getRobot();
-
-        // Remove the front node and delete it.
         temp = front;
-        front = front->getNext();
+
+        if (front == rear)
+        { // Special case: one node in queue
+            front = nullptr;
+            rear = nullptr;
+        }
+        else
+        {
+            front = front->getNext();
+        }
+
         temp->setRobot(nullptr);
         temp->setNext(nullptr);
-        delete temp;
-
         numRobots--;
     }
 }
@@ -498,7 +550,7 @@ bool Battlefield::updatePosition(Robot *r, int x, int y)
 {
     if (r == nullptr)
         return false;
-        
+
     if (isValid(x, y) && isEmpty(x, y))
     {
         cellArr[r->getY()][r->getX()] = nullptr;
@@ -537,7 +589,7 @@ MovingRobot::MovingRobot(string n, string t, int x, int y) : Robot(n, t, x, y)
 
 void MovingRobot::move(Battlefield &bt)
 {
-    int newX, newY;
+    int prevX, prevY, newX, newY;
     DIRECTION direction;
     bool invalidMove = true;
     while (invalidMove)
@@ -577,8 +629,13 @@ void MovingRobot::move(Battlefield &bt)
         }
         if (bt.isValid(newX, newY) && bt.isEmpty(newX, newY))
         {
+            prevX = getX();
+            prevY = getY();
+            bt.removeRobot(prevX, prevY);
             setX(newX);
             setY(newY);
+            bt.updatePosition(this, getX(), getY());
+            
             invalidMove = false;
         }
     }
@@ -592,10 +649,12 @@ ShootingRobot::ShootingRobot(string t, string n, int x, int y) : Robot(t, n, x, 
 
 void ShootingRobot::fire(int offsetX, int offsetY, Battlefield &bt)
 {
+    if (offsetX == 0 && offsetY == 0)
+        return;
     int targetX = getX() + offsetX;
     int targetY = getY() + offsetY;
 
-    if (!(offsetX == 0 && offsetY == 0) && bt.isValid(targetX, targetY))
+    if (bt.isValid(targetX, targetY))
     {
         if (!bt.isEmpty(targetX, targetY))
         {
@@ -767,12 +826,15 @@ void BlueThunder::takeTurn(Battlefield &bt)
     int targetX;
     int targetY;
     int directionIndex;
+    int attempts = 0;
+    const int maxAttempts = 8; // Maximum attempts to find a valid direction
 
     // Define the firing directions in a clockwise sequence starting from up
     const int directions[8][2] = {{0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1}, {-1, 0}, {-1, 1}};
-    while (true)
+
+    while (attempts < maxAttempts)
     {
-        directionIndex = (directionCount) % 8;
+        directionIndex = (directionCount + attempts) % 8;
         targetX = getX() + directions[directionIndex][0];
         targetY = getY() + directions[directionIndex][1];
 
@@ -781,9 +843,10 @@ void BlueThunder::takeTurn(Battlefield &bt)
             fire(directions[directionIndex][0], directions[directionIndex][1], bt);
             if (getNumOfRobotTerminated() >= 3)
                 setUpgradePermission(true);
-            directionCount++;
+            directionCount = (directionCount + 1) % 8; // Update directionCount for the next turn
             break;
         }
+        attempts++;
     }
 }
 
@@ -830,6 +893,8 @@ void TerminatorRoboCop::takeTurn(Battlefield &bt)
     {
         offsetX = rand() % 21 - 10; // Random offset between -10 and 10
         offsetY = rand() % 21 - 10;
+        if (offsetX == 0 && offsetY == 0)
+            continue;
         targetX = getX() + offsetX;
         targetY = getY() + offsetY;
         if (abs(offsetX) + abs(offsetY) <= 10 && bt.isValid(targetX, targetY))
@@ -849,11 +914,16 @@ RoboTank::RoboTank(string t, string n, int x, int y) : Madbot(t, n, x, y), BlueT
 void RoboTank::takeTurn(Battlefield &bt)
 {
     int offsetX, offsetY, targetX, targetY;
-
     while (true)
     {
-        offsetX = rand();
-        offsetY = rand();
+        // Generate offsets in the range [-width/2, width/2] and [-length/2, length/2]
+        offsetX = (rand() % (bt.getWidth() * 2 + 1)) - bt.getWidth();
+        offsetY = (rand() % (bt.getLength() * 2 + 1)) - bt.getLength();
+
+        // Skip if no movement
+        if (offsetX == 0 && offsetY == 0)
+            continue;
+
         targetX = getX() + offsetX;
         targetY = getY() + offsetY;
         if (bt.isValid(targetX, targetY))
@@ -874,6 +944,7 @@ UltimateRobot::UltimateRobot(string t, string n, int x, int y) : TerminatorRoboC
 void UltimateRobot::takeTurn(Battlefield &bt)
 {
     Terminator::takeTurn(bt);
+
     for (int i = 0; i < 3; i++)
     {
         RoboTank::takeTurn(bt);
@@ -1008,7 +1079,7 @@ War::War(const string &filename)
     robotsDied = 0;
 }
 
-void War::changePosition(Robot &r)
+void War::changePosition(Robot *&r)
 {
     int tempX, tempY;
     bool valid_position = false;
@@ -1026,8 +1097,8 @@ void War::changePosition(Robot &r)
             }
         }
     }
-    r.setX(tempX);
-    r.setY(tempY);
+    r->setX(tempX);
+    r->setY(tempY);
 }
 
 void War::initializeRobot(string tt, string tn, int tx, int ty)
@@ -1140,7 +1211,7 @@ void War::promoteRobot(Robot &r)
 
 void War::startWar()
 {
-    while (currentStep < totalSteps && robotsRemaining > 0)
+    while (currentStep < totalSteps && robotsRemaining > 1)
     {
         currentStep++;
         cout << "Current step: " << currentStep << endl
@@ -1149,7 +1220,7 @@ void War::startWar()
         cout << "Action:\n";
         for (int i = 0; i < robotPlaying.getListLength(); i++)
         {
-            
+
             Robot *currentRobot = robotPlaying.getNodeAt(i)->getRobot();
 
             int prevX = currentRobot->getX();
@@ -1167,6 +1238,7 @@ void War::startWar()
                 else
                 {
                     terminateRobot(currentRobot->getRobotTerminated(i));
+                    battlefield.updatePosition(currentRobot, currentRobot->getX(), currentRobot->getY());
                 }
             }
             currentRobot->resetRobotTerminated();
@@ -1175,16 +1247,24 @@ void War::startWar()
         }
         if (!isWaitingEmpty() && robotsRemaining > 0)
         {
-            Robot *returnRobot = nullptr;
+            Robot *returnRobot;
             robotWaiting.dequeue(returnRobot);
-            cout << returnRobot->getName();
             noOfRobotWaiting--;
-            robotPlaying.appendRobot(returnRobot);
-            
-            changePosition(*returnRobot);
-            battlefield.updatePosition(returnRobot, returnRobot->getX(), returnRobot->getY());
-            noOfRobotPlaying++;
 
+            changePosition(returnRobot);
+            battlefield.updatePosition(returnRobot, returnRobot->getX(), returnRobot->getY());
+            robotPlaying.appendRobot(returnRobot);
+            noOfRobotPlaying++;
+            cout << returnRobot->getType() << " " << returnRobot->getName() << " has respawned from the queue at position ("
+                 << returnRobot->getX() << ", " << returnRobot->getY() << ").\n";
+        }
+        cout << "\nLive Statistics:\n";
+        cout << "Number of robots terminated by...\n";
+        for (int i = 0; i < robotPlaying.getListLength(); i++)
+        {
+            Robot *currentRobot = robotPlaying.getNodeAt(i)->getRobot();
+            cout << currentRobot->getType() << " " << currentRobot->getName() << ": ";
+            cout << currentRobot->getNumOfRobotTerminated() << endl;
         }
         cout << "\n\n";
     }
@@ -1198,6 +1278,6 @@ void War::startWar()
     }
     else
     {
-        cout << "War end.\nThe winner is " << robotPlaying.getNodeAt(0)->getRobot()->getName() << "!!!\n Congratulations!!!\n";
+        cout << "War end.\nThe winner is " << robotPlaying.getNodeAt(0)->getRobot()->getName() << "!!!\nCongratulations!!!\n";
     }
 }

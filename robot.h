@@ -18,6 +18,7 @@ private:
     int remainingLives;
     Robot *robotTerminated[3];
     int numOfRobotTerminated;
+    int currentNumOfRobotTerminated;
     bool upgradePermission;
 
 public:
@@ -45,6 +46,8 @@ public:
     int getNumOfRobotTerminated() const { return numOfRobotTerminated; }   // return number of robot terminated
     void resetRobotTerminated();                                           // reset robot terminated to nullptr
     void resetNumOfRobotTerminated() { numOfRobotTerminated = 0; }
+    void resetCurrentNumOfRobotTerminated() {currentNumOfRobotTerminated = 0;}
+    int getCurrentNumOfRobotTerminated() const { return currentNumOfRobotTerminated; }
 
     virtual void takeTurn(Battlefield &bt) = 0;                     // Pure virtual function
     bool getUpgradePermission() const { return upgradePermission; } // Valid for upgrade?
@@ -109,12 +112,14 @@ private:
 
 public:
     RobotQueue();
-
+    RobotQueue(const RobotQueue &rq);
+    RobotQueue(RobotQueue &&rq);
+    RobotQueue &operator=(const RobotQueue &rq);
     ~RobotQueue();
 
     // Queue operations
     void enqueue(Robot *);
-    void dequeue(Robot *);
+    void dequeue(Robot *&);
     bool isEmpty() const;
     int getQueueLength() const { return numRobots; }
     void clear();
@@ -279,7 +284,7 @@ class UltimateRobot : public TerminatorRoboCop, public RoboTank
 {
 public:
     UltimateRobot(string t, string n, int x, int y);
-    virtual void takeTurn(Battlefield &bt);
+    void takeTurn(Battlefield &bt) override;
 };
 
 // War class
@@ -307,7 +312,7 @@ public:
     bool isPlayingEmpty() const;
     bool isWaitingEmpty() const;
 
-    void changePosition(Robot &r);
+    void changePosition(Robot *&r);
     void terminateRobot(Robot &r);
     void promoteRobot(Robot &r);
 

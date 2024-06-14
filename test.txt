@@ -1,6 +1,8 @@
 M by N : 10 10
 steps: 10
 robots: 3
-Madbot      Kidd    1   4
-RoboTank    Jet     1   1
-Terminator  Alpha   1   2
+Madbot      Kidd    3   6
+RoboTank    Jet     1  1
+Terminator  Alpha   3  2
+BlueThunder Beta    2  3
+RoboCop     Star    5  2

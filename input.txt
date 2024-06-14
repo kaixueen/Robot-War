@@ -1,5 +1,5 @@
 M by N : 40 50
-steps: 300
+steps: 1000
 robots: 5
 Madbot      Kidd    3   6
 RoboTank    Jet     12  1
