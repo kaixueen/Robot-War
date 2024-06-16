@@ -26,6 +26,12 @@ int main()
     srand(time(0));
     War newGame("test.txt");
     cout << "Yo! Welcome to Robot War!!!\n\n";
-    newGame.startWar();
+    cout << "##### User Guide #####\n";
+    cout << "\'R\' represents RoboCop, \'T\' represents Terminator, \'N\' represents TerminatorRoboCop,\n";
+    cout << "\'B\' represents BlueThunder, \'M\' represents Madbot, \'O\' represents RoboTank,\n";
+    cout << "\'U\' represents UltimateRobot.\n\n";
+    cout << "Now... War Start!\n\n";
+
+    newGame.startWar("output.txt");
     return 0;
 }

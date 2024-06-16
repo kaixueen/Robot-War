@@ -9,6 +9,7 @@ Robot::Robot()
 {
     robotName = "";
     robotType = "";
+    robotSymbol = 'R';
     robotPositionX = robotPositionY = -1;
     remainingLives = 3;
     upgradePermission = false;
@@ -18,10 +19,11 @@ Robot::Robot()
         robotTerminated[i] = nullptr;
 }
 
-Robot::Robot(string t, string n, int x, int y) // Parameterized constructor
+Robot::Robot(string t, string n, int x, int y, char s) // Parameterized constructor
 {
     robotName = n;
     robotType = t;
+    robotSymbol = s;
     robotPositionX = x;
     robotPositionY = y;
     remainingLives = 3;
@@ -36,6 +38,7 @@ Robot::Robot(const Robot &r) // Copy constructor
 {
     robotName = r.robotName;
     robotType = r.robotType;
+    robotSymbol = r.robotSymbol;
     robotPositionX = r.robotPositionX;
     robotPositionY = r.robotPositionY;
     remainingLives = r.remainingLives;
@@ -46,7 +49,7 @@ Robot::Robot(const Robot &r) // Copy constructor
         robotTerminated[i] = r.robotTerminated[i];
 }
 
-Robot::Robot(Robot &&r) noexcept : robotName(r.robotName), robotType(r.robotType), robotPositionX(r.robotPositionX), robotPositionY(r.robotPositionY), remainingLives(r.remainingLives), upgradePermission(r.upgradePermission), numOfRobotTerminated(r.numOfRobotTerminated), currentNumOfRobotTerminated(r.currentNumOfRobotTerminated) // move constructor
+Robot::Robot(Robot &&r) noexcept : robotName(r.robotName), robotType(r.robotType), robotSymbol(r.robotSymbol), robotPositionX(r.robotPositionX), robotPositionY(r.robotPositionY), remainingLives(r.remainingLives), upgradePermission(r.upgradePermission), numOfRobotTerminated(r.numOfRobotTerminated), currentNumOfRobotTerminated(r.currentNumOfRobotTerminated) // move constructor
 {
     // Transfer ownership of terminated robots
     for (int i = 0; i < 3; ++i)
@@ -64,6 +67,7 @@ Robot &Robot::operator=(const Robot &right) // Assignment operator overloading
     {
         robotName = right.robotName;
         robotType = right.robotType;
+        robotSymbol = right.robotSymbol;
         robotPositionX = right.robotPositionX;
         robotPositionY = right.robotPositionY;
         remainingLives = right.remainingLives;
@@ -442,7 +446,7 @@ Battlefield::Battlefield()
 {
     width = 0;
     length = 0;
-    emptyCell = robotCell = boundary = ' ';
+    emptyCell = boundary = ' ';
     cellArr = nullptr;
 }
 
@@ -451,7 +455,6 @@ Battlefield::Battlefield(int w, int l, RobotList &rl)
     width = w;
     length = l;
     emptyCell = ' ';
-    robotCell = 'R';
     boundary = '*';
     cellArr = new Robot **[length];
 
@@ -497,7 +500,6 @@ Battlefield &Battlefield::operator=(const Battlefield &right)
         width = right.width;
         length = right.length;
         emptyCell = right.emptyCell;
-        robotCell = right.robotCell;
         boundary = right.boundary;
 
         cellArr = new Robot **[length];
@@ -534,7 +536,7 @@ void Battlefield::displayField() const
             if (cellArr[i][j] == nullptr)
                 cout << emptyCell;
             else
-                cout << robotCell;
+                cout << cellArr[i][j]->getSymbol();
 
             if (j == width - 1)
                 cout << boundary << endl;
@@ -544,6 +546,34 @@ void Battlefield::displayField() const
     for (int i = 0; i < width + 2; i++)
         cout << boundary;
     cout << endl;
+}
+
+void Battlefield::displayField(ofstream &outfile) const
+{
+    for (int i = 0; i < width + 2; i++)
+        outfile << boundary;
+    outfile << endl;
+
+    for (int i = 0; i < length; i++)
+    {
+        for (int j = 0; j < width; j++)
+        {
+            if (j == 0)
+                outfile << boundary;
+
+            if (cellArr[i][j] == nullptr)
+                outfile << emptyCell;
+            else
+                outfile << cellArr[i][j]->getSymbol();
+
+            if (j == width - 1)
+                outfile << boundary << endl;
+        }
+    }
+
+    for (int i = 0; i < width + 2; i++)
+        outfile << boundary;
+    outfile << endl;
 }
 
 bool Battlefield::updatePosition(Robot *r, int x, int y)
@@ -583,11 +613,11 @@ Battlefield::~Battlefield()
 }
 
 // MovingRobot class
-MovingRobot::MovingRobot(string n, string t, int x, int y) : Robot(n, t, x, y)
+MovingRobot::MovingRobot(string n, string t, int x, int y, char s) : Robot(n, t, x, y, s)
 {
 }
 
-void MovingRobot::move(Battlefield &bt)
+void MovingRobot::move(Battlefield &bt, ofstream& outfile)
 {
     int prevX, prevY, newX, newY;
     DIRECTION direction;
@@ -635,19 +665,20 @@ void MovingRobot::move(Battlefield &bt)
             setX(newX);
             setY(newY);
             bt.updatePosition(this, getX(), getY());
-            
+
             invalidMove = false;
         }
     }
     cout << getType() << " " << getName() << " move to (" << newX << ", " << newY << ").\n";
+    outfile << getType() << " " << getName() << " move to (" << newX << ", " << newY << ").\n";
 }
 
 // ShootingRobot class
-ShootingRobot::ShootingRobot(string t, string n, int x, int y) : Robot(t, n, x, y)
+ShootingRobot::ShootingRobot(string t, string n, int x, int y, char s) : Robot(t, n, x, y, s)
 {
 }
 
-void ShootingRobot::fire(int offsetX, int offsetY, Battlefield &bt)
+void ShootingRobot::fire(int offsetX, int offsetY, Battlefield &bt, ofstream& outfile)
 {
     if (offsetX == 0 && offsetY == 0)
         return;
@@ -660,17 +691,19 @@ void ShootingRobot::fire(int offsetX, int offsetY, Battlefield &bt)
         {
             Robot *enemyRobot = bt.getRobotAt(targetX, targetY);
             cout << getType() << " " << getName() << " fires at (" << targetX << ", " << targetY << ") and destroys " << enemyRobot->getType() << " " << enemyRobot->getName() << "!" << endl;
+            outfile << getType() << " " << getName() << " fires at (" << targetX << ", " << targetY << ") and destroys " << enemyRobot->getType() << " " << enemyRobot->getName() << "!" << endl;
             setRobotTerminated(*enemyRobot);
         }
         else
         {
             cout << getType() << " " << getName() << " fires at (" << targetX << ", " << targetY << ") but the position is empty." << endl;
+            outfile << getType() << " " << getName() << " fires at (" << targetX << ", " << targetY << ") but the position is empty." << endl;
         }
     }
 }
 
 // SeeingRobot class
-SeeingRobot::SeeingRobot(string t, string n, int x, int y) : Robot(t, n, x, y)
+SeeingRobot::SeeingRobot(string t, string n, int x, int y, char s) : Robot(t, n, x, y, s)
 {
     isRobotDetected = false;
     RobotDetectedX = new int[9];
@@ -694,13 +727,14 @@ void SeeingRobot::resetDetection()
     numOfRobotDetected = 0;
 }
 
-void SeeingRobot::look(int offsetX, int offsetY, Battlefield &bt) // need to reset the robot detected every turn, does it look at the offset position, if not only immediate neighbourhood
+void SeeingRobot::look(int offsetX, int offsetY, Battlefield &bt, ofstream &outfile) // need to reset the robot detected every turn, does it look at the offset position, if not only immediate neighbourhood
 {
 
     int centerX = getX() + offsetX;
     int centerY = getY() + offsetY;
 
     cout << getType() << " " << getName() << " is looking around:" << endl;
+    outfile << getType() << " " << getName() << " is looking around:" << endl;
     for (int dy = -1; dy <= 1; ++dy)
     {
         for (int dx = -1; dx <= 1; ++dx)
@@ -714,8 +748,8 @@ void SeeingRobot::look(int offsetX, int offsetY, Battlefield &bt) // need to res
                 {
                     if (!bt.isEmpty(checkX, checkY))
                     {
-                        cout << "Position (" << checkX << ", " << checkY;
-                        cout << ") contains an enemy robot." << endl;
+                        cout << "Position (" << checkX << ", " << checkY << ") contains an enemy robot." << endl;
+                        outfile << "Position (" << checkX << ", " << checkY << ") contains an enemy robot." << endl;
                         isRobotDetected = true;
                         RobotDetectedX[numOfRobotDetected] = checkX;
                         RobotDetectedY[numOfRobotDetected] = checkY;
@@ -726,7 +760,11 @@ void SeeingRobot::look(int offsetX, int offsetY, Battlefield &bt) // need to res
         }
     }
     if (numOfRobotDetected == 0)
-        cout << "No robot has been detected.\n";
+    {
+        cout << "No robot has been detected by " << getType() << " " << getName() << " this round.\n";
+        outfile << "No robot has been detected by " << getType() << " " << getName() << " this round.\n";;
+    }
+        
 }
 
 SeeingRobot::~SeeingRobot()
@@ -736,36 +774,43 @@ SeeingRobot::~SeeingRobot()
 }
 
 // SteppingRobot class
-SteppingRobot::SteppingRobot(string t, string n, int x, int y) : Robot(t, n, x, y)
+SteppingRobot::SteppingRobot(string t, string n, int x, int y, char s) : Robot(t, n, x, y, s)
 {
     robotStepCount = 0;
 }
 
-void SteppingRobot::step(int coordinateX, int coordinateY, Battlefield &bt)
+void SteppingRobot::step(int coordinateX, int coordinateY, Battlefield &bt, ofstream& outfile)
 {
     if (bt.isValid(coordinateX, coordinateY) && !bt.isEmpty(coordinateX, coordinateY))
     {
-        cout << getType() << " " << getName() << " steps to (" << coordinateX << ", " << coordinateY << ") and kills the enemy!" << endl;
         Robot *enemyRobot = bt.getRobotAt(coordinateX, coordinateY);
+        cout << getType() << " " << getName() << " steps to (" << coordinateX << ", " << coordinateY << ") and kills "<< enemyRobot->getType() << " " << enemyRobot->getName() << "!\n";
+        outfile << getType() << " " << getName() << " steps to (" << coordinateX << ", " << coordinateY << ") and kills "<< enemyRobot->getType() << " " << enemyRobot->getName() << "!\n";
+        
         setRobotTerminated(*enemyRobot);
         setX(coordinateX);
         setY(coordinateY);
         robotStepCount++;
     }
+    else
+    {
+        cout << "No robot has been stepped by " << getType() << " " << getName() << " this round.\n";
+        outfile << "No robot has been stepped by " << getType() << " " << getName() << " this round.\n";
+    }
 }
 
 // RoboCop class
-RoboCop::RoboCop(string t, string n, int x, int y) : MovingRobot(t, n, x, y), ShootingRobot(t, n, x, y), SeeingRobot(t, n, x, y), Robot(t, n, x, y)
+RoboCop::RoboCop(string t, string n, int x, int y, char s) : MovingRobot(t, n, x, y, s), ShootingRobot(t, n, x, y, s), SeeingRobot(t, n, x, y, s), Robot(t, n, x, y, s)
 {
 }
 
-void RoboCop::takeTurn(Battlefield &bt)
+void RoboCop::takeTurn(Battlefield &bt, ofstream& outfile)
 {
     int offsetX, offsetY, targetX, targetY;
 
-    look(0, 0, bt); // Look at current position
+    look(0, 0, bt, outfile); // Look at current position
 
-    move(bt);
+    move(bt, outfile);
     int count = 0;
     while (count < 3)
     {
@@ -775,7 +820,7 @@ void RoboCop::takeTurn(Battlefield &bt)
         targetY = getY() + offsetY;
         if (abs(offsetX) + abs(offsetY) <= 10 && bt.isValid(targetX, targetY))
         {
-            fire(offsetX, offsetY, bt);
+            fire(offsetX, offsetY, bt, outfile);
             if (getNumOfRobotTerminated() >= 3)
                 setUpgradePermission(true);
             count++;
@@ -785,13 +830,13 @@ void RoboCop::takeTurn(Battlefield &bt)
 }
 
 // Terminator class
-Terminator::Terminator(string t, string n, int x, int y) : MovingRobot(t, n, x, y), SeeingRobot(t, n, x, y), SteppingRobot(t, n, x, y), Robot(t, n, x, y)
+Terminator::Terminator(string t, string n, int x, int y, char s) : MovingRobot(t, n, x, y, s), SeeingRobot(t, n, x, y, s), SteppingRobot(t, n, x, y, s), Robot(t, n, x, y, s)
 {
 }
 
-void Terminator::takeTurn(Battlefield &bt)
+void Terminator::takeTurn(Battlefield &bt, ofstream& outfile)
 {
-    look(0, 0, bt); // Look around the 3x3 neighborhood
+    look(0, 0, bt, outfile); // Look around the 3x3 neighborhood
 
     int *robotCoordinateX = getRobotDetectedX();
     int *robotCoordinateY = getRobotDetectedY();
@@ -802,7 +847,7 @@ void Terminator::takeTurn(Battlefield &bt)
         int targetY = robotCoordinateY[0];
 
         // Move to and terminate the enemy robot
-        step(targetX, targetY, bt);
+        step(targetX, targetY, bt, outfile);
         if (getNumOfRobotTerminated() >= 3)
             setUpgradePermission(true);
         resetDetection();
@@ -811,17 +856,17 @@ void Terminator::takeTurn(Battlefield &bt)
     else
     {
         // No enemies in neighborhood, move randomly
-        move(bt);
+        move(bt, outfile);
     }
 }
 
 // BlueThunder class
-BlueThunder::BlueThunder(string t, string n, int x, int y) : ShootingRobot(t, n, x, y), Robot(t, n, x, y)
+BlueThunder::BlueThunder(string t, string n, int x, int y, char s) : ShootingRobot(t, n, x, y, s), Robot(t, n, x, y, s)
 {
     directionCount = 0;
 }
 
-void BlueThunder::takeTurn(Battlefield &bt)
+void BlueThunder::takeTurn(Battlefield &bt, ofstream& outfile)
 {
     int targetX;
     int targetY;
@@ -840,7 +885,7 @@ void BlueThunder::takeTurn(Battlefield &bt)
 
         if (bt.isValid(targetX, targetY))
         {
-            fire(directions[directionIndex][0], directions[directionIndex][1], bt);
+            fire(directions[directionIndex][0], directions[directionIndex][1], bt, outfile);
             if (getNumOfRobotTerminated() >= 3)
                 setUpgradePermission(true);
             directionCount = (directionCount + 1) % 8; // Update directionCount for the next turn
@@ -851,11 +896,11 @@ void BlueThunder::takeTurn(Battlefield &bt)
 }
 
 // Madbot class
-Madbot::Madbot(string t, string n, int x, int y) : BlueThunder(t, n, x, y), ShootingRobot(t, n, x, y), Robot(t, n, x, y)
+Madbot::Madbot(string t, string n, int x, int y, char s) : BlueThunder(t, n, x, y, s), ShootingRobot(t, n, x, y, s), Robot(t, n, x, y, s)
 {
 }
 
-void Madbot::takeTurn(Battlefield &bt)
+void Madbot::takeTurn(Battlefield &bt, ofstream& outfile)
 {
     int targetX;
     int targetY;
@@ -871,7 +916,7 @@ void Madbot::takeTurn(Battlefield &bt)
 
         if (bt.isValid(targetX, targetY))
         {
-            fire(directions[directionIndex][0], directions[directionIndex][1], bt);
+            fire(directions[directionIndex][0], directions[directionIndex][1], bt, outfile);
             if (getNumOfRobotTerminated() >= 3)
                 setUpgradePermission(true);
             break;
@@ -880,13 +925,13 @@ void Madbot::takeTurn(Battlefield &bt)
 }
 
 // TerminatorRoboCop class
-TerminatorRoboCop::TerminatorRoboCop(string t, string n, int x, int y) : RoboCop(t, n, x, y), Terminator(t, n, x, y), MovingRobot(t, n, x, y), SeeingRobot(t, n, x, y), SteppingRobot(t, n, x, y), Robot(t, n, x, y)
+TerminatorRoboCop::TerminatorRoboCop(string t, string n, int x, int y, char s) : RoboCop(t, n, x, y, s), Terminator(t, n, x, y, s), MovingRobot(t, n, x, y, s), SeeingRobot(t, n, x, y, s), SteppingRobot(t, n, x, y, s), Robot(t, n, x, y, s)
 {
 }
 
-void TerminatorRoboCop::takeTurn(Battlefield &bt)
+void TerminatorRoboCop::takeTurn(Battlefield &bt, ofstream& outfile)
 {
-    Terminator::takeTurn(bt);
+    Terminator::takeTurn(bt, outfile);
     int offsetX, offsetY, targetX, targetY;
     int count = 0;
     while (count < 3)
@@ -899,7 +944,7 @@ void TerminatorRoboCop::takeTurn(Battlefield &bt)
         targetY = getY() + offsetY;
         if (abs(offsetX) + abs(offsetY) <= 10 && bt.isValid(targetX, targetY))
         {
-            fire(offsetX, offsetY, bt);
+            fire(offsetX, offsetY, bt, outfile);
             if (getNumOfRobotTerminated() >= 3)
                 setUpgradePermission(true);
             count++;
@@ -907,11 +952,11 @@ void TerminatorRoboCop::takeTurn(Battlefield &bt)
     }
 }
 // RoboTank class
-RoboTank::RoboTank(string t, string n, int x, int y) : Madbot(t, n, x, y), BlueThunder(t, n, x, y), ShootingRobot(t, n, x, y), Robot(t, n, x, y)
+RoboTank::RoboTank(string t, string n, int x, int y, char s) : Madbot(t, n, x, y, s), BlueThunder(t, n, x, y, s), ShootingRobot(t, n, x, y, s), Robot(t, n, x, y, s)
 {
 }
 
-void RoboTank::takeTurn(Battlefield &bt)
+void RoboTank::takeTurn(Battlefield &bt, ofstream& outfile)
 {
     int offsetX, offsetY, targetX, targetY;
     while (true)
@@ -928,7 +973,7 @@ void RoboTank::takeTurn(Battlefield &bt)
         targetY = getY() + offsetY;
         if (bt.isValid(targetX, targetY))
         {
-            fire(offsetX, offsetY, bt);
+            fire(offsetX, offsetY, bt, outfile);
             if (getNumOfRobotTerminated() >= 3)
                 setUpgradePermission(true);
             break;
@@ -937,29 +982,30 @@ void RoboTank::takeTurn(Battlefield &bt)
 }
 
 // UltimateRobot class
-UltimateRobot::UltimateRobot(string t, string n, int x, int y) : TerminatorRoboCop(t, n, x, y), RoboTank(t, n, x, y), RoboCop(t, n, x, y), Terminator(t, n, x, y), Madbot(t, n, x, y), BlueThunder(t, n, x, y), MovingRobot(t, n, x, y), SeeingRobot(t, n, x, y), SteppingRobot(t, n, x, y), Robot(t, n, x, y)
+UltimateRobot::UltimateRobot(string t, string n, int x, int y, char s) : TerminatorRoboCop(t, n, x, y, s), RoboTank(t, n, x, y, s), RoboCop(t, n, x, y, s), Terminator(t, n, x, y, s), Madbot(t, n, x, y, s), BlueThunder(t, n, x, y, s), MovingRobot(t, n, x, y, s), SeeingRobot(t, n, x, y, s), SteppingRobot(t, n, x, y, s), Robot(t, n, x, y, s)
 {
 }
 
-void UltimateRobot::takeTurn(Battlefield &bt)
+void UltimateRobot::takeTurn(Battlefield &bt, ofstream& outfile)
 {
-    Terminator::takeTurn(bt);
+    Terminator::takeTurn(bt, outfile);
 
     for (int i = 0; i < 3; i++)
     {
-        RoboTank::takeTurn(bt);
+        RoboTank::takeTurn(bt, outfile);
     }
 }
 
 // War class
-War::War(const string &filename)
+War::War(const string &input)
 {
     robotPlaying;
     robotWaiting;
-    ifstream infile(filename);
+    ifstream infile(input);
+
     if (infile.fail())
     {
-        cout << "Error opening file: " << filename << endl;
+        cout << "Error opening file: " << input << endl;
         exit(EXIT_FAILURE);
     }
 
@@ -1107,31 +1153,31 @@ void War::initializeRobot(string tt, string tn, int tx, int ty)
 
     if (tt == "RoboCop")
     {
-        newRobot = new RoboCop(tt, tn, tx, ty);
+        newRobot = new RoboCop(tt, tn, tx, ty, 'R');
     }
     else if (tt == "Terminator")
     {
-        newRobot = new Terminator(tt, tn, tx, ty);
+        newRobot = new Terminator(tt, tn, tx, ty, 'T');
     }
     else if (tt == "TerminatorRoboCop")
     {
-        newRobot = new TerminatorRoboCop(tt, tn, tx, ty);
+        newRobot = new TerminatorRoboCop(tt, tn, tx, ty, 'N');
     }
     else if (tt == "BlueThunder")
     {
-        newRobot = new BlueThunder(tt, tn, tx, ty);
+        newRobot = new BlueThunder(tt, tn, tx, ty, 'B');
     }
     else if (tt == "Madbot")
     {
-        newRobot = new Madbot(tt, tn, tx, ty);
+        newRobot = new Madbot(tt, tn, tx, ty, 'M');
     }
     else if (tt == "RoboTank")
     {
-        newRobot = new RoboTank(tt, tn, tx, ty);
+        newRobot = new RoboTank(tt, tn, tx, ty, 'O');
     }
     else if (tt == "UltimateRobot")
     {
-        newRobot = new UltimateRobot(tt, tn, tx, ty);
+        newRobot = new UltimateRobot(tt, tn, tx, ty, 'U');
     }
     else
     {
@@ -1186,22 +1232,22 @@ void War::promoteRobot(Robot &r)
     if (r.getType() == "RoboCop" || r.getType() == "Terminator")
     {
         cout << r.getType() << " " << r.getName() << " has been upgraded to TerminatorRoboCop!" << endl;
-        promotedRobot = new TerminatorRoboCop("TerminatorRoboCop", r.getName(), r.getX(), r.getY());
+        promotedRobot = new TerminatorRoboCop("TerminatorRoboCop", r.getName(), r.getX(), r.getY(), 'N');
     }
     else if (r.getType() == "BlueThunder")
     {
         cout << r.getType() << " " << r.getName() << " has been upgraded to MadBot!" << endl;
-        promotedRobot = new Madbot("Madbot", r.getName(), r.getX(), r.getY());
+        promotedRobot = new Madbot("Madbot", r.getName(), r.getX(), r.getY(), 'M');
     }
     else if (r.getType() == "Madbot")
     {
         cout << r.getType() << " " << r.getName() << " has been upgraded to RoboTank!" << endl;
-        promotedRobot = new RoboTank("RoboTank", r.getName(), r.getX(), r.getY());
+        promotedRobot = new RoboTank("RoboTank", r.getName(), r.getX(), r.getY(), 'O');
     }
     else if (r.getType() == "TerminatorRoboCop" || r.getType() == "RoboTank")
     {
         cout << r.getType() << " " << r.getName() << " has been upgraded to UltimateRobot!" << endl;
-        promotedRobot = new UltimateRobot("UltimateRobot", r.getName(), r.getX(), r.getY());
+        promotedRobot = new UltimateRobot("UltimateRobot", r.getName(), r.getX(), r.getY(), 'U');
     }
     robotPlaying.replaceRobot(r, *promotedRobot);
     battlefield.removeRobot(r);
@@ -1209,24 +1255,34 @@ void War::promoteRobot(Robot &r)
     delete &r;
 }
 
-void War::startWar()
+void War::startWar(const string &output)
 {
+    ofstream outfile(output);
+    if (outfile.fail())
+    {
+        cout << "Error opening file: " << output << endl;
+        exit(EXIT_FAILURE);
+    }
+
     while (currentStep < totalSteps && robotsRemaining > 1)
     {
         currentStep++;
         cout << "Current step: " << currentStep << endl
              << endl;
+        outfile << "Current step: " << currentStep << endl
+                << endl;
         battlefield.displayField();
+        battlefield.displayField(outfile);
         cout << "Action:\n";
+        outfile << "Action:\n";
         for (int i = 0; i < robotPlaying.getListLength(); i++)
         {
-
             Robot *currentRobot = robotPlaying.getNodeAt(i)->getRobot();
 
             int prevX = currentRobot->getX();
             int prevY = currentRobot->getY();
 
-            currentRobot->takeTurn(battlefield);
+            currentRobot->takeTurn(battlefield, outfile);
 
             battlefield.removeRobot(prevX, prevY);
             battlefield.updatePosition(currentRobot, currentRobot->getX(), currentRobot->getY());
@@ -1257,27 +1313,38 @@ void War::startWar()
             noOfRobotPlaying++;
             cout << returnRobot->getType() << " " << returnRobot->getName() << " has respawned from the queue at position ("
                  << returnRobot->getX() << ", " << returnRobot->getY() << ").\n";
+            outfile << returnRobot->getType() << " " << returnRobot->getName() << " has respawned from the queue at position ("
+                    << returnRobot->getX() << ", " << returnRobot->getY() << ").\n";
         }
         cout << "\nLive Statistics:\n";
         cout << "Number of robots terminated by...\n";
+        outfile << "\nLive Statistics:\n";
+        outfile << "Number of robots terminated by...\n";
         for (int i = 0; i < robotPlaying.getListLength(); i++)
         {
             Robot *currentRobot = robotPlaying.getNodeAt(i)->getRobot();
             cout << currentRobot->getType() << " " << currentRobot->getName() << ": ";
+            outfile << currentRobot->getType() << " " << currentRobot->getName() << ": ";
             cout << currentRobot->getNumOfRobotTerminated() << endl;
+            outfile << currentRobot->getNumOfRobotTerminated() << endl;
         }
         cout << "\n\n";
+        outfile << "\n\n";
     }
     if (robotsRemaining <= 0)
     {
         cout << "All robots have been terminated!\n Game Over!!!\n";
+        outfile << "All robots have been terminated!\n Game Over!!!\n";
     }
     else if (currentStep >= totalSteps && robotsRemaining > 1)
     {
         cout << "The war has reached the maximum number of steps.\nDraw!!!\n";
+        outfile << "The war has reached the maximum number of steps.\nDraw!!!\n";
     }
     else
     {
         cout << "War end.\nThe winner is " << robotPlaying.getNodeAt(0)->getRobot()->getName() << "!!!\nCongratulations!!!\n";
+        outfile << "War end.\nThe winner is " << robotPlaying.getNodeAt(0)->getRobot()->getName() << "!!!\nCongratulations!!!\n";
     }
+    outfile.close();
 }

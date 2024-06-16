@@ -14,6 +14,7 @@ class Robot
 private:
     string robotName;
     string robotType;
+    char robotSymbol;
     int robotPositionX, robotPositionY;
     int remainingLives;
     Robot *robotTerminated[3];
@@ -22,15 +23,19 @@ private:
     bool upgradePermission;
 
 public:
-    Robot();                                 // Default constructor
-    Robot(string t, string n, int x, int y); // Parameterized constructor
-    Robot(const Robot &r);                   // Copy constructor
-    Robot(Robot &&r) noexcept;               // move constructor
-    Robot &operator=(const Robot &right);    // Assignment operator overloading
-    virtual ~Robot();                        // Destructor
+    Robot();                                         // Default constructor
+    Robot(string t, string n, int x, int y, char s); // Parameterized constructor
+    Robot(const Robot &r);                           // Copy constructor
+    Robot(Robot &&r) noexcept;                       // move constructor
+    Robot &operator=(const Robot &right);            // Assignment operator overloading
+    virtual ~Robot();                                // Destructor
 
     string getName() const { return robotName; } // Return robot name
     string getType() const { return robotType; } // Return robot type
+    char getSymbol() const { return robotSymbol; }
+    void setName(string n) { robotName = n; }
+    void setType(string t) { robotType = t; }
+    void setSymbol(char r) { robotSymbol = r; }
 
     int getX() const { return robotPositionX; } // Return robot x coordinate
     int getY() const { return robotPositionY; } // Return robot y coordinate
@@ -46,10 +51,10 @@ public:
     int getNumOfRobotTerminated() const { return numOfRobotTerminated; }   // return number of robot terminated
     void resetRobotTerminated();                                           // reset robot terminated to nullptr
     void resetNumOfRobotTerminated() { numOfRobotTerminated = 0; }
-    void resetCurrentNumOfRobotTerminated() {currentNumOfRobotTerminated = 0;}
+    void resetCurrentNumOfRobotTerminated() { currentNumOfRobotTerminated = 0; }
     int getCurrentNumOfRobotTerminated() const { return currentNumOfRobotTerminated; }
 
-    virtual void takeTurn(Battlefield &bt) = 0;                     // Pure virtual function
+    virtual void takeTurn(Battlefield &bt, ofstream& outfile) = 0;                     // Pure virtual function
     bool getUpgradePermission() const { return upgradePermission; } // Valid for upgrade?
     void setUpgradePermission(bool p) { upgradePermission = p; }    // Set upgradePermission
 };
@@ -130,7 +135,7 @@ class Battlefield
 {
 private:
     int width, length;
-    char emptyCell, robotCell, boundary;
+    char emptyCell, boundary;
     Robot ***cellArr;
 
 public:
@@ -143,6 +148,7 @@ public:
     int getLength() const { return length; }
 
     void displayField() const;
+    void displayField(ofstream &outfile) const;
     bool updatePosition(Robot *r, int x, int y); // need to swap pointer
 
     bool isEmpty(int x, int y) const { return cellArr[y][x] == nullptr; }
@@ -173,9 +179,9 @@ private:
 
 public:
     MovingRobot() : Robot() {}
-    MovingRobot(string n, string t, int x, int y);
-    virtual void move(Battlefield &bt);
-    virtual void takeTurn(Battlefield &bt) = 0; // Pure virtual function
+    MovingRobot(string n, string t, int x, int y, char s);
+    virtual void move(Battlefield &bt, ofstream& outfile);
+    virtual void takeTurn(Battlefield &bt, ofstream& outfile) = 0; // Pure virtual function
     virtual ~MovingRobot() {}
 };
 
@@ -184,10 +190,10 @@ class ShootingRobot : virtual public Robot
 {
 public:
     ShootingRobot() : Robot() {}
-    ShootingRobot(string t, string n, int x, int y);
+    ShootingRobot(string t, string n, int x, int y, char s);
 
-    virtual void fire(int offsetX, int offsetY, Battlefield &bt);
-    virtual void takeTurn(Battlefield &bt) = 0; // Pure virtual function
+    virtual void fire(int offsetX, int offsetY, Battlefield &bt, ofstream& outfile);
+    virtual void takeTurn(Battlefield &bt, ofstream& outfile) = 0; // Pure virtual function
     virtual ~ShootingRobot() {}
 };
 
@@ -202,14 +208,14 @@ private:
 
 public:
     SeeingRobot() : Robot() {}
-    SeeingRobot(string t, string n, int x, int y);
+    SeeingRobot(string t, string n, int x, int y, char s);
     int *getRobotDetectedX() const { return RobotDetectedX; }
     int *getRobotDetectedY() const { return RobotDetectedY; }
     bool getIsRobotDetected() const { return isRobotDetected; }
     int getNumOfRobotDetected() const { return numOfRobotDetected; }
     void resetDetection();
-    virtual void look(int offsetX, int offsetY, Battlefield &bt);
-    virtual void takeTurn(Battlefield &bt) = 0; // Pure virtual function
+    virtual void look(int offsetX, int offsetY, Battlefield &bt, ofstream& outfile);
+    virtual void takeTurn(Battlefield &bt, ofstream& outfile) = 0; // Pure virtual function
     virtual ~SeeingRobot();
 };
 
@@ -220,11 +226,11 @@ private:
     int robotStepCount;
 
 public:
-    SteppingRobot(string t, string n, int x, int y);
-    virtual void step(int coordinateX, int coordinateY, Battlefield &bt);
+    SteppingRobot(string t, string n, int x, int y, char s);
+    virtual void step(int coordinateX, int coordinateY, Battlefield &bt, ofstream& outfile);
     int getRobotStepCount() const { return robotStepCount; }
     void resetRobotStepCount() { robotStepCount = 0; }
-    virtual void takeTurn(Battlefield &bt) = 0; // Pure virtual function
+    virtual void takeTurn(Battlefield &bt, ofstream& outfile) = 0; // Pure virtual function
     virtual ~SteppingRobot() {}
 };
 
@@ -232,16 +238,16 @@ public:
 class RoboCop : virtual public MovingRobot, virtual public ShootingRobot, virtual public SeeingRobot
 {
 public:
-    RoboCop(string t, string n, int x, int y);
-    virtual void takeTurn(Battlefield &bt);
+    RoboCop(string t, string n, int x, int y, char s);
+    virtual void takeTurn(Battlefield &bt, ofstream& outfile);
 };
 
 // Terminator class
 class Terminator : virtual public MovingRobot, virtual public SeeingRobot, virtual public SteppingRobot
 {
 public:
-    Terminator(string t, string n, int x, int y);
-    virtual void takeTurn(Battlefield &bt);
+    Terminator(string t, string n, int x, int y, char s);
+    virtual void takeTurn(Battlefield &bt, ofstream& outfile);
 };
 
 // BlueThunder class
@@ -251,41 +257,68 @@ private:
     int directionCount;
 
 public:
-    BlueThunder(string t, string n, int x, int y);
-    virtual void takeTurn(Battlefield &bt);
+    BlueThunder(string t, string n, int x, int y, char s);
+    virtual void takeTurn(Battlefield &bt, ofstream& outfile);
 };
 
 // Madbot class
 class Madbot : virtual public BlueThunder
 {
 public:
-    Madbot(string t, string n, int x, int y);
-    virtual void takeTurn(Battlefield &bt);
+    Madbot(string t, string n, int x, int y, char s);
+    virtual void takeTurn(Battlefield &bt, ofstream& outfile);
 };
 
 // TerminatorRoboCop class
 class TerminatorRoboCop : virtual public RoboCop, virtual public Terminator
 {
 public:
-    TerminatorRoboCop(string t, string n, int x, int y);
-    virtual void takeTurn(Battlefield &bt);
+    TerminatorRoboCop(string t, string n, int x, int y, char s);
+    virtual void takeTurn(Battlefield &bt, ofstream& outfile);
 };
 
 // RoboTank class
 class RoboTank : virtual public Madbot
 {
 public:
-    RoboTank(string t, string n, int x, int y);
-    virtual void takeTurn(Battlefield &bt);
+    RoboTank(string t, string n, int x, int y, char s);
+    virtual void takeTurn(Battlefield &bt, ofstream& outfile);
 };
 
 // UltimateRobot class
 class UltimateRobot : public TerminatorRoboCop, public RoboTank
 {
 public:
-    UltimateRobot(string t, string n, int x, int y);
-    void takeTurn(Battlefield &bt) override;
+    UltimateRobot(string t, string n, int x, int y, char s);
+    void takeTurn(Battlefield &bt, ofstream& outfile) override;
 };
+
+// Extra robot classes
+// BomberRobot class        X 
+// Can shoot in consequent XXX area and destroy the robots
+//                          X
+class BomberMan : public MovingRobot, public ShootingRobot
+{
+public:
+    BomberMan(string t, string n, int x, int y, char s);
+    virtual void takeTurn(Battlefield &bt, ofstream& outfile);
+    virtual ~BomberMan() {}
+};
+
+// HealingBomber class
+// Increase its remaining lives by 1 every 10 rounds if its remaining lives is less than 3
+class HealingBomber : public BomberMan
+{
+private:
+    bool shieldActive;
+public:
+    HealingBomber(string t, string n, int x, int y, char s);
+    virtual void takeTurn(Battlefield &bt, ofstream& outfile) override;
+    void heal();
+    virtual ~HealingBomber() {}
+};
+
+
 
 // War class
 class War
@@ -305,7 +338,7 @@ private:
     int noOfRobotWaiting;
 
 public:
-    War(const string &filename);
+    War(const string &input);
     void initializeRobot(string tt, string tn, int tx, int ty);
     ~War() {}
 
@@ -316,7 +349,8 @@ public:
     void terminateRobot(Robot &r);
     void promoteRobot(Robot &r);
 
-    void startWar();
+    void startWar(const string &output);
 };
 
+#include "robot.cpp"
 #endif
