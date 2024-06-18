@@ -278,16 +278,16 @@ bool RobotList::removeRobot(Robot &rb)
     }
 }
 
-bool RobotList::replaceRobot(Robot &oldRobot, Robot &newRobot) // replace war replaceRobot function
+bool RobotList::replaceRobot(Robot *oldRobot, Robot *newRobot) // replace war replaceRobot function
 {
     RobotNode *nodePtr;
     RobotNode *prevNode;
-    RobotNode *newNode = new RobotNode(&newRobot);
+    RobotNode *newNode = new RobotNode(newRobot);
 
     if (!headPtr)
         return false;
 
-    if (headPtr->getRobot() == &oldRobot)
+    if (headPtr->getRobot() == oldRobot)
     {
         nodePtr = headPtr->getNext();
         delete headPtr;
@@ -298,7 +298,7 @@ bool RobotList::replaceRobot(Robot &oldRobot, Robot &newRobot) // replace war re
     else
     {
         nodePtr = headPtr;
-        while (nodePtr != nullptr && nodePtr->getRobot() != &oldRobot)
+        while (nodePtr != nullptr && nodePtr->getRobot() != oldRobot)
         {
             prevNode = nodePtr;
             nodePtr = nodePtr->getNext();
@@ -1252,7 +1252,7 @@ void War::promoteRobot(Robot &r)
         cout << r.getType() << " " << r.getName() << " has been upgraded to UltimateRobot!" << endl;
         promotedRobot = new UltimateRobot("UltimateRobot", r.getName(), r.getX(), r.getY(), 'U');
     }
-    robotPlaying.replaceRobot(r, *promotedRobot);
+    robotPlaying.replaceRobot(&r, promotedRobot);
     battlefield.removeRobot(r);
     battlefield.updatePosition(promotedRobot, promotedRobot->getX(), promotedRobot->getY());
     delete &r;
@@ -1286,6 +1286,7 @@ void War::startWar(const string &output)
             int prevY = currentRobot->getY();
 
             currentRobot->takeTurn(battlefield, outfile);
+            cout << endl;
 
             battlefield.removeRobot(prevX, prevY);
             battlefield.updatePosition(currentRobot, currentRobot->getX(), currentRobot->getY());
@@ -1320,11 +1321,12 @@ void War::startWar(const string &output)
                     << returnRobot->getX() << ", " << returnRobot->getY() << ").\n";
         }
         cout << "\nLive Statistics:\n";
-        cout << "-----------------------------\n\n";
-        outfile << "-----------------------------\n\n";
-        cout << "Number of robots terminated by...\n";
+        cout << "-----------------------------\n";
+        cout << "\nNumber of robots terminated by...\n";
+
         outfile << "\nLive Statistics:\n";
-        outfile << "Number of robots terminated by...\n";
+        outfile << "-----------------------------\n";
+        outfile << "\nNumber of robots terminated by...\n";
         for (int i = 0; i < robotPlaying.getListLength(); i++)
         {
             Robot *currentRobot = robotPlaying.getNodeAt(i)->getRobot();
@@ -1335,10 +1337,10 @@ void War::startWar(const string &output)
 
         }
 
-        cout << "-----------------------------\n";
-        outfile << "-----------------------------\n";
-        cout << "\nRemaining lives of...\n";
-        outfile << "\nRemaining lives of...\n";
+        cout << "\n-----------------------------\n";
+        outfile << "\n-----------------------------\n";
+        cout << "\nRemaining lives:\n";
+        outfile << "\nRemaining lives of:\n";
         for (int i = 0; i < robotPlaying.getListLength(); i++)
         {
             Robot *currentRobot = robotPlaying.getNodeAt(i)->getRobot();

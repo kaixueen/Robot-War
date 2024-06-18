@@ -103,7 +103,7 @@ public:
     RobotNode *getNodeAt(int position);
     void appendRobot(Robot *rb);
     bool removeRobot(Robot &rb);
-    bool replaceRobot(Robot &oldRobot, Robot &newRobot);
+    bool replaceRobot(Robot *oldRobot, Robot *newRobot);
     void displayList() const; // testing function
 };
 
@@ -315,6 +315,10 @@ public:
     void heal();
     virtual ~HealingBomber() {}
 };
+
+// Terrorist class
+// can see and bomb
+// also can heal
 */
 
 

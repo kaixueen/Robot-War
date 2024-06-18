@@ -25,6 +25,14 @@ int main()
 {
     srand(time(0));
     War newGame("test.txt");
+    cout << "             ___.           __ \n";
+    cout << "_______  ____\\_ |__   _____/  |___  _  _______ _______ \n";               
+    cout << "\\_  __ \\/  _ \\| __ \\ /  _ \\   __\\ \\/ \\/ /\\__  \\\\_  __ \\\n";
+    cout << " |  | \\(  <_> ) \\_\\ (  <_> )  |  \\     /  / __ \\|  | \\/ \n";
+    cout << " |__|   \\____/|___  /\\____/|__|   \\/\\_/  (____  /__|   \n";
+    cout << "                  \\/                          \\/\n";
+
+    
     cout << "Yo! Welcome to Robot War!!!\n\n";
     cout << "##### User Guide #####\n";
     cout << "\'R\' represents RoboCop, \'T\' represents Terminator, \'N\' represents TerminatorRoboCop,\n";
