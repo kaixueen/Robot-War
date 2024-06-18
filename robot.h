@@ -203,7 +203,6 @@ class SeeingRobot : virtual public Robot
 private:
     int *RobotDetectedX;
     int *RobotDetectedY;
-    bool isRobotDetected;
     int numOfRobotDetected;
 
 public:
@@ -211,7 +210,7 @@ public:
     SeeingRobot(string t, string n, int x, int y, char s);
     int *getRobotDetectedX() const { return RobotDetectedX; }
     int *getRobotDetectedY() const { return RobotDetectedY; }
-    bool getIsRobotDetected() const { return isRobotDetected; }
+    bool getIsRobotDetected() const { return numOfRobotDetected != 0; }
     int getNumOfRobotDetected() const { return numOfRobotDetected; }
     void resetDetection();
     virtual void look(int offsetX, int offsetY, Battlefield &bt, ofstream& outfile);
@@ -293,6 +292,7 @@ public:
     void takeTurn(Battlefield &bt, ofstream& outfile) override;
 };
 
+/*
 // Extra robot classes
 // BomberRobot class        X 
 // Can shoot in consequent XXX area and destroy the robots
@@ -309,15 +309,13 @@ public:
 // Increase its remaining lives by 1 every 10 rounds if its remaining lives is less than 3
 class HealingBomber : public BomberMan
 {
-private:
-    bool shieldActive;
 public:
     HealingBomber(string t, string n, int x, int y, char s);
     virtual void takeTurn(Battlefield &bt, ofstream& outfile) override;
     void heal();
     virtual ~HealingBomber() {}
 };
-
+*/
 
 
 // War class

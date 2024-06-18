@@ -617,7 +617,7 @@ MovingRobot::MovingRobot(string n, string t, int x, int y, char s) : Robot(n, t,
 {
 }
 
-void MovingRobot::move(Battlefield &bt, ofstream& outfile)
+void MovingRobot::move(Battlefield &bt, ofstream &outfile)
 {
     int prevX, prevY, newX, newY;
     DIRECTION direction;
@@ -678,7 +678,7 @@ ShootingRobot::ShootingRobot(string t, string n, int x, int y, char s) : Robot(t
 {
 }
 
-void ShootingRobot::fire(int offsetX, int offsetY, Battlefield &bt, ofstream& outfile)
+void ShootingRobot::fire(int offsetX, int offsetY, Battlefield &bt, ofstream &outfile)
 {
     if (offsetX == 0 && offsetY == 0)
         return;
@@ -705,7 +705,6 @@ void ShootingRobot::fire(int offsetX, int offsetY, Battlefield &bt, ofstream& ou
 // SeeingRobot class
 SeeingRobot::SeeingRobot(string t, string n, int x, int y, char s) : Robot(t, n, x, y, s)
 {
-    isRobotDetected = false;
     RobotDetectedX = new int[9];
     RobotDetectedY = new int[9];
     numOfRobotDetected = 0;
@@ -750,7 +749,6 @@ void SeeingRobot::look(int offsetX, int offsetY, Battlefield &bt, ofstream &outf
                     {
                         cout << "Position (" << checkX << ", " << checkY << ") contains an enemy robot." << endl;
                         outfile << "Position (" << checkX << ", " << checkY << ") contains an enemy robot." << endl;
-                        isRobotDetected = true;
                         RobotDetectedX[numOfRobotDetected] = checkX;
                         RobotDetectedY[numOfRobotDetected] = checkY;
                         numOfRobotDetected++;
@@ -762,9 +760,9 @@ void SeeingRobot::look(int offsetX, int offsetY, Battlefield &bt, ofstream &outf
     if (numOfRobotDetected == 0)
     {
         cout << "No robot has been detected by " << getType() << " " << getName() << " this round.\n";
-        outfile << "No robot has been detected by " << getType() << " " << getName() << " this round.\n";;
+        outfile << "No robot has been detected by " << getType() << " " << getName() << " this round.\n";
+        ;
     }
-        
 }
 
 SeeingRobot::~SeeingRobot()
@@ -779,14 +777,14 @@ SteppingRobot::SteppingRobot(string t, string n, int x, int y, char s) : Robot(t
     robotStepCount = 0;
 }
 
-void SteppingRobot::step(int coordinateX, int coordinateY, Battlefield &bt, ofstream& outfile)
+void SteppingRobot::step(int coordinateX, int coordinateY, Battlefield &bt, ofstream &outfile)
 {
     if (bt.isValid(coordinateX, coordinateY) && !bt.isEmpty(coordinateX, coordinateY))
     {
         Robot *enemyRobot = bt.getRobotAt(coordinateX, coordinateY);
-        cout << getType() << " " << getName() << " steps to (" << coordinateX << ", " << coordinateY << ") and kills "<< enemyRobot->getType() << " " << enemyRobot->getName() << "!\n";
-        outfile << getType() << " " << getName() << " steps to (" << coordinateX << ", " << coordinateY << ") and kills "<< enemyRobot->getType() << " " << enemyRobot->getName() << "!\n";
-        
+        cout << getType() << " " << getName() << " steps to (" << coordinateX << ", " << coordinateY << ") and kills " << enemyRobot->getType() << " " << enemyRobot->getName() << "!\n";
+        outfile << getType() << " " << getName() << " steps to (" << coordinateX << ", " << coordinateY << ") and kills " << enemyRobot->getType() << " " << enemyRobot->getName() << "!\n";
+
         setRobotTerminated(*enemyRobot);
         setX(coordinateX);
         setY(coordinateY);
@@ -804,7 +802,7 @@ RoboCop::RoboCop(string t, string n, int x, int y, char s) : MovingRobot(t, n, x
 {
 }
 
-void RoboCop::takeTurn(Battlefield &bt, ofstream& outfile)
+void RoboCop::takeTurn(Battlefield &bt, ofstream &outfile)
 {
     int offsetX, offsetY, targetX, targetY;
 
@@ -834,7 +832,7 @@ Terminator::Terminator(string t, string n, int x, int y, char s) : MovingRobot(t
 {
 }
 
-void Terminator::takeTurn(Battlefield &bt, ofstream& outfile)
+void Terminator::takeTurn(Battlefield &bt, ofstream &outfile)
 {
     look(0, 0, bt, outfile); // Look around the 3x3 neighborhood
 
@@ -866,7 +864,7 @@ BlueThunder::BlueThunder(string t, string n, int x, int y, char s) : ShootingRob
     directionCount = 0;
 }
 
-void BlueThunder::takeTurn(Battlefield &bt, ofstream& outfile)
+void BlueThunder::takeTurn(Battlefield &bt, ofstream &outfile)
 {
     int targetX;
     int targetY;
@@ -900,7 +898,7 @@ Madbot::Madbot(string t, string n, int x, int y, char s) : BlueThunder(t, n, x, 
 {
 }
 
-void Madbot::takeTurn(Battlefield &bt, ofstream& outfile)
+void Madbot::takeTurn(Battlefield &bt, ofstream &outfile)
 {
     int targetX;
     int targetY;
@@ -929,7 +927,7 @@ TerminatorRoboCop::TerminatorRoboCop(string t, string n, int x, int y, char s) :
 {
 }
 
-void TerminatorRoboCop::takeTurn(Battlefield &bt, ofstream& outfile)
+void TerminatorRoboCop::takeTurn(Battlefield &bt, ofstream &outfile)
 {
     Terminator::takeTurn(bt, outfile);
     int offsetX, offsetY, targetX, targetY;
@@ -956,7 +954,7 @@ RoboTank::RoboTank(string t, string n, int x, int y, char s) : Madbot(t, n, x, y
 {
 }
 
-void RoboTank::takeTurn(Battlefield &bt, ofstream& outfile)
+void RoboTank::takeTurn(Battlefield &bt, ofstream &outfile)
 {
     int offsetX, offsetY, targetX, targetY;
     while (true)
@@ -986,7 +984,7 @@ UltimateRobot::UltimateRobot(string t, string n, int x, int y, char s) : Termina
 {
 }
 
-void UltimateRobot::takeTurn(Battlefield &bt, ofstream& outfile)
+void UltimateRobot::takeTurn(Battlefield &bt, ofstream &outfile)
 {
     Terminator::takeTurn(bt, outfile);
 
@@ -995,6 +993,11 @@ void UltimateRobot::takeTurn(Battlefield &bt, ofstream& outfile)
         RoboTank::takeTurn(bt, outfile);
     }
 }
+
+// BomberMan class
+// BomberMan::BomberMan(string t, string n, int x, int y, char s) : Robot(t, n, x, y, s), MovingRobot(t, n, x, y, s), ShootingRobot(t, n, x, y, s)
+// {
+// }
 
 // War class
 War::War(const string &input)
@@ -1317,6 +1320,8 @@ void War::startWar(const string &output)
                     << returnRobot->getX() << ", " << returnRobot->getY() << ").\n";
         }
         cout << "\nLive Statistics:\n";
+        cout << "-----------------------------\n\n";
+        outfile << "-----------------------------\n\n";
         cout << "Number of robots terminated by...\n";
         outfile << "\nLive Statistics:\n";
         outfile << "Number of robots terminated by...\n";
@@ -1327,7 +1332,23 @@ void War::startWar(const string &output)
             outfile << currentRobot->getType() << " " << currentRobot->getName() << ": ";
             cout << currentRobot->getNumOfRobotTerminated() << endl;
             outfile << currentRobot->getNumOfRobotTerminated() << endl;
+
         }
+
+        cout << "-----------------------------\n";
+        outfile << "-----------------------------\n";
+        cout << "\nRemaining lives of...\n";
+        outfile << "\nRemaining lives of...\n";
+        for (int i = 0; i < robotPlaying.getListLength(); i++)
+        {
+            Robot *currentRobot = robotPlaying.getNodeAt(i)->getRobot();
+            cout << currentRobot->getType() << " " << currentRobot->getName() << ": ";
+            outfile << currentRobot->getType() << " " << currentRobot->getName() << ": ";
+            cout << currentRobot->getRemainingLives() << endl;
+            outfile << currentRobot->getRemainingLives() << endl;
+        }
+        cout << "\n-----------------------------\n";
+        outfile << "\n-----------------------------\n";
         cout << "\n\n";
         outfile << "\n\n";
     }
