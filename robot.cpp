@@ -743,12 +743,13 @@ void SeeingRobot::resetDetection()
 
 void SeeingRobot::look(int offsetX, int offsetY, Battlefield &bt, ofstream &outfile) 
 {
-
     int centerX = getX() + offsetX;
     int centerY = getY() + offsetY;
 
+    // Output seeing message
     cout << getType() << " " << getName() << " is looking around:" << endl;
     outfile << getType() << " " << getName() << " is looking around:" << endl;
+    // Check the immediate neighborhood around the center position
     for (int dy = -1; dy <= 1; ++dy)
     {
         for (int dx = -1; dx <= 1; ++dx)
@@ -762,6 +763,7 @@ void SeeingRobot::look(int offsetX, int offsetY, Battlefield &bt, ofstream &outf
                 {
                     if (!bt.isEmpty(checkX, checkY))
                     {
+                        // Output if robots were detected
                         cout << "Position (" << checkX << ", " << checkY << ") contains an enemy robot." << endl;
                         outfile << "Position (" << checkX << ", " << checkY << ") contains an enemy robot." << endl;
                         RobotDetectedX[numOfRobotDetected] = checkX;
@@ -772,6 +774,7 @@ void SeeingRobot::look(int offsetX, int offsetY, Battlefield &bt, ofstream &outf
             }
         }
     }
+    // Output if no robots were detected
     if (numOfRobotDetected == 0)
     {
         cout << "No robot has been detected by " << getType() << " " << getName() << " this round.\n";
@@ -794,9 +797,11 @@ SteppingRobot::SteppingRobot(string t, string n, int x, int y, char s) : Robot(t
 
 void SteppingRobot::step(int coordinateX, int coordinateY, Battlefield &bt, ofstream &outfile)
 {
+    // Check if the target position is valid and not empty
     if (bt.isValid(coordinateX, coordinateY) && !bt.isEmpty(coordinateX, coordinateY))
     {
         Robot *enemyRobot = bt.getRobotAt(coordinateX, coordinateY);
+        // output stepping message
         cout << getType() << " " << getName() << " steps to (" << coordinateX << ", " << coordinateY << ") and kills " << enemyRobot->getType() << " " << enemyRobot->getName() << "!\n";
         outfile << getType() << " " << getName() << " steps to (" << coordinateX << ", " << coordinateY << ") and kills " << enemyRobot->getType() << " " << enemyRobot->getName() << "!\n";
 
@@ -807,6 +812,7 @@ void SteppingRobot::step(int coordinateX, int coordinateY, Battlefield &bt, ofst
     }
     else
     {
+        // output message if no robots were stepped
         cout << "No robot has been stepped by " << getType() << " " << getName() << " this round.\n";
         outfile << "No robot has been stepped by " << getType() << " " << getName() << " this round.\n";
     }
@@ -820,17 +826,18 @@ RoboCop::RoboCop(string t, string n, int x, int y, char s) : MovingRobot(t, n, x
 void RoboCop::takeTurn(Battlefield &bt, ofstream &outfile)
 {
     int offsetX, offsetY, targetX, targetY;
-
     look(0, 0, bt, outfile); // Look at current position
-
     move(bt, outfile);
     int count = 0;
+
+    // Attempt to fire up to 3 times
     while (count < 3)
     {
         offsetX = rand() % 21 - 10; // Random offset between -10 and 10
         offsetY = rand() % 21 - 10;
         targetX = getX() + offsetX;
         targetY = getY() + offsetY;
+        // Check if the target position is within range and valid
         if (abs(offsetX) + abs(offsetY) <= 10 && bt.isValid(targetX, targetY))
         {
             fire(offsetX, offsetY, bt, outfile);
@@ -859,7 +866,7 @@ void Terminator::takeTurn(Battlefield &bt, ofstream &outfile)
         int targetX = robotCoordinateX[0];
         int targetY = robotCoordinateY[0];
 
-        // Move to and terminate the enemy robot
+        // step and terminate the enemy robot
         step(targetX, targetY, bt, outfile);
         if (getNumOfRobotTerminated() >= 3)
             setUpgradePermission(true);
@@ -892,6 +899,7 @@ void BlueThunder::takeTurn(Battlefield &bt, ofstream &outfile)
 
     while (attempts < maxAttempts)
     {
+        // Fires in one of eight directions in a clockwise sequence starting from up
         directionIndex = (directionCount + attempts) % 8;
         targetX = getX() + directions[directionIndex][0];
         targetY = getY() + directions[directionIndex][1];
@@ -924,6 +932,7 @@ void Madbot::takeTurn(Battlefield &bt, ofstream &outfile)
 
     while (invalidFire)
     {
+        // Fires in one of eight random directions.
         directionIndex = rand() % 8; // random number 0-7
         targetX = getX() + directions[directionIndex][0];
         targetY = getY() + directions[directionIndex][1];
@@ -945,9 +954,10 @@ TerminatorRoboCop::TerminatorRoboCop(string t, string n, int x, int y, char s) :
 
 void TerminatorRoboCop::takeTurn(Battlefield &bt, ofstream &outfile)
 {
-    Terminator::takeTurn(bt, outfile);
+    Terminator::takeTurn(bt, outfile);  // Step on enemy like Terminator
     int offsetX, offsetY, targetX, targetY;
     int count = 0;
+    // Fire like RoboCop
     while (count < 3)
     {
         offsetX = rand() % 21 - 10; // Random offset between -10 and 10
@@ -973,8 +983,10 @@ RoboTank::RoboTank(string t, string n, int x, int y, char s) : Madbot(t, n, x, y
 void RoboTank::takeTurn(Battlefield &bt, ofstream &outfile)
 {
     int offsetX, offsetY, targetX, targetY;
-    while (true)
+    bool invalidFire = true;
+    while (invalidFire)
     {
+        // fires at one random location in the battlefield
         // Generate offsets in the range [-width/2, width/2] and [-length/2, length/2]
         offsetX = (rand() % (bt.getWidth() * 2 + 1)) - bt.getWidth();
         offsetY = (rand() % (bt.getLength() * 2 + 1)) - bt.getLength();
@@ -986,7 +998,7 @@ void RoboTank::takeTurn(Battlefield &bt, ofstream &outfile)
             fire(offsetX, offsetY, bt, outfile);
             if (getNumOfRobotTerminated() >= 3)
                 setUpgradePermission(true);
-            break;
+            invalidFire = false;
         }
     }
 }
