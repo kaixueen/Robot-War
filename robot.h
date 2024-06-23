@@ -30,33 +30,36 @@ public:
     Robot &operator=(const Robot &right);            // Assignment operator overloading
     virtual ~Robot();                                // Destructor
 
-    string getName() const { return robotName; } // Return robot name
-    string getType() const { return robotType; } // Return robot type
+    string getName() const { return robotName; }
+    string getType() const { return robotType; }
     char getSymbol() const { return robotSymbol; }
     void setName(string n) { robotName = n; }
     void setType(string t) { robotType = t; }
     void setSymbol(char r) { robotSymbol = r; }
 
-    int getX() const { return robotPositionX; } // Return robot x coordinate
-    int getY() const { return robotPositionY; } // Return robot y coordinate
-    void setX(int x) { robotPositionX = x; }    // Set robot x coordinate
-    void setY(int y) { robotPositionY = y; }    // Set robot y coordinate
+    int getX() const { return robotPositionX; }
+    int getY() const { return robotPositionY; }
+    void setX(int x) { robotPositionX = x; }
+    void setY(int y) { robotPositionY = y; }
 
-    bool stillGotLive() const { return remainingLives > 0; } // Remaining lives > 0?
-    int getRemainingLives() const { return remainingLives; } // Return remaining lives
-    void setRemainingLives(int l) { remainingLives = l; }    // Set remaining lives
+    bool stillGotLive() const { return remainingLives > 0; }
+    int getRemainingLives() const { return remainingLives; }
+    void setRemainingLives(int l) { remainingLives = l; }
 
-    void setRobotTerminated(Robot &r);                                     // store robot terminated
-    Robot &getRobotTerminated(int n) const { return *robotTerminated[n]; } // return robot terminated
-    int getNumOfRobotTerminated() const { return numOfRobotTerminated; }   // return number of robot terminated
-    void resetRobotTerminated();                                           // reset robot terminated to nullptr
+    // Keep track of robot terminated by the robot
+    void setRobotTerminated(Robot &r);
+    Robot &getRobotTerminated(int n) const { return *robotTerminated[n]; }
+    int getNumOfRobotTerminated() const { return numOfRobotTerminated; }
+    void resetRobotTerminated();
     void resetNumOfRobotTerminated() { numOfRobotTerminated = 0; }
     void resetCurrentNumOfRobotTerminated() { currentNumOfRobotTerminated = 0; }
     int getCurrentNumOfRobotTerminated() const { return currentNumOfRobotTerminated; }
 
-    virtual void takeTurn(Battlefield &bt, ofstream &outfile) = 0;  // Pure virtual function
-    bool getUpgradePermission() const { return upgradePermission; } // Valid for upgrade?
-    void setUpgradePermission(bool p) { upgradePermission = p; }    // Set upgradePermission
+    virtual void takeTurn(Battlefield &bt, ofstream &outfile) = 0; // Pure virtual function
+
+    // Manage upgrade permission of robot
+    bool getUpgradePermission() const { return upgradePermission; }
+    void setUpgradePermission(bool p) { upgradePermission = p; }
 };
 
 // RobotNode class (for linked list and queue implementation)
@@ -83,7 +86,7 @@ public:
     RobotNode *getNext() const { return next; }
 };
 
-// RobotList (linked list)
+// RobotList (linked list that keep track of robots in game)
 class RobotList
 {
 private:
@@ -103,12 +106,12 @@ public:
     RobotNode *getNodeAt(int position);
     void appendRobot(Robot *rb);
     bool removeRobot(Robot &rb);
-    bool replaceRobot(Robot *oldRobot, Robot *newRobot);
-    void displayList() const; // testing function
+    bool replaceRobot(Robot *oldRobot, Robot *newRobot); //  replace current robot with another robot in the list
+    void displayList() const;                            // testing function that will soon to be removed
 };
 
-// RobotQueue class
-class RobotQueue // have some bug, need to be fixed
+// RobotQueue class (keep track of robot that is being destroyed and waiting to respawn)
+class RobotQueue
 {
 private:
     RobotNode *front;
@@ -147,15 +150,15 @@ public:
     int getWidth() const { return width; }
     int getLength() const { return length; }
 
-    void displayField() const;
-    void displayField(ofstream &outfile) const;
-    bool updatePosition(Robot *r, int x, int y); // need to swap pointer
+    void displayField() const;                   // for terminal display
+    void displayField(ofstream &outfile) const;  // for file output
+    bool updatePosition(Robot *r, int x, int y); // swap pointer to update robot position in battlefield
 
     bool isEmpty(int x, int y) const { return cellArr[y][x] == nullptr; }
     bool isValid(int x, int y) const { return x >= 0 && x < width && y >= 0 && y < length; }
 
-    void removeRobot(const Robot &r) { cellArr[r.getY()][r.getX()] = nullptr; }
-    void removeRobot(int x, int y) { cellArr[y][x] = nullptr; }
+    void removeRobot(const Robot &r) { cellArr[r.getY()][r.getX()] = nullptr; } // remove a robot from the battlefield by the robot
+    void removeRobot(int x, int y) { cellArr[y][x] = nullptr; }                 // remove a robot from the battlefield by the robot's coordinate
     Robot *getRobotAt(int x, int y);
 
     ~Battlefield();
@@ -208,11 +211,11 @@ private:
 public:
     SeeingRobot() : Robot() {}
     SeeingRobot(string t, string n, int x, int y, char s);
-    int *getRobotDetectedX() const { return RobotDetectedX; }
-    int *getRobotDetectedY() const { return RobotDetectedY; }
+    int *getRobotDetectedX() const { return RobotDetectedX; } // get coordinate X of robot detected
+    int *getRobotDetectedY() const { return RobotDetectedY; } //  get coordinate Y of robot detected
     bool getIsRobotDetected() const { return numOfRobotDetected != 0; }
     int getNumOfRobotDetected() const { return numOfRobotDetected; }
-    void resetDetection();
+    void resetDetection(); // reset robot detected because robots' positions change every turn
     virtual void look(int offsetX, int offsetY, Battlefield &bt, ofstream &outfile);
     virtual void takeTurn(Battlefield &bt, ofstream &outfile) = 0; // Pure virtual function
     virtual ~SeeingRobot();
@@ -234,6 +237,7 @@ public:
 };
 
 // RoboCop class
+// looks at its current position, moves (once) and fires (three times) at random positions
 class RoboCop : virtual public MovingRobot, virtual public ShootingRobot, virtual public SeeingRobot
 {
 public:
@@ -242,6 +246,7 @@ public:
 };
 
 // Terminator class
+// looks at the immediate neighbourhood, move or steps to one of the neighbours.
 class Terminator : virtual public MovingRobot, virtual public SeeingRobot, virtual public SteppingRobot
 {
 public:
@@ -250,6 +255,7 @@ public:
 };
 
 // BlueThunder class
+// fires at one neighbouring cell starts from the location up and continue with a new location clockwise
 class BlueThunder : virtual public ShootingRobot
 {
 private:
@@ -261,6 +267,7 @@ public:
 };
 
 // Madbot class
+// fires at only one of its immediate neighbouring locations surrounding it randomly
 class Madbot : virtual public BlueThunder
 {
 public:
@@ -269,6 +276,7 @@ public:
 };
 
 // TerminatorRoboCop class
+// fire like RoboCop and step on other robots like Terminator
 class TerminatorRoboCop : virtual public RoboCop, virtual public Terminator
 {
 public:
@@ -277,6 +285,7 @@ public:
 };
 
 // RoboTank class
+// fires at one random location
 class RoboTank : virtual public Madbot
 {
 public:
@@ -285,6 +294,7 @@ public:
 };
 
 // UltimateRobot class
+// moves like the TerminatorRoboCop, stepping robots and shooting randomly at 3 locations in the battlefield
 class UltimateRobot : public TerminatorRoboCop, public RoboTank
 {
 public:
@@ -294,7 +304,7 @@ public:
 
 // Extra robot classes
 // BomberRobot class        X
-// Can shoot in consequent XXX area and destroy the robots
+// Can shoot in consequent XXX area and destroy the robots in the positions
 //                          X
 class BomberMan : virtual public MovingRobot, virtual public ShootingRobot
 {
@@ -310,7 +320,7 @@ public:
 };
 
 // HealingBomber class
-// Increase its remaining lives by 1 every 10 rounds if its remaining lives is less than 3
+// Fire like BomberMan and can increase its remaining lives by 1 every 10 rounds if its remaining lives is less than 3
 class HealingBomber : virtual public BomberMan
 {
 private:
@@ -324,9 +334,7 @@ public:
 };
 
 // Terrorist class
-// can see and step, if no step, move
-// can bomb
-// also can heal
+// Fire like BomberMan, heal like HealingBomber, see and step the robot its detected
 class Terrorist : public HealingBomber, public SeeingRobot, public SteppingRobot
 {
 public:
@@ -354,17 +362,17 @@ private:
 
 public:
     War(const string &input);
-    void initializeRobot(string tt, string tn, int tx, int ty);
+    void initializeRobot(string tt, string tn, int tx, int ty); // initialize robot based on its type
     ~War() {}
 
     bool isPlayingEmpty() const { return robotPlaying.getListLength() == 0; }
     bool isWaitingEmpty() const { return robotWaiting.getQueueLength() == 0; }
 
-    void changePosition(Robot *&r);
-    void terminateRobot(Robot &r, ofstream &outfile);
-    void promoteRobot(Robot &r, ofstream &outfile);
+    void changePosition(Robot *&r);                   // randomly change position of respawned robot after it exits the queue
+    void terminateRobot(Robot &r, ofstream &outfile); // terminate robot that has been killed or place it to waiting queue if remaining lives > 0
+    void promoteRobot(Robot &r, ofstream &outfile);   // promote robot based on its initial type
 
-    void startWar(const string &output);
+    void startWar(const string &output); // implement game logic
 };
 
 #include "robot.cpp"

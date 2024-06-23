@@ -5,7 +5,7 @@
 using namespace std;
 
 // Robot class
-Robot::Robot()
+Robot::Robot() // default constructor
 {
     robotName = "";
     robotType = "";
@@ -147,7 +147,7 @@ RobotList::RobotList(const RobotList &rl) // copy constructor
     }
 }
 
-RobotList::RobotList(RobotList &&rl)
+RobotList::RobotList(RobotList &&rl) // Move constructor
 {
     headPtr = rl.headPtr;
     robotCount = rl.robotCount;
@@ -155,7 +155,7 @@ RobotList::RobotList(RobotList &&rl)
     rl.robotCount = 0;
 }
 
-RobotList &RobotList::operator=(const RobotList &rl)
+RobotList &RobotList::operator=(const RobotList &rl) // copy assignment operator
 {
     if (this != &rl)
     {
@@ -193,7 +193,7 @@ RobotList &RobotList::operator=(const RobotList &rl)
     return *this;
 }
 
-RobotList::~RobotList()
+RobotList::~RobotList() // destructor
 {
     RobotNode *nodePtr;
     RobotNode *nextNode;
@@ -216,12 +216,12 @@ RobotNode *RobotList::getNodeAt(int position)
         {
             nodePtr = nodePtr->getNext();
         }
-        return nodePtr;
+        return nodePtr; // return robot ptr at the position
     }
     return nullptr;
 }
 
-void RobotList::appendRobot(Robot *rb)
+void RobotList::appendRobot(Robot *rb) // append robot to the linked list
 {
     RobotNode *newNode = new RobotNode(rb); // To point to a new node
 
@@ -239,7 +239,7 @@ void RobotList::appendRobot(Robot *rb)
     newNode = nullptr;
 }
 
-bool RobotList::removeRobot(Robot &rb)
+bool RobotList::removeRobot(Robot &rb) // remove robot from the linked list
 {
     RobotNode *nodePtr;  // To traverse the list
     RobotNode *prevNode; // To point to the previous node
@@ -249,8 +249,6 @@ bool RobotList::removeRobot(Robot &rb)
 
     if (headPtr->getRobot() == &rb)
     {
-        // headPtr = headPtr->getNext();
-        // headPtr = nodePtr;
         nodePtr = headPtr;
         headPtr = headPtr->getNext();
         nodePtr->setRobot(nullptr);
@@ -278,7 +276,7 @@ bool RobotList::removeRobot(Robot &rb)
     }
 }
 
-bool RobotList::replaceRobot(Robot *oldRobot, Robot *newRobot) // replace war replaceRobot function
+bool RobotList::replaceRobot(Robot *oldRobot, Robot *newRobot) // replace robot in the list with another robot
 {
     RobotNode *nodePtr;
     RobotNode *prevNode;
@@ -327,7 +325,7 @@ void RobotList::displayList() const // testing function
 }
 
 // RobotQueue class
-RobotQueue::RobotQueue()
+RobotQueue::RobotQueue() // default constructor
 {
     front = nullptr;
     rear = nullptr;
@@ -372,12 +370,12 @@ RobotQueue &RobotQueue::operator=(const RobotQueue &rq)
     return *this;
 }
 
-RobotQueue::~RobotQueue()
+RobotQueue::~RobotQueue() // destructor
 {
     clear();
 }
 
-void RobotQueue::enqueue(Robot *rb)
+void RobotQueue::enqueue(Robot *rb) // enqueue robot to the queue
 {
     RobotNode *newNode = new RobotNode(rb);
     if (isEmpty())
@@ -394,7 +392,7 @@ void RobotQueue::enqueue(Robot *rb)
     numRobots++;
 }
 
-void RobotQueue::dequeue(Robot *&rb)
+void RobotQueue::dequeue(Robot *&rb) // dequeue robot from the queue
 {
     if (isEmpty())
     {
@@ -442,7 +440,7 @@ void RobotQueue::clear()
 }
 
 // Battlefield class
-Battlefield::Battlefield()
+Battlefield::Battlefield() // default constructor
 {
     width = 0;
     length = 0;
@@ -450,26 +448,29 @@ Battlefield::Battlefield()
     cellArr = nullptr;
 }
 
-Battlefield::Battlefield(int w, int l, RobotList &rl)
+Battlefield::Battlefield(int w, int l, RobotList &rl) // parameterized constructor
 {
     width = w;
     length = l;
     emptyCell = ' ';
     boundary = '*';
-    cellArr = new Robot **[length];
+    cellArr = new Robot **[length]; // initialize cellArr as a two dimensional array of robot ptr for battlefield display
 
+    // Initialize the battlefield grid
     for (int i = 0; i < length; i++)
     {
         cellArr[i] = new Robot *[width];
         for (int j = 0; j < width; j++)
         {
-            cellArr[i][j] = nullptr;
+            cellArr[i][j] = nullptr; // set default ptr to nullptr
         }
     }
 
+    // If there are no robots in the list, return
     if (rl.getListLength() == 0)
         return;
 
+    // Else place robots on the battlefield
     int tempX, tempY;
     Robot *tempR = nullptr;
     for (int i = 0; i < rl.getListLength(); i++)
@@ -483,10 +484,11 @@ Battlefield::Battlefield(int w, int l, RobotList &rl)
     }
 }
 
-Battlefield &Battlefield::operator=(const Battlefield &right)
+Battlefield &Battlefield::operator=(const Battlefield &right) // copy assignment operator
 {
     if (this != &right)
     {
+        // Delete the current battlefield grid
         for (int i = 0; i < length; ++i)
         {
             for (int j = 0; j < width; ++j)
@@ -502,8 +504,10 @@ Battlefield &Battlefield::operator=(const Battlefield &right)
         emptyCell = right.emptyCell;
         boundary = right.boundary;
 
+        // Allocate memory for the new battlefield grid
         cellArr = new Robot **[length];
 
+        // Initialize the new battlefield grid
         for (int i = 0; i < length; i++)
         {
             cellArr[i] = new Robot *[width];
@@ -520,12 +524,14 @@ Battlefield &Battlefield::operator=(const Battlefield &right)
     return *this;
 }
 
-void Battlefield::displayField() const
+void Battlefield::displayField() const // output for terminal
 {
+    // Print the top boundary
     for (int i = 0; i < width + 2; i++)
         cout << boundary;
     cout << endl;
 
+    // Print each row of the battlefield
     for (int i = 0; i < length; i++)
     {
         for (int j = 0; j < width; j++)
@@ -543,12 +549,13 @@ void Battlefield::displayField() const
         }
     }
 
+    // Print the bottom boundary
     for (int i = 0; i < width + 2; i++)
         cout << boundary;
     cout << endl;
 }
 
-void Battlefield::displayField(ofstream &outfile) const
+void Battlefield::displayField(ofstream &outfile) const // output for file
 {
     for (int i = 0; i < width + 2; i++)
         outfile << boundary;
@@ -576,15 +583,15 @@ void Battlefield::displayField(ofstream &outfile) const
     outfile << endl;
 }
 
-bool Battlefield::updatePosition(Robot *r, int x, int y)
+bool Battlefield::updatePosition(Robot *r, int x, int y) // update robot position every turn
 {
     if (r == nullptr)
         return false;
 
     if (isValid(x, y) && isEmpty(x, y))
     {
-        cellArr[r->getY()][r->getX()] = nullptr;
-        cellArr[y][x] = r;
+        cellArr[r->getY()][r->getX()] = nullptr; // remove previous position
+        cellArr[y][x] = r;                       // set new position
         r->setX(x);
         r->setY(y);
         return true;
@@ -599,7 +606,7 @@ Robot *Battlefield::getRobotAt(int x, int y)
     return nullptr;
 }
 
-Battlefield::~Battlefield()
+Battlefield::~Battlefield() // destructor
 {
     for (int i = 0; i < length; ++i)
     {
@@ -622,12 +629,13 @@ void MovingRobot::move(Battlefield &bt, ofstream &outfile)
     int prevX, prevY, newX, newY;
     DIRECTION direction;
     bool invalidMove = true;
-    while (invalidMove)
+
+    while (invalidMove) // Loop until a valid move is found
     {
         newX = getX();
         newY = getY();
-        direction = static_cast<DIRECTION>(rand() % 8);
-        switch (direction)
+        direction = static_cast<DIRECTION>(rand() % 8); // Randomly select a direction
+        switch (direction)                              // Update coordinates based on the direction
         {
         case up:
             newY += 1;
@@ -657,7 +665,7 @@ void MovingRobot::move(Battlefield &bt, ofstream &outfile)
             newX -= 1;
             newY += 1;
         }
-        if (bt.isValid(newX, newY) && bt.isEmpty(newX, newY))
+        if (bt.isValid(newX, newY) && bt.isEmpty(newX, newY)) // Check if the new position is valid and empty
         {
             prevX = getX();
             prevY = getY();
@@ -669,6 +677,7 @@ void MovingRobot::move(Battlefield &bt, ofstream &outfile)
             invalidMove = false;
         }
     }
+    // output the move information
     cout << getType() << " " << getName() << " move to (" << newX << ", " << newY << ").\n";
     outfile << getType() << " " << getName() << " move to (" << newX << ", " << newY << ").\n";
 }
@@ -680,22 +689,26 @@ ShootingRobot::ShootingRobot(string t, string n, int x, int y, char s) : Robot(t
 
 void ShootingRobot::fire(int offsetX, int offsetY, Battlefield &bt, ofstream &outfile)
 {
-    if (offsetX == 0 && offsetY == 0)
+    if (offsetX == 0 && offsetY == 0) // Cannot fire at itself
         return;
     int targetX = getX() + offsetX;
     int targetY = getY() + offsetY;
 
+    // Check if the target position is valid
     if (bt.isValid(targetX, targetY))
     {
+        // Check if the position contains robot
         if (!bt.isEmpty(targetX, targetY))
         {
             Robot *enemyRobot = bt.getRobotAt(targetX, targetY);
+            // Output the firing result
             cout << getType() << " " << getName() << " fires at (" << targetX << ", " << targetY << ") and destroys " << enemyRobot->getType() << " " << enemyRobot->getName() << "!" << endl;
             outfile << getType() << " " << getName() << " fires at (" << targetX << ", " << targetY << ") and destroys " << enemyRobot->getType() << " " << enemyRobot->getName() << "!" << endl;
             setRobotTerminated(*enemyRobot);
         }
         else
         {
+            // Output the firing result
             cout << getType() << " " << getName() << " fires at (" << targetX << ", " << targetY << ") but the position is empty." << endl;
             outfile << getType() << " " << getName() << " fires at (" << targetX << ", " << targetY << ") but the position is empty." << endl;
         }
@@ -705,6 +718,7 @@ void ShootingRobot::fire(int offsetX, int offsetY, Battlefield &bt, ofstream &ou
 // SeeingRobot class
 SeeingRobot::SeeingRobot(string t, string n, int x, int y, char s) : Robot(t, n, x, y, s)
 {
+    // Keep track of positions of robots detected
     RobotDetectedX = new int[9];
     RobotDetectedY = new int[9];
     numOfRobotDetected = 0;
@@ -718,6 +732,7 @@ SeeingRobot::SeeingRobot(string t, string n, int x, int y, char s) : Robot(t, n,
 
 void SeeingRobot::resetDetection()
 {
+    // clear the content of RobotDetected
     for (int i = 0; i < 9; i++)
     {
         RobotDetectedX[i] = -1;
@@ -726,7 +741,7 @@ void SeeingRobot::resetDetection()
     numOfRobotDetected = 0;
 }
 
-void SeeingRobot::look(int offsetX, int offsetY, Battlefield &bt, ofstream &outfile) // need to reset the robot detected every turn, does it look at the offset position, if not only immediate neighbourhood
+void SeeingRobot::look(int offsetX, int offsetY, Battlefield &bt, ofstream &outfile) 
 {
 
     int centerX = getX() + offsetX;
@@ -740,7 +755,7 @@ void SeeingRobot::look(int offsetX, int offsetY, Battlefield &bt, ofstream &outf
         {
             int checkX = centerX + dx;
             int checkY = centerY + dy;
-
+            // Check the immediate neighborhood around the center position
             if (checkX != getX() || checkY != getY())
             {
                 if (bt.isValid(checkX, checkY))
@@ -903,10 +918,11 @@ void Madbot::takeTurn(Battlefield &bt, ofstream &outfile)
     int targetX;
     int targetY;
     int directionIndex;
+    bool invalidFire = true;
 
     const int directions[8][2] = {{0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1}, {-1, 0}, {-1, 1}};
 
-    while (true)
+    while (invalidFire)
     {
         directionIndex = rand() % 8; // random number 0-7
         targetX = getX() + directions[directionIndex][0];
@@ -917,7 +933,7 @@ void Madbot::takeTurn(Battlefield &bt, ofstream &outfile)
             fire(directions[directionIndex][0], directions[directionIndex][1], bt, outfile);
             if (getNumOfRobotTerminated() >= 3)
                 setUpgradePermission(true);
-            break;
+            invalidFire = false;
         }
     }
 }
@@ -1030,7 +1046,7 @@ HealingBomber::HealingBomber(string t, string n, int x, int y, char s) : Robot(t
 
 void HealingBomber::takeTurn(Battlefield &bt, ofstream &outfile)
 {
-    if (healingTurn >= 9)   // heal at round 10
+    if (healingTurn >= 9) // heal at round 10
     {
         heal(outfile);
         healingTurn = 0;
@@ -1319,7 +1335,7 @@ void War::terminateRobot(Robot &r, ofstream &outfile)
         robotWaiting.enqueue(&r);
         noOfRobotWaiting++;
     }
-    cout <<  endl;
+    cout << endl;
     outfile << endl;
 }
 
@@ -1355,7 +1371,7 @@ void War::promoteRobot(Robot &r, ofstream &outfile)
     robotPlaying.replaceRobot(&r, promotedRobot);
     battlefield.removeRobot(r);
     battlefield.updatePosition(promotedRobot, promotedRobot->getX(), promotedRobot->getY());
-    cout <<  endl;
+    cout << endl;
     outfile << endl;
     delete &r;
 }
