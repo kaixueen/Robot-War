@@ -356,7 +356,6 @@ private:
     int robotsDied;
 
     RobotList robotPlaying;
-
     RobotQueue robotWaiting;
     int noOfRobotWaiting;
 
