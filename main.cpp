@@ -24,7 +24,7 @@ using namespace std;
 int main()
 {
     srand(time(0));          // initialize random seed
-    War newGame("test.txt"); // create War object newGame
+    War newGame("input.txt"); // create War object newGame
     cout << "             ___.           __ \n";
     cout << "_______  ____\\_ |__   _____/  |___  _  _______ _______ \n";
     cout << "\\_  __ \\/  _ \\| __ \\ /  _ \\   __\\ \\/ \\/ /\\__  \\\\_  __ \\\n";

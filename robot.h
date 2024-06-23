@@ -107,7 +107,7 @@ public:
     void appendRobot(Robot *rb);
     bool removeRobot(Robot &rb);
     bool replaceRobot(Robot *oldRobot, Robot *newRobot); //  replace current robot with another robot in the list
-    void displayList() const;                            // testing function that will soon to be removed
+    void displayList() const;                            // function for testing purpose
 };
 
 // RobotQueue class (keep track of robot that is being destroyed and waiting to respawn)
@@ -126,8 +126,8 @@ public:
     ~RobotQueue();
 
     // Queue operations
-    void enqueue(Robot *);
-    void dequeue(Robot *&);
+    void enqueue(Robot *rb);
+    void dequeue(Robot *&rb);
     bool isEmpty() const;
     int getQueueLength() const { return numRobots; }
     void clear();
@@ -314,7 +314,7 @@ private:
 public:
     BomberMan(string t, string n, int x, int y, char s);
     virtual void takeTurn(Battlefield &bt, ofstream &outfile);
-    bool getMovePermission() { return movePermission; }
+    bool getMovePermission() const { return movePermission; }
     void setMovePermission(bool m) { movePermission = m; }
     virtual ~BomberMan() {}
 };
@@ -366,12 +366,10 @@ public:
 
     bool isPlayingEmpty() const { return robotPlaying.getListLength() == 0; }
     bool isWaitingEmpty() const { return robotWaiting.getQueueLength() == 0; }
-
     void changePosition(Robot *&r);                   // randomly change position of respawned robot after it exits the queue
     void terminateRobot(Robot &r, ofstream &outfile); // terminate robot that has been killed or place it to waiting queue if remaining lives > 0
     void promoteRobot(Robot &r, ofstream &outfile);   // promote robot based on its initial type
-
-    void startWar(const string &output); // implement game logic
+    void startWar(const string &output);              // implement game logic
 };
 
 #include "robot.cpp"

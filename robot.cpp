@@ -638,32 +638,32 @@ void MovingRobot::move(Battlefield &bt, ofstream &outfile)
         switch (direction)                              // Update coordinates based on the direction
         {
         case up:
-            newY += 1;
+            newY -= 1;
             break;
         case upright:
             newX += 1;
-            newY += 1;
+            newY -= 1;
             break;
         case right:
             newX += 1;
             break;
         case downright:
             newX += 1;
-            newY -= 1;
+            newY += 1;
             break;
         case down:
-            newY -= 1;
+            newY += 1;
             break;
         case downleft:
             newX -= 1;
-            newY -= 1;
+            newY += 1;
             break;
         case left:
             newX -= 1;
             break;
         case upleft:
             newX -= 1;
-            newY += 1;
+            newY -= 1;
         }
         if (bt.isValid(newX, newY) && bt.isEmpty(newX, newY)) // Check if the new position is valid and empty
         {
@@ -895,7 +895,7 @@ void BlueThunder::takeTurn(Battlefield &bt, ofstream &outfile)
     const int maxAttempts = 8; // Maximum attempts to find a valid direction
 
     // Define the firing directions in a clockwise sequence starting from up
-    const int directions[8][2] = {{0, 1}, {1, 1}, {1, 0}, {1, -1}, {0, -1}, {-1, -1}, {-1, 0}, {-1, 1}};
+    const int directions[8][2] = {{0, -1}, {1, -1}, {1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}};
 
     while (attempts < maxAttempts)
     {
