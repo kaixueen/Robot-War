@@ -37,7 +37,8 @@ int main()
     cout << "##### User Guide #####\n";
     cout << "\'R\' represents RoboCop, \'T\' represents Terminator, \'N\' represents TerminatorRoboCop,\n";
     cout << "\'B\' represents BlueThunder, \'M\' represents Madbot, \'O\' represents RoboTank,\n";
-    cout << "\'U\' represents UltimateRobot.\n\n";
+    cout << "\'U\' represents UltimateRobot, \'X\' represents BomberMan, \'H\' represents HealingBomber,\n";
+    cout << "\'Y\' represents Terrorist.\n\n";
     cout << "Now... War Start!\n\n";
 
     newGame.startWar("output.txt");

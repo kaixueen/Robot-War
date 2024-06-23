@@ -7,30 +7,38 @@ Current step: 1
 *  B       *
 *          *
 *          *
-*   M      *
+*   X      *
 *          *
 *          *
 *          *
 ************
 Action:
-Madbot Kidd fires at (3, 7) but the position is empty.
-RoboTank Jet fires at (4, 8) but the position is empty.
+BomberMan Kidd fires at (9, 4) but the position is empty.
+BomberMan Kidd fires at (8, 4) but the position is empty.
+BomberMan Kidd fires at (9, 3) but the position is empty.
+BomberMan Kidd fires at (9, 5) but the position is empty.
+BomberMan Kidd move to (3, 7).
+RoboTank Jet fires at (4, 0) but the position is empty.
 Terminator Alpha is looking around:
 Position (2, 3) contains an enemy robot.
 Terminator Alpha steps to (2, 3) and kills BlueThunder Beta!
+BlueThunder Beta has been killed.
+BlueThunder Beta's lives reduced by 1
+BlueThunder Beta enter the waiting queue
+
 RoboCop Star is looking around:
 No robot has been detected by RoboCop Star this round.
-RoboCop Star move to (4, 3).
-RoboCop Star fires at (4, 7) but the position is empty.
-RoboCop Star fires at (2, 4) but the position is empty.
-RoboCop Star fires at (8, 7) but the position is empty.
-BlueThunder Beta has respawned from the queue at position (8, 9).
+RoboCop Star move to (6, 2).
+RoboCop Star fires at (1, 3) but the position is empty.
+RoboCop Star fires at (0, 2) but the position is empty.
+RoboCop Star fires at (8, 8) but the position is empty.
+BlueThunder Beta has respawned from the queue at position (5, 0).
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-Madbot Kidd: 0
+BomberMan Kidd: 0
 RoboTank Jet: 0
 Terminator Alpha: 1
 RoboCop Star: 0
@@ -39,7 +47,7 @@ BlueThunder Beta: 0
 -----------------------------
 
 Remaining lives of:
-Madbot Kidd: 3
+BomberMan Kidd: 3
 RoboTank Jet: 3
 Terminator Alpha: 3
 RoboCop Star: 3
@@ -51,36 +59,40 @@ BlueThunder Beta: 2
 Current step: 2
 
 ************
-*          *
+*     B    *
 * O        *
-*          *
-*  T R     *
-*          *
-*          *
-*   M      *
+*      R   *
+*  T       *
 *          *
 *          *
-*        B *
+*          *
+*   X      *
+*          *
+*          *
 ************
 Action:
-Madbot Kidd fires at (2, 5) but the position is empty.
-RoboTank Jet fires at (7, 3) but the position is empty.
+BomberMan Kidd fires at (6, 9) but the position is empty.
+BomberMan Kidd fires at (5, 9) but the position is empty.
+BomberMan Kidd fires at (7, 9) but the position is empty.
+BomberMan Kidd fires at (6, 8) but the position is empty.
+BomberMan Kidd move to (2, 8).
+RoboTank Jet fires at (9, 0) but the position is empty.
 Terminator Alpha is looking around:
 No robot has been detected by Terminator Alpha this round.
-Terminator Alpha move to (3, 4).
+Terminator Alpha move to (1, 4).
 RoboCop Star is looking around:
-Position (3, 4) contains an enemy robot.
-RoboCop Star move to (3, 3).
+No robot has been detected by RoboCop Star this round.
+RoboCop Star move to (7, 2).
+RoboCop Star fires at (0, 0) but the position is empty.
+RoboCop Star fires at (7, 0) but the position is empty.
 RoboCop Star fires at (3, 0) but the position is empty.
-RoboCop Star fires at (2, 6) but the position is empty.
-RoboCop Star fires at (9, 6) but the position is empty.
-BlueThunder Beta fires at (9, 9) but the position is empty.
+BlueThunder Beta fires at (5, 1) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-Madbot Kidd: 0
+BomberMan Kidd: 0
 RoboTank Jet: 0
 Terminator Alpha: 1
 RoboCop Star: 0
@@ -89,7 +101,7 @@ BlueThunder Beta: 0
 -----------------------------
 
 Remaining lives of:
-Madbot Kidd: 3
+BomberMan Kidd: 3
 RoboTank Jet: 3
 Terminator Alpha: 3
 RoboCop Star: 3
@@ -101,36 +113,41 @@ BlueThunder Beta: 2
 Current step: 3
 
 ************
-*          *
+*     B    *
 * O        *
+*       R  *
 *          *
-*   R      *
-*   T      *
-*          *
-*   M      *
+* T        *
 *          *
 *          *
-*        B *
+*          *
+*  X       *
+*          *
 ************
 Action:
-Madbot Kidd fires at (3, 5) but the position is empty.
-RoboTank Jet fires at (0, 5) but the position is empty.
+BomberMan Kidd fires at (7, 6) but the position is empty.
+BomberMan Kidd fires at (6, 6) but the position is empty.
+BomberMan Kidd fires at (8, 6) but the position is empty.
+BomberMan Kidd fires at (7, 5) but the position is empty.
+BomberMan Kidd fires at (7, 7) but the position is empty.
+BomberMan Kidd move to (1, 7).
+RoboTank Jet fires at (6, 9) but the position is empty.
 Terminator Alpha is looking around:
 No robot has been detected by Terminator Alpha this round.
 Terminator Alpha move to (2, 4).
 RoboCop Star is looking around:
-Position (2, 4) contains an enemy robot.
-RoboCop Star move to (2, 3).
-RoboCop Star fires at (2, 6) but the position is empty.
-RoboCop Star fires at (7, 5) but the position is empty.
-RoboCop Star fires at (8, 1) but the position is empty.
-BlueThunder Beta fires at (9, 9) but the position is empty.
+No robot has been detected by RoboCop Star this round.
+RoboCop Star move to (7, 3).
+RoboCop Star fires at (1, 6) but the position is empty.
+RoboCop Star fires at (2, 8) but the position is empty.
+RoboCop Star fires at (2, 3) but the position is empty.
+BlueThunder Beta fires at (6, 1) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-Madbot Kidd: 0
+BomberMan Kidd: 0
 RoboTank Jet: 0
 Terminator Alpha: 1
 RoboCop Star: 0
@@ -139,7 +156,7 @@ BlueThunder Beta: 0
 -----------------------------
 
 Remaining lives of:
-Madbot Kidd: 3
+BomberMan Kidd: 3
 RoboTank Jet: 3
 Terminator Alpha: 3
 RoboCop Star: 3
@@ -151,40 +168,97 @@ BlueThunder Beta: 2
 Current step: 4
 
 ************
-*          *
+*     B    *
 * O        *
 *          *
-*  R       *
+*       R  *
 *  T       *
 *          *
-*   M      *
+*          *
+* X        *
 *          *
 *          *
-*        B *
 ************
 Action:
-Madbot Kidd fires at (2, 5) but the position is empty.
-RoboTank Jet fires at (4, 4) but the position is empty.
+BomberMan Kidd fires at (0, 4) but the position is empty.
+BomberMan Kidd fires at (1, 4) but the position is empty.
+BomberMan Kidd fires at (0, 3) but the position is empty.
+BomberMan Kidd fires at (0, 5) but the position is empty.
+BomberMan Kidd move to (1, 6).
+RoboTank Jet fires at (2, 0) but the position is empty.
 Terminator Alpha is looking around:
 No robot has been detected by Terminator Alpha this round.
-Terminator Alpha move to (3, 4).
+Terminator Alpha move to (3, 5).
 RoboCop Star is looking around:
-Position (3, 4) contains an enemy robot.
-RoboCop Star move to (2, 2).
-RoboCop Star fires at (3, 6) and destroys Madbot Kidd!
-RoboCop Star fires at (2, 0) but the position is empty.
-RoboCop Star fires at (2, 0) but the position is empty.
-Madbot Kidd has respawned from the queue at position (0, 5).
+No robot has been detected by RoboCop Star this round.
+RoboCop Star move to (7, 2).
+RoboCop Star fires at (4, 6) but the position is empty.
+RoboCop Star fires at (1, 3) but the position is empty.
+RoboCop Star fires at (9, 5) but the position is empty.
+BlueThunder Beta fires at (6, 0) but the position is empty.
+
+Live Statistics:
+-----------------------------
+
+Number of robots terminated by...
+BomberMan Kidd: 0
+RoboTank Jet: 0
+Terminator Alpha: 1
+RoboCop Star: 0
+BlueThunder Beta: 0
+
+-----------------------------
+
+Remaining lives of:
+BomberMan Kidd: 3
+RoboTank Jet: 3
+Terminator Alpha: 3
+RoboCop Star: 3
+BlueThunder Beta: 2
+
+-----------------------------
+
+
+Current step: 5
+
+************
+*     B    *
+* O        *
+*       R  *
+*          *
+*          *
+*   T      *
+* X        *
+*          *
+*          *
+*          *
+************
+Action:
+BomberMan Kidd fires at (9, 4) but the position is empty.
+BomberMan Kidd fires at (8, 4) but the position is empty.
+BomberMan Kidd fires at (9, 3) but the position is empty.
+BomberMan Kidd fires at (9, 5) but the position is empty.
+BomberMan Kidd move to (2, 6).
+RoboTank Jet fires at (4, 0) but the position is empty.
+Terminator Alpha is looking around:
+Position (2, 6) contains an enemy robot.
+Terminator Alpha steps to (2, 6) and kills BomberMan Kidd!
+BomberMan Kidd has been killed.
+BomberMan Kidd's lives reduced by 1
+BomberMan Kidd enter the waiting queue
+
+BlueThunder Beta fires at (4, 0) but the position is empty.
+BomberMan Kidd has respawned from the queue at position (3, 2).
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
 RoboTank Jet: 0
-Terminator Alpha: 1
-RoboCop Star: 1
+Terminator Alpha: 2
+RoboCop Star: 0
 BlueThunder Beta: 0
-Madbot Kidd: 0
+BomberMan Kidd: 0
 
 -----------------------------
 
@@ -193,52 +267,7 @@ RoboTank Jet: 3
 Terminator Alpha: 3
 RoboCop Star: 3
 BlueThunder Beta: 2
-Madbot Kidd: 2
-
------------------------------
-
-
-Current step: 5
-
-************
-*          *
-* O        *
-*  R       *
-*          *
-*   T      *
-*M         *
-*          *
-*          *
-*          *
-*        B *
-************
-Action:
-RoboTank Jet fires at (2, 2) and destroys RoboCop Star!
-Terminator Alpha is looking around:
-No robot has been detected by Terminator Alpha this round.
-Terminator Alpha move to (2, 4).
-BlueThunder Beta fires at (9, 9) but the position is empty.
-Madbot Kidd fires at (0, 6) but the position is empty.
-RoboCop Star has respawned from the queue at position (5, 3).
-
-Live Statistics:
------------------------------
-
-Number of robots terminated by...
-RoboTank Jet: 1
-Terminator Alpha: 1
-BlueThunder Beta: 0
-Madbot Kidd: 0
-RoboCop Star: 1
-
------------------------------
-
-Remaining lives of:
-RoboTank Jet: 3
-Terminator Alpha: 3
-BlueThunder Beta: 2
-Madbot Kidd: 2
-RoboCop Star: 2
+BomberMan Kidd: 2
 
 -----------------------------
 
@@ -246,49 +275,54 @@ RoboCop Star: 2
 Current step: 6
 
 ************
-*          *
+*     B    *
 * O        *
+*   X   R  *
 *          *
-*     R    *
+*          *
+*          *
 *  T       *
-*M         *
 *          *
 *          *
 *          *
-*        B *
 ************
 Action:
-RoboTank Jet fires at (6, 5) but the position is empty.
+RoboTank Jet fires at (1, 4) but the position is empty.
 Terminator Alpha is looking around:
 No robot has been detected by Terminator Alpha this round.
-Terminator Alpha move to (1, 4).
-BlueThunder Beta fires at (9, 8) but the position is empty.
-Madbot Kidd fires at (1, 5) but the position is empty.
+Terminator Alpha move to (2, 5).
 RoboCop Star is looking around:
 No robot has been detected by RoboCop Star this round.
-RoboCop Star move to (4, 2).
-RoboCop Star fires at (5, 7) but the position is empty.
-RoboCop Star fires at (9, 0) but the position is empty.
-RoboCop Star fires at (5, 8) but the position is empty.
+RoboCop Star move to (8, 3).
+RoboCop Star fires at (6, 6) but the position is empty.
+RoboCop Star fires at (9, 1) but the position is empty.
+RoboCop Star fires at (1, 2) but the position is empty.
+BlueThunder Beta fires at (4, 0) but the position is empty.
+BomberMan Kidd fires at (7, 1) but the position is empty.
+BomberMan Kidd fires at (6, 1) but the position is empty.
+BomberMan Kidd fires at (8, 1) but the position is empty.
+BomberMan Kidd fires at (7, 0) but the position is empty.
+BomberMan Kidd fires at (7, 2) but the position is empty.
+BomberMan Kidd move to (4, 1).
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-RoboTank Jet: 1
-Terminator Alpha: 1
+RoboTank Jet: 0
+Terminator Alpha: 2
+RoboCop Star: 0
 BlueThunder Beta: 0
-Madbot Kidd: 0
-RoboCop Star: 1
+BomberMan Kidd: 0
 
 -----------------------------
 
 Remaining lives of:
 RoboTank Jet: 3
 Terminator Alpha: 3
+RoboCop Star: 3
 BlueThunder Beta: 2
-Madbot Kidd: 2
-RoboCop Star: 2
+BomberMan Kidd: 2
 
 -----------------------------
 
@@ -296,49 +330,53 @@ RoboCop Star: 2
 Current step: 7
 
 ************
+*     B    *
+* O  X     *
 *          *
-* O        *
-*    R     *
+*        R *
 *          *
-* T        *
-*M         *
+*  T       *
 *          *
 *          *
 *          *
-*        B *
+*          *
 ************
 Action:
-RoboTank Jet fires at (4, 3) but the position is empty.
+RoboTank Jet fires at (9, 3) but the position is empty.
 Terminator Alpha is looking around:
-Position (0, 5) contains an enemy robot.
-Terminator Alpha steps to (0, 5) and kills Madbot Kidd!
-BlueThunder Beta fires at (8, 8) but the position is empty.
+No robot has been detected by Terminator Alpha this round.
+Terminator Alpha move to (1, 4).
 RoboCop Star is looking around:
 No robot has been detected by RoboCop Star this round.
-RoboCop Star move to (5, 3).
-RoboCop Star fires at (1, 0) but the position is empty.
-RoboCop Star fires at (8, 3) but the position is empty.
-RoboCop Star fires at (3, 5) but the position is empty.
-Madbot Kidd has respawned from the queue at position (6, 6).
+RoboCop Star move to (8, 4).
+RoboCop Star fires at (0, 2) but the position is empty.
+RoboCop Star fires at (4, 1) and destroys BomberMan Kidd!
+RoboCop Star fires at (0, 5) but the position is empty.
+BomberMan Kidd has been killed.
+BomberMan Kidd's lives reduced by 1
+BomberMan Kidd enter the waiting queue
+
+BlueThunder Beta fires at (4, 0) but the position is empty.
+BomberMan Kidd has respawned from the queue at position (7, 3).
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-RoboTank Jet: 1
+RoboTank Jet: 0
 Terminator Alpha: 2
-BlueThunder Beta: 0
 RoboCop Star: 1
-Madbot Kidd: 0
+BlueThunder Beta: 0
+BomberMan Kidd: 0
 
 -----------------------------
 
 Remaining lives of:
 RoboTank Jet: 3
 Terminator Alpha: 3
+RoboCop Star: 3
 BlueThunder Beta: 2
-RoboCop Star: 2
-Madbot Kidd: 1
+BomberMan Kidd: 1
 
 -----------------------------
 
@@ -346,49 +384,53 @@ Madbot Kidd: 1
 Current step: 8
 
 ************
-*          *
+*     B    *
 * O        *
 *          *
-*     R    *
-*          *
-*T         *
-*      M   *
+*       X  *
+* T      R *
 *          *
 *          *
-*        B *
+*          *
+*          *
+*          *
 ************
 Action:
-RoboTank Jet fires at (9, 8) but the position is empty.
+RoboTank Jet fires at (8, 5) but the position is empty.
 Terminator Alpha is looking around:
 No robot has been detected by Terminator Alpha this round.
-Terminator Alpha move to (0, 6).
-BlueThunder Beta fires at (7, 8) but the position is empty.
+Terminator Alpha move to (0, 5).
 RoboCop Star is looking around:
-No robot has been detected by RoboCop Star this round.
-RoboCop Star move to (6, 2).
-RoboCop Star fires at (5, 8) but the position is empty.
-RoboCop Star fires at (1, 2) but the position is empty.
-RoboCop Star fires at (3, 1) but the position is empty.
-Madbot Kidd fires at (5, 5) but the position is empty.
+Position (7, 3) contains an enemy robot.
+RoboCop Star move to (7, 4).
+RoboCop Star fires at (1, 7) but the position is empty.
+RoboCop Star fires at (5, 4) but the position is empty.
+RoboCop Star fires at (9, 9) but the position is empty.
+BlueThunder Beta fires at (4, 0) but the position is empty.
+BomberMan Kidd fires at (9, 5) but the position is empty.
+BomberMan Kidd fires at (8, 5) but the position is empty.
+BomberMan Kidd fires at (9, 4) but the position is empty.
+BomberMan Kidd fires at (9, 6) but the position is empty.
+BomberMan Kidd move to (8, 2).
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-RoboTank Jet: 1
+RoboTank Jet: 0
 Terminator Alpha: 2
-BlueThunder Beta: 0
 RoboCop Star: 1
-Madbot Kidd: 0
+BlueThunder Beta: 0
+BomberMan Kidd: 0
 
 -----------------------------
 
 Remaining lives of:
 RoboTank Jet: 3
 Terminator Alpha: 3
+RoboCop Star: 3
 BlueThunder Beta: 2
-RoboCop Star: 2
-Madbot Kidd: 1
+BomberMan Kidd: 1
 
 -----------------------------
 
@@ -396,49 +438,59 @@ Madbot Kidd: 1
 Current step: 9
 
 ************
-*          *
+*     B    *
 * O        *
-*      R   *
+*        X *
+*          *
+*       R  *
+*T         *
 *          *
 *          *
 *          *
-*T     M   *
 *          *
-*          *
-*        B *
 ************
 Action:
-RoboTank Jet fires at (6, 1) but the position is empty.
+RoboTank Jet fires at (3, 5) but the position is empty.
 Terminator Alpha is looking around:
 No robot has been detected by Terminator Alpha this round.
 Terminator Alpha move to (1, 5).
-BlueThunder Beta fires at (7, 9) but the position is empty.
 RoboCop Star is looking around:
 No robot has been detected by RoboCop Star this round.
-RoboCop Star move to (7, 2).
-RoboCop Star fires at (0, 4) but the position is empty.
-RoboCop Star fires at (8, 7) but the position is empty.
-RoboCop Star fires at (7, 8) but the position is empty.
-Madbot Kidd fires at (5, 6) but the position is empty.
+RoboCop Star move to (7, 3).
+RoboCop Star fires at (7, 7) but the position is empty.
+RoboCop Star fires at (8, 9) but the position is empty.
+RoboCop Star fires at (4, 4) but the position is empty.
+BlueThunder Beta fires at (4, 1) but the position is empty.
+BomberMan Kidd fires at (1, 4) but the position is empty.
+BomberMan Kidd fires at (0, 4) but the position is empty.
+BomberMan Kidd fires at (2, 4) but the position is empty.
+BomberMan Kidd fires at (1, 3) but the position is empty.
+BomberMan Kidd fires at (1, 5) and destroys Terminator Alpha!
+BomberMan Kidd move to (9, 2).
+Terminator Alpha has been killed.
+Terminator Alpha's lives reduced by 1
+Terminator Alpha enter the waiting queue
+
+Terminator Alpha has respawned from the queue at position (9, 8).
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-RoboTank Jet: 1
-Terminator Alpha: 2
-BlueThunder Beta: 0
+RoboTank Jet: 0
 RoboCop Star: 1
-Madbot Kidd: 0
+BlueThunder Beta: 0
+BomberMan Kidd: 1
+Terminator Alpha: 2
 
 -----------------------------
 
 Remaining lives of:
 RoboTank Jet: 3
-Terminator Alpha: 3
+RoboCop Star: 3
 BlueThunder Beta: 2
-RoboCop Star: 2
-Madbot Kidd: 1
+BomberMan Kidd: 1
+Terminator Alpha: 2
 
 -----------------------------
 
@@ -446,49 +498,54 @@ Madbot Kidd: 1
 Current step: 10
 
 ************
-*          *
+*     B    *
 * O        *
+*         X*
 *       R  *
 *          *
 *          *
-* T        *
-*      M   *
 *          *
 *          *
-*        B *
+*         T*
+*          *
 ************
 Action:
-RoboTank Jet fires at (8, 2) but the position is empty.
-Terminator Alpha is looking around:
-No robot has been detected by Terminator Alpha this round.
-Terminator Alpha move to (0, 4).
-BlueThunder Beta fires at (9, 9) but the position is empty.
+RoboTank Jet fires at (5, 4) but the position is empty.
 RoboCop Star is looking around:
 No robot has been detected by RoboCop Star this round.
-RoboCop Star move to (6, 1).
-RoboCop Star fires at (9, 5) but the position is empty.
-RoboCop Star fires at (1, 1) and destroys RoboTank Jet!
-RoboCop Star fires at (0, 5) but the position is empty.
-RoboTank Jet has respawned from the queue at position (1, 6).
+RoboCop Star move to (8, 4).
+RoboCop Star fires at (4, 8) but the position is empty.
+RoboCop Star fires at (4, 5) but the position is empty.
+RoboCop Star fires at (6, 7) but the position is empty.
+BlueThunder Beta fires at (5, 1) but the position is empty.
+BomberMan Kidd fires at (5, 2) but the position is empty.
+BomberMan Kidd fires at (4, 2) but the position is empty.
+BomberMan Kidd fires at (6, 2) but the position is empty.
+BomberMan Kidd fires at (5, 1) but the position is empty.
+BomberMan Kidd fires at (5, 3) but the position is empty.
+BomberMan Kidd move to (9, 3).
+Terminator Alpha is looking around:
+No robot has been detected by Terminator Alpha this round.
+Terminator Alpha move to (8, 9).
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-Terminator Alpha: 2
+RoboTank Jet: 0
+RoboCop Star: 1
 BlueThunder Beta: 0
-RoboCop Star: 2
-Madbot Kidd: 0
-RoboTank Jet: 1
+BomberMan Kidd: 1
+Terminator Alpha: 2
 
 -----------------------------
 
 Remaining lives of:
-Terminator Alpha: 3
+RoboTank Jet: 3
+RoboCop Star: 3
 BlueThunder Beta: 2
-RoboCop Star: 2
-Madbot Kidd: 1
-RoboTank Jet: 2
+BomberMan Kidd: 1
+Terminator Alpha: 2
 
 -----------------------------
 
@@ -496,48 +553,54 @@ RoboTank Jet: 2
 Current step: 11
 
 ************
+*     B    *
+* O        *
 *          *
-*      R   *
-*          *
-*          *
-*T         *
-*          *
-* O    M   *
+*         X*
+*        R *
 *          *
 *          *
-*        B *
+*          *
+*          *
+*        T *
 ************
 Action:
-Terminator Alpha is looking around:
-No robot has been detected by Terminator Alpha this round.
-Terminator Alpha move to (0, 3).
-BlueThunder Beta fires at (9, 9) but the position is empty.
+RoboTank Jet fires at (8, 8) but the position is empty.
 RoboCop Star is looking around:
-No robot has been detected by RoboCop Star this round.
-RoboCop Star move to (7, 2).
-RoboCop Star fires at (9, 4) but the position is empty.
-RoboCop Star fires at (6, 0) but the position is empty.
-Madbot Kidd fires at (7, 5) but the position is empty.
-RoboTank Jet fires at (3, 0) but the position is empty.
+Position (9, 3) contains an enemy robot.
+RoboCop Star move to (7, 4).
+RoboCop Star fires at (8, 1) but the position is empty.
+RoboCop Star fires at (7, 5) but the position is empty.
+RoboCop Star fires at (9, 7) but the position is empty.
+BlueThunder Beta fires at (6, 1) but the position is empty.
+BomberMan Kidd fires at (9, 9) but the position is empty.
+BomberMan Kidd fires at (8, 9) and destroys Terminator Alpha!
+BomberMan Kidd fires at (9, 8) but the position is empty.
+BomberMan Kidd move to (8, 4).
+Terminator Alpha has been killed.
+Terminator Alpha's lives reduced by 1
+Terminator Alpha enter the waiting queue
+
+Terminator Alpha has respawned from the queue at position (4, 7).
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-Terminator Alpha: 2
+RoboTank Jet: 0
+RoboCop Star: 1
 BlueThunder Beta: 0
-RoboCop Star: 2
-Madbot Kidd: 0
-RoboTank Jet: 1
+BomberMan Kidd: 2
+Terminator Alpha: 2
 
 -----------------------------
 
 Remaining lives of:
-Terminator Alpha: 3
+RoboTank Jet: 3
+RoboCop Star: 3
 BlueThunder Beta: 2
-RoboCop Star: 2
-Madbot Kidd: 1
-RoboTank Jet: 2
+BomberMan Kidd: 1
+Terminator Alpha: 1
 
 -----------------------------
 
@@ -545,49 +608,53 @@ RoboTank Jet: 2
 Current step: 12
 
 ************
+*     B    *
+* O        *
 *          *
 *          *
-*       R  *
-*T         *
+*       RX *
 *          *
 *          *
-* O    M   *
+*    T     *
 *          *
 *          *
-*        B *
 ************
 Action:
+RoboTank Jet fires at (9, 7) but the position is empty.
+RoboCop Star is looking around:
+Position (8, 4) contains an enemy robot.
+RoboCop Star move to (8, 5).
+RoboCop Star fires at (5, 8) but the position is empty.
+RoboCop Star fires at (4, 6) but the position is empty.
+RoboCop Star fires at (9, 6) but the position is empty.
+BlueThunder Beta fires at (6, 0) but the position is empty.
+BomberMan Kidd fires at (0, 2) but the position is empty.
+BomberMan Kidd fires at (1, 2) but the position is empty.
+BomberMan Kidd fires at (0, 1) but the position is empty.
+BomberMan Kidd fires at (0, 3) but the position is empty.
+BomberMan Kidd move to (9, 5).
 Terminator Alpha is looking around:
 No robot has been detected by Terminator Alpha this round.
-Terminator Alpha move to (1, 4).
-BlueThunder Beta fires at (9, 9) but the position is empty.
-RoboCop Star is looking around:
-No robot has been detected by RoboCop Star this round.
-RoboCop Star move to (6, 1).
-RoboCop Star fires at (6, 3) but the position is empty.
-RoboCop Star fires at (7, 4) but the position is empty.
-RoboCop Star fires at (4, 3) but the position is empty.
-Madbot Kidd fires at (6, 7) but the position is empty.
-RoboTank Jet fires at (2, 3) but the position is empty.
+Terminator Alpha move to (3, 8).
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-Terminator Alpha: 2
+RoboTank Jet: 0
+RoboCop Star: 1
 BlueThunder Beta: 0
-RoboCop Star: 2
-Madbot Kidd: 0
-RoboTank Jet: 1
+BomberMan Kidd: 2
+Terminator Alpha: 2
 
 -----------------------------
 
 Remaining lives of:
-Terminator Alpha: 3
+RoboTank Jet: 3
+RoboCop Star: 3
 BlueThunder Beta: 2
-RoboCop Star: 2
-Madbot Kidd: 1
-RoboTank Jet: 2
+BomberMan Kidd: 1
+Terminator Alpha: 1
 
 -----------------------------
 
@@ -595,49 +662,53 @@ RoboTank Jet: 2
 Current step: 13
 
 ************
-*          *
-*      R   *
-*          *
-*          *
-* T        *
-*          *
-* O    M   *
+*     B    *
+* O        *
 *          *
 *          *
-*        B *
+*          *
+*        RX*
+*          *
+*          *
+*   T      *
+*          *
 ************
 Action:
+RoboTank Jet fires at (8, 2) but the position is empty.
+RoboCop Star is looking around:
+Position (9, 5) contains an enemy robot.
+RoboCop Star move to (7, 5).
+RoboCop Star fires at (1, 6) but the position is empty.
+RoboCop Star fires at (4, 6) but the position is empty.
+RoboCop Star fires at (4, 4) but the position is empty.
+BlueThunder Beta fires at (4, 0) but the position is empty.
+BomberMan Kidd fires at (0, 4) but the position is empty.
+BomberMan Kidd fires at (1, 4) but the position is empty.
+BomberMan Kidd fires at (0, 3) but the position is empty.
+BomberMan Kidd fires at (0, 5) but the position is empty.
+BomberMan Kidd move to (8, 6).
 Terminator Alpha is looking around:
 No robot has been detected by Terminator Alpha this round.
-Terminator Alpha move to (2, 5).
-BlueThunder Beta fires at (9, 9) but the position is empty.
-RoboCop Star is looking around:
-No robot has been detected by RoboCop Star this round.
-RoboCop Star move to (6, 2).
-RoboCop Star fires at (8, 0) but the position is empty.
-RoboCop Star fires at (7, 2) but the position is empty.
-RoboCop Star fires at (1, 7) but the position is empty.
-Madbot Kidd fires at (7, 7) but the position is empty.
-RoboTank Jet fires at (0, 8) but the position is empty.
+Terminator Alpha move to (2, 8).
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-Terminator Alpha: 2
+RoboTank Jet: 0
+RoboCop Star: 1
 BlueThunder Beta: 0
-RoboCop Star: 2
-Madbot Kidd: 0
-RoboTank Jet: 1
+BomberMan Kidd: 2
+Terminator Alpha: 2
 
 -----------------------------
 
 Remaining lives of:
-Terminator Alpha: 3
+RoboTank Jet: 3
+RoboCop Star: 3
 BlueThunder Beta: 2
-RoboCop Star: 2
-Madbot Kidd: 1
-RoboTank Jet: 2
+BomberMan Kidd: 1
+Terminator Alpha: 1
 
 -----------------------------
 
@@ -645,49 +716,58 @@ RoboTank Jet: 2
 Current step: 14
 
 ************
+*     B    *
+* O        *
 *          *
 *          *
-*      R   *
 *          *
+*       R  *
+*        X *
 *          *
 *  T       *
-* O    M   *
 *          *
-*          *
-*        B *
 ************
 Action:
-Terminator Alpha is looking around:
-Position (1, 6) contains an enemy robot.
-Terminator Alpha steps to (1, 6) and kills RoboTank Jet!
-BlueThunder Beta fires at (9, 8) but the position is empty.
+RoboTank Jet fires at (0, 4) but the position is empty.
 RoboCop Star is looking around:
-No robot has been detected by RoboCop Star this round.
-RoboCop Star move to (6, 3).
-RoboCop Star fires at (4, 0) but the position is empty.
-RoboCop Star fires at (3, 3) but the position is empty.
-RoboCop Star fires at (5, 1) but the position is empty.
-Madbot Kidd fires at (5, 7) but the position is empty.
-RoboTank Jet has respawned from the queue at position (4, 1).
+Position (8, 6) contains an enemy robot.
+RoboCop Star move to (8, 5).
+RoboCop Star fires at (4, 8) but the position is empty.
+RoboCop Star fires at (5, 0) and destroys BlueThunder Beta!
+RoboCop Star fires at (5, 2) but the position is empty.
+BlueThunder Beta has been killed.
+BlueThunder Beta's lives reduced by 1
+BlueThunder Beta enter the waiting queue
+
+BomberMan Kidd fires at (7, 3) but the position is empty.
+BomberMan Kidd fires at (6, 3) but the position is empty.
+BomberMan Kidd fires at (8, 3) but the position is empty.
+BomberMan Kidd fires at (7, 2) but the position is empty.
+BomberMan Kidd fires at (7, 4) but the position is empty.
+BomberMan Kidd move to (7, 6).
+Terminator Alpha is looking around:
+No robot has been detected by Terminator Alpha this round.
+Terminator Alpha move to (1, 7).
+BlueThunder Beta has respawned from the queue at position (9, 4).
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-TerminatorRoboCop Alpha: 0
-BlueThunder Beta: 0
+RoboTank Jet: 0
 RoboCop Star: 2
-Madbot Kidd: 0
-RoboTank Jet: 1
+BomberMan Kidd: 2
+Terminator Alpha: 2
+BlueThunder Beta: 0
 
 -----------------------------
 
 Remaining lives of:
-TerminatorRoboCop Alpha: 3
-BlueThunder Beta: 2
-RoboCop Star: 2
-Madbot Kidd: 1
-RoboTank Jet: 1
+RoboTank Jet: 3
+RoboCop Star: 3
+BomberMan Kidd: 1
+Terminator Alpha: 1
+BlueThunder Beta: 1
 
 -----------------------------
 
@@ -696,51 +776,57 @@ Current step: 15
 
 ************
 *          *
-*    O     *
-*          *
-*      R   *
+* O        *
 *          *
 *          *
-* N    M   *
+*         B*
+*        R *
+*       X  *
+* T        *
 *          *
 *          *
-*        B *
 ************
 Action:
-TerminatorRoboCop Alpha is looking around:
-No robot has been detected by TerminatorRoboCop Alpha this round.
-TerminatorRoboCop Alpha move to (2, 5).
-TerminatorRoboCop Alpha fires at (6, 2) but the position is empty.
-TerminatorRoboCop Alpha fires at (6, 2) but the position is empty.
-TerminatorRoboCop Alpha fires at (1, 5) but the position is empty.
-BlueThunder Beta fires at (8, 8) but the position is empty.
+RoboTank Jet fires at (0, 2) but the position is empty.
 RoboCop Star is looking around:
-No robot has been detected by RoboCop Star this round.
-RoboCop Star move to (5, 3).
-RoboCop Star fires at (5, 2) but the position is empty.
+Position (9, 4) contains an enemy robot.
+Position (7, 6) contains an enemy robot.
+RoboCop Star move to (7, 5).
+RoboCop Star fires at (3, 7) but the position is empty.
 RoboCop Star fires at (2, 8) but the position is empty.
-RoboCop Star fires at (3, 8) but the position is empty.
-Madbot Kidd fires at (6, 7) but the position is empty.
-RoboTank Jet fires at (9, 1) but the position is empty.
+BomberMan Kidd fires at (1, 2) but the position is empty.
+BomberMan Kidd fires at (0, 2) but the position is empty.
+BomberMan Kidd fires at (2, 2) but the position is empty.
+BomberMan Kidd fires at (1, 1) and destroys RoboTank Jet!
+BomberMan Kidd fires at (1, 3) but the position is empty.
+BomberMan Kidd move to (8, 5).
+RoboTank Jet has been killed.
+RoboTank Jet's lives reduced by 1
+RoboTank Jet enter the waiting queue
+
+BomberMan Kidd has been upgraded to HealingBomber!
+
+BlueThunder Beta fires at (9, 3) but the position is empty.
+RoboTank Jet has respawned from the queue at position (8, 8).
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-TerminatorRoboCop Alpha: 0
-BlueThunder Beta: 0
 RoboCop Star: 2
-Madbot Kidd: 0
-RoboTank Jet: 1
+HealingBomber Kidd: 0
+Terminator Alpha: 2
+BlueThunder Beta: 0
+RoboTank Jet: 0
 
 -----------------------------
 
 Remaining lives of:
-TerminatorRoboCop Alpha: 3
-BlueThunder Beta: 2
-RoboCop Star: 2
-Madbot Kidd: 1
-RoboTank Jet: 1
+RoboCop Star: 3
+HealingBomber Kidd: 3
+Terminator Alpha: 1
+BlueThunder Beta: 1
+RoboTank Jet: 2
 
 -----------------------------
 
@@ -749,51 +835,55 @@ Current step: 16
 
 ************
 *          *
-*    O     *
-*          *
-*     R    *
-*          *
-*  N       *
-*      M   *
 *          *
 *          *
-*        B *
+*          *
+*         B*
+*       RH *
+*          *
+* T        *
+*        O *
+*          *
 ************
 Action:
-TerminatorRoboCop Alpha is looking around:
-No robot has been detected by TerminatorRoboCop Alpha this round.
-TerminatorRoboCop Alpha move to (1, 6).
-TerminatorRoboCop Alpha fires at (6, 2) but the position is empty.
-TerminatorRoboCop Alpha fires at (5, 8) but the position is empty.
-TerminatorRoboCop Alpha fires at (7, 9) but the position is empty.
-BlueThunder Beta fires at (7, 8) but the position is empty.
 RoboCop Star is looking around:
-No robot has been detected by RoboCop Star this round.
-RoboCop Star move to (4, 3).
-RoboCop Star fires at (3, 7) but the position is empty.
-RoboCop Star fires at (8, 2) but the position is empty.
-RoboCop Star fires at (0, 6) but the position is empty.
-Madbot Kidd fires at (5, 7) but the position is empty.
-RoboTank Jet fires at (9, 8) but the position is empty.
+Position (8, 5) contains an enemy robot.
+RoboCop Star move to (6, 4).
+RoboCop Star fires at (4, 6) but the position is empty.
+RoboCop Star fires at (5, 5) but the position is empty.
+RoboCop Star fires at (2, 5) but the position is empty.
+HealingBomber Kidd fires at (6, 7) but the position is empty.
+HealingBomber Kidd fires at (5, 7) but the position is empty.
+HealingBomber Kidd fires at (7, 7) but the position is empty.
+HealingBomber Kidd fires at (6, 6) but the position is empty.
+HealingBomber Kidd fires at (6, 8) but the position is empty.
+HealingBomber Kidd move to (9, 6).
+Terminator Alpha is looking around:
+No robot has been detected by Terminator Alpha this round.
+Terminator Alpha move to (2, 6).
+BlueThunder Beta fires at (8, 3) but the position is empty.
+RoboTank Jet fires at (2, 6) and destroys Terminator Alpha!
+Terminator Alpha has been killed.
+Terminator Alpha doesn't have any lives remained.
+Terminator Alpha out!!!
+
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-TerminatorRoboCop Alpha: 0
-BlueThunder Beta: 0
 RoboCop Star: 2
-Madbot Kidd: 0
+HealingBomber Kidd: 0
+BlueThunder Beta: 0
 RoboTank Jet: 1
 
 -----------------------------
 
 Remaining lives of:
-TerminatorRoboCop Alpha: 3
-BlueThunder Beta: 2
-RoboCop Star: 2
-Madbot Kidd: 1
-RoboTank Jet: 1
+RoboCop Star: 3
+HealingBomber Kidd: 3
+BlueThunder Beta: 1
+RoboTank Jet: 2
 
 -----------------------------
 
@@ -802,51 +892,48 @@ Current step: 17
 
 ************
 *          *
-*    O     *
-*          *
-*    R     *
 *          *
 *          *
-* N    M   *
 *          *
+*      R  B*
 *          *
-*        B *
+*         H*
+*          *
+*        O *
+*          *
 ************
 Action:
-TerminatorRoboCop Alpha is looking around:
-No robot has been detected by TerminatorRoboCop Alpha this round.
-TerminatorRoboCop Alpha move to (1, 5).
-TerminatorRoboCop Alpha fires at (5, 5) but the position is empty.
-TerminatorRoboCop Alpha fires at (2, 8) but the position is empty.
-TerminatorRoboCop Alpha fires at (0, 8) but the position is empty.
-BlueThunder Beta fires at (7, 9) but the position is empty.
 RoboCop Star is looking around:
 No robot has been detected by RoboCop Star this round.
-RoboCop Star move to (3, 2).
-RoboCop Star fires at (5, 6) but the position is empty.
-RoboCop Star fires at (9, 2) but the position is empty.
-RoboCop Star fires at (0, 2) but the position is empty.
-Madbot Kidd fires at (7, 7) but the position is empty.
-RoboTank Jet fires at (7, 6) but the position is empty.
+RoboCop Star move to (6, 5).
+RoboCop Star fires at (6, 4) but the position is empty.
+RoboCop Star fires at (4, 7) but the position is empty.
+RoboCop Star fires at (6, 2) but the position is empty.
+HealingBomber Kidd fires at (3, 6) but the position is empty.
+HealingBomber Kidd fires at (2, 6) but the position is empty.
+HealingBomber Kidd fires at (4, 6) but the position is empty.
+HealingBomber Kidd fires at (3, 5) but the position is empty.
+HealingBomber Kidd fires at (3, 7) but the position is empty.
+HealingBomber Kidd move to (8, 7).
+BlueThunder Beta fires at (8, 4) but the position is empty.
+RoboTank Jet fires at (1, 4) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-TerminatorRoboCop Alpha: 0
-BlueThunder Beta: 0
 RoboCop Star: 2
-Madbot Kidd: 0
+HealingBomber Kidd: 0
+BlueThunder Beta: 0
 RoboTank Jet: 1
 
 -----------------------------
 
 Remaining lives of:
-TerminatorRoboCop Alpha: 3
-BlueThunder Beta: 2
-RoboCop Star: 2
-Madbot Kidd: 1
-RoboTank Jet: 1
+RoboCop Star: 3
+HealingBomber Kidd: 3
+BlueThunder Beta: 1
+RoboTank Jet: 2
 
 -----------------------------
 
@@ -855,51 +942,48 @@ Current step: 18
 
 ************
 *          *
-*    O     *
-*   R      *
 *          *
 *          *
-* N        *
-*      M   *
 *          *
+*         B*
+*      R   *
 *          *
-*        B *
+*        H *
+*        O *
+*          *
 ************
 Action:
-TerminatorRoboCop Alpha is looking around:
-No robot has been detected by TerminatorRoboCop Alpha this round.
-TerminatorRoboCop Alpha move to (0, 5).
-TerminatorRoboCop Alpha fires at (6, 4) but the position is empty.
-TerminatorRoboCop Alpha fires at (4, 9) but the position is empty.
-TerminatorRoboCop Alpha fires at (5, 5) but the position is empty.
-BlueThunder Beta fires at (9, 9) but the position is empty.
 RoboCop Star is looking around:
-Position (4, 1) contains an enemy robot.
-RoboCop Star move to (2, 3).
-RoboCop Star fires at (0, 2) but the position is empty.
-RoboCop Star fires at (9, 1) but the position is empty.
-RoboCop Star fires at (2, 9) but the position is empty.
-Madbot Kidd fires at (6, 5) but the position is empty.
-RoboTank Jet fires at (1, 6) but the position is empty.
+No robot has been detected by RoboCop Star this round.
+RoboCop Star move to (5, 6).
+RoboCop Star fires at (0, 4) but the position is empty.
+RoboCop Star fires at (7, 2) but the position is empty.
+RoboCop Star fires at (7, 0) but the position is empty.
+HealingBomber Kidd fires at (4, 7) but the position is empty.
+HealingBomber Kidd fires at (3, 7) but the position is empty.
+HealingBomber Kidd fires at (5, 7) but the position is empty.
+HealingBomber Kidd fires at (4, 6) but the position is empty.
+HealingBomber Kidd fires at (4, 8) but the position is empty.
+HealingBomber Kidd move to (7, 6).
+BlueThunder Beta fires at (8, 5) but the position is empty.
+RoboTank Jet fires at (2, 8) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-TerminatorRoboCop Alpha: 0
-BlueThunder Beta: 0
 RoboCop Star: 2
-Madbot Kidd: 0
+HealingBomber Kidd: 0
+BlueThunder Beta: 0
 RoboTank Jet: 1
 
 -----------------------------
 
 Remaining lives of:
-TerminatorRoboCop Alpha: 3
-BlueThunder Beta: 2
-RoboCop Star: 2
-Madbot Kidd: 1
-RoboTank Jet: 1
+RoboCop Star: 3
+HealingBomber Kidd: 3
+BlueThunder Beta: 1
+RoboTank Jet: 2
 
 -----------------------------
 
@@ -908,50 +992,52 @@ Current step: 19
 
 ************
 *          *
-*    O     *
-*          *
-*  R       *
-*          *
-*N         *
-*      M   *
 *          *
 *          *
-*        B *
+*          *
+*         B*
+*          *
+*     R H  *
+*          *
+*        O *
+*          *
 ************
 Action:
-TerminatorRoboCop Alpha is looking around:
-No robot has been detected by TerminatorRoboCop Alpha this round.
-TerminatorRoboCop Alpha move to (1, 4).
-TerminatorRoboCop Alpha fires at (0, 6) but the position is empty.
-TerminatorRoboCop Alpha fires at (4, 9) but the position is empty.
-TerminatorRoboCop Alpha fires at (2, 7) but the position is empty.
-BlueThunder Beta fires at (9, 9) but the position is empty.
 RoboCop Star is looking around:
-Position (1, 4) contains an enemy robot.
-RoboCop Star move to (3, 3).
-RoboCop Star fires at (5, 7) but the position is empty.
-RoboCop Star fires at (1, 2) but the position is empty.
-RoboCop Star fires at (9, 3) but the position is empty.
-Madbot Kidd fires at (7, 7) but the position is empty.
-RoboTank Jet fires at (7, 3) but the position is empty.
+No robot has been detected by RoboCop Star this round.
+RoboCop Star move to (4, 6).
+RoboCop Star fires at (4, 2) but the position is empty.
+RoboCop Star fires at (5, 0) but the position is empty.
+RoboCop Star fires at (8, 8) and destroys RoboTank Jet!
+RoboTank Jet has been killed.
+RoboTank Jet's lives reduced by 1
+RoboTank Jet enter the waiting queue
+
+RoboCop Star has been upgraded to TerminatorRoboCop!
+
+HealingBomber Kidd fires at (6, 6) but the position is empty.
+HealingBomber Kidd fires at (8, 6) but the position is empty.
+HealingBomber Kidd fires at (7, 5) but the position is empty.
+HealingBomber Kidd fires at (7, 7) but the position is empty.
+HealingBomber Kidd move to (7, 5).
+BlueThunder Beta fires at (9, 5) but the position is empty.
+RoboTank Jet has respawned from the queue at position (8, 8).
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-TerminatorRoboCop Alpha: 0
+TerminatorRoboCop Star: 0
+HealingBomber Kidd: 0
 BlueThunder Beta: 0
-RoboCop Star: 2
-Madbot Kidd: 0
 RoboTank Jet: 1
 
 -----------------------------
 
 Remaining lives of:
-TerminatorRoboCop Alpha: 3
-BlueThunder Beta: 2
-RoboCop Star: 2
-Madbot Kidd: 1
+TerminatorRoboCop Star: 3
+HealingBomber Kidd: 3
+BlueThunder Beta: 1
 RoboTank Jet: 1
 
 -----------------------------
@@ -961,50 +1047,46 @@ Current step: 20
 
 ************
 *          *
-*    O     *
-*          *
-*   R      *
-* N        *
-*          *
-*      M   *
 *          *
 *          *
-*        B *
+*          *
+*         B*
+*       H  *
+*    N     *
+*          *
+*        O *
+*          *
 ************
 Action:
-TerminatorRoboCop Alpha is looking around:
-No robot has been detected by TerminatorRoboCop Alpha this round.
-TerminatorRoboCop Alpha move to (2, 4).
-TerminatorRoboCop Alpha fires at (6, 4) but the position is empty.
-TerminatorRoboCop Alpha fires at (0, 7) but the position is empty.
-TerminatorRoboCop Alpha fires at (6, 5) but the position is empty.
-BlueThunder Beta fires at (9, 9) but the position is empty.
-RoboCop Star is looking around:
-Position (2, 4) contains an enemy robot.
-RoboCop Star move to (2, 3).
-RoboCop Star fires at (6, 1) but the position is empty.
-RoboCop Star fires at (0, 2) but the position is empty.
-RoboCop Star fires at (8, 7) but the position is empty.
-Madbot Kidd fires at (7, 7) but the position is empty.
-RoboTank Jet fires at (7, 3) but the position is empty.
+TerminatorRoboCop Star is looking around:
+No robot has been detected by TerminatorRoboCop Star this round.
+TerminatorRoboCop Star move to (3, 5).
+TerminatorRoboCop Star fires at (8, 6) but the position is empty.
+TerminatorRoboCop Star fires at (8, 5) but the position is empty.
+TerminatorRoboCop Star fires at (7, 1) but the position is empty.
+HealingBomber Kidd fires at (7, 0) but the position is empty.
+HealingBomber Kidd fires at (6, 0) but the position is empty.
+HealingBomber Kidd fires at (8, 0) but the position is empty.
+HealingBomber Kidd fires at (7, 1) but the position is empty.
+HealingBomber Kidd move to (7, 4).
+BlueThunder Beta fires at (9, 3) but the position is empty.
+RoboTank Jet fires at (5, 7) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-TerminatorRoboCop Alpha: 0
+TerminatorRoboCop Star: 0
+HealingBomber Kidd: 0
 BlueThunder Beta: 0
-RoboCop Star: 2
-Madbot Kidd: 0
 RoboTank Jet: 1
 
 -----------------------------
 
 Remaining lives of:
-TerminatorRoboCop Alpha: 3
-BlueThunder Beta: 2
-RoboCop Star: 2
-Madbot Kidd: 1
+TerminatorRoboCop Star: 3
+HealingBomber Kidd: 3
+BlueThunder Beta: 1
 RoboTank Jet: 1
 
 -----------------------------
@@ -1014,50 +1096,47 @@ Current step: 21
 
 ************
 *          *
-*    O     *
-*          *
-*  R       *
-*  N       *
-*          *
-*      M   *
 *          *
 *          *
-*        B *
+*          *
+*       H B*
+*   N      *
+*          *
+*          *
+*        O *
+*          *
 ************
 Action:
-TerminatorRoboCop Alpha is looking around:
-No robot has been detected by TerminatorRoboCop Alpha this round.
-TerminatorRoboCop Alpha move to (2, 5).
-TerminatorRoboCop Alpha fires at (6, 0) but the position is empty.
-TerminatorRoboCop Alpha fires at (7, 8) but the position is empty.
-TerminatorRoboCop Alpha fires at (8, 6) but the position is empty.
-BlueThunder Beta fires at (9, 9) but the position is empty.
-RoboCop Star is looking around:
-No robot has been detected by RoboCop Star this round.
-RoboCop Star move to (2, 2).
-RoboCop Star fires at (6, 0) but the position is empty.
-RoboCop Star fires at (6, 0) but the position is empty.
-RoboCop Star fires at (3, 2) but the position is empty.
-Madbot Kidd fires at (6, 7) but the position is empty.
-RoboTank Jet fires at (2, 8) but the position is empty.
+TerminatorRoboCop Star is looking around:
+No robot has been detected by TerminatorRoboCop Star this round.
+TerminatorRoboCop Star move to (4, 6).
+TerminatorRoboCop Star fires at (4, 1) but the position is empty.
+TerminatorRoboCop Star fires at (3, 6) but the position is empty.
+TerminatorRoboCop Star fires at (6, 0) but the position is empty.
+HealingBomber Kidd fires at (1, 1) but the position is empty.
+HealingBomber Kidd fires at (0, 1) but the position is empty.
+HealingBomber Kidd fires at (2, 1) but the position is empty.
+HealingBomber Kidd fires at (1, 0) but the position is empty.
+HealingBomber Kidd fires at (1, 2) but the position is empty.
+HealingBomber Kidd move to (8, 5).
+BlueThunder Beta fires at (9, 3) but the position is empty.
+RoboTank Jet fires at (6, 4) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-TerminatorRoboCop Alpha: 0
+TerminatorRoboCop Star: 0
+HealingBomber Kidd: 0
 BlueThunder Beta: 0
-RoboCop Star: 2
-Madbot Kidd: 0
 RoboTank Jet: 1
 
 -----------------------------
 
 Remaining lives of:
-TerminatorRoboCop Alpha: 3
-BlueThunder Beta: 2
-RoboCop Star: 2
-Madbot Kidd: 1
+TerminatorRoboCop Star: 3
+HealingBomber Kidd: 3
+BlueThunder Beta: 1
 RoboTank Jet: 1
 
 -----------------------------
@@ -1067,50 +1146,47 @@ Current step: 22
 
 ************
 *          *
-*    O     *
-*  R       *
 *          *
 *          *
-*  N       *
-*      M   *
 *          *
+*         B*
+*        H *
+*    N     *
 *          *
-*        B *
+*        O *
+*          *
 ************
 Action:
-TerminatorRoboCop Alpha is looking around:
-No robot has been detected by TerminatorRoboCop Alpha this round.
-TerminatorRoboCop Alpha move to (1, 4).
-TerminatorRoboCop Alpha fires at (2, 4) but the position is empty.
-TerminatorRoboCop Alpha fires at (8, 5) but the position is empty.
-TerminatorRoboCop Alpha fires at (6, 1) but the position is empty.
-BlueThunder Beta fires at (9, 8) but the position is empty.
-RoboCop Star is looking around:
-No robot has been detected by RoboCop Star this round.
-RoboCop Star move to (2, 1).
-RoboCop Star fires at (2, 9) but the position is empty.
-RoboCop Star fires at (4, 3) but the position is empty.
-RoboCop Star fires at (3, 2) but the position is empty.
-Madbot Kidd fires at (5, 6) but the position is empty.
-RoboTank Jet fires at (7, 2) but the position is empty.
+TerminatorRoboCop Star is looking around:
+No robot has been detected by TerminatorRoboCop Star this round.
+TerminatorRoboCop Star move to (4, 7).
+TerminatorRoboCop Star fires at (4, 1) but the position is empty.
+TerminatorRoboCop Star fires at (5, 2) but the position is empty.
+TerminatorRoboCop Star fires at (5, 6) but the position is empty.
+HealingBomber Kidd fires at (2, 7) but the position is empty.
+HealingBomber Kidd fires at (1, 7) but the position is empty.
+HealingBomber Kidd fires at (3, 7) but the position is empty.
+HealingBomber Kidd fires at (2, 6) but the position is empty.
+HealingBomber Kidd fires at (2, 8) but the position is empty.
+HealingBomber Kidd move to (7, 5).
+BlueThunder Beta fires at (9, 3) but the position is empty.
+RoboTank Jet fires at (6, 3) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-TerminatorRoboCop Alpha: 0
+TerminatorRoboCop Star: 0
+HealingBomber Kidd: 0
 BlueThunder Beta: 0
-RoboCop Star: 2
-Madbot Kidd: 0
 RoboTank Jet: 1
 
 -----------------------------
 
 Remaining lives of:
-TerminatorRoboCop Alpha: 3
-BlueThunder Beta: 2
-RoboCop Star: 2
-Madbot Kidd: 1
+TerminatorRoboCop Star: 3
+HealingBomber Kidd: 3
+BlueThunder Beta: 1
 RoboTank Jet: 1
 
 -----------------------------
@@ -1120,50 +1196,47 @@ Current step: 23
 
 ************
 *          *
-*  R O     *
 *          *
 *          *
-* N        *
 *          *
-*      M   *
+*         B*
+*       H  *
 *          *
+*    N     *
+*        O *
 *          *
-*        B *
 ************
 Action:
-TerminatorRoboCop Alpha is looking around:
-No robot has been detected by TerminatorRoboCop Alpha this round.
-TerminatorRoboCop Alpha move to (0, 5).
-TerminatorRoboCop Alpha fires at (6, 5) but the position is empty.
-TerminatorRoboCop Alpha fires at (7, 6) but the position is empty.
-TerminatorRoboCop Alpha fires at (1, 6) but the position is empty.
-BlueThunder Beta fires at (8, 8) but the position is empty.
-RoboCop Star is looking around:
-No robot has been detected by RoboCop Star this round.
-RoboCop Star move to (3, 2).
-RoboCop Star fires at (4, 2) but the position is empty.
-RoboCop Star fires at (7, 5) but the position is empty.
-RoboCop Star fires at (2, 1) but the position is empty.
-Madbot Kidd fires at (7, 5) but the position is empty.
-RoboTank Jet fires at (7, 2) but the position is empty.
+TerminatorRoboCop Star is looking around:
+No robot has been detected by TerminatorRoboCop Star this round.
+TerminatorRoboCop Star move to (5, 8).
+TerminatorRoboCop Star fires at (9, 4) and destroys BlueThunder Beta!
+TerminatorRoboCop Star fires at (3, 2) but the position is empty.
+TerminatorRoboCop Star fires at (2, 6) but the position is empty.
+BlueThunder Beta has been killed.
+BlueThunder Beta doesn't have any lives remained.
+BlueThunder Beta out!!!
+
+HealingBomber Kidd fires at (9, 2) but the position is empty.
+HealingBomber Kidd fires at (8, 2) but the position is empty.
+HealingBomber Kidd fires at (9, 1) but the position is empty.
+HealingBomber Kidd fires at (9, 3) but the position is empty.
+HealingBomber Kidd move to (8, 4).
+RoboTank Jet fires at (4, 5) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-TerminatorRoboCop Alpha: 0
-BlueThunder Beta: 0
-RoboCop Star: 2
-Madbot Kidd: 0
+TerminatorRoboCop Star: 1
+HealingBomber Kidd: 0
 RoboTank Jet: 1
 
 -----------------------------
 
 Remaining lives of:
-TerminatorRoboCop Alpha: 3
-BlueThunder Beta: 2
-RoboCop Star: 2
-Madbot Kidd: 1
+TerminatorRoboCop Star: 3
+HealingBomber Kidd: 3
 RoboTank Jet: 1
 
 -----------------------------
@@ -1173,50 +1246,44 @@ Current step: 24
 
 ************
 *          *
-*    O     *
-*   R      *
 *          *
 *          *
-*N         *
-*      M   *
+*          *
+*        H *
 *          *
 *          *
-*        B *
+*          *
+*     N  O *
+*          *
 ************
 Action:
-TerminatorRoboCop Alpha is looking around:
-No robot has been detected by TerminatorRoboCop Alpha this round.
-TerminatorRoboCop Alpha move to (1, 4).
-TerminatorRoboCop Alpha fires at (7, 8) but the position is empty.
-TerminatorRoboCop Alpha fires at (2, 3) but the position is empty.
-TerminatorRoboCop Alpha fires at (4, 7) but the position is empty.
-BlueThunder Beta fires at (7, 8) but the position is empty.
-RoboCop Star is looking around:
-Position (4, 1) contains an enemy robot.
-RoboCop Star move to (2, 3).
-RoboCop Star fires at (6, 2) but the position is empty.
-RoboCop Star fires at (2, 7) but the position is empty.
-RoboCop Star fires at (3, 8) but the position is empty.
-Madbot Kidd fires at (5, 6) but the position is empty.
-RoboTank Jet fires at (9, 8) but the position is empty.
+TerminatorRoboCop Star is looking around:
+No robot has been detected by TerminatorRoboCop Star this round.
+TerminatorRoboCop Star move to (5, 9).
+TerminatorRoboCop Star fires at (0, 9) but the position is empty.
+TerminatorRoboCop Star fires at (7, 6) but the position is empty.
+TerminatorRoboCop Star fires at (2, 7) but the position is empty.
+HealingBomber Kidd fires at (4, 2) but the position is empty.
+HealingBomber Kidd fires at (3, 2) but the position is empty.
+HealingBomber Kidd fires at (5, 2) but the position is empty.
+HealingBomber Kidd fires at (4, 1) but the position is empty.
+HealingBomber Kidd fires at (4, 3) but the position is empty.
+HealingBomber Kidd move to (9, 5).
+RoboTank Jet fires at (8, 0) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-TerminatorRoboCop Alpha: 0
-BlueThunder Beta: 0
-RoboCop Star: 2
-Madbot Kidd: 0
+TerminatorRoboCop Star: 1
+HealingBomber Kidd: 0
 RoboTank Jet: 1
 
 -----------------------------
 
 Remaining lives of:
-TerminatorRoboCop Alpha: 3
-BlueThunder Beta: 2
-RoboCop Star: 2
-Madbot Kidd: 1
+TerminatorRoboCop Star: 3
+HealingBomber Kidd: 3
 RoboTank Jet: 1
 
 -----------------------------
@@ -1226,46 +1293,47 @@ Current step: 25
 
 ************
 *          *
-*    O     *
-*          *
-*  R       *
-* N        *
-*          *
-*      M   *
 *          *
 *          *
-*        B *
+*          *
+*          *
+*         H*
+*          *
+*          *
+*        O *
+*     N    *
 ************
 Action:
-TerminatorRoboCop Alpha is looking around:
-Position (2, 3) contains an enemy robot.
-TerminatorRoboCop Alpha steps to (2, 3) and kills RoboCop Star!
-TerminatorRoboCop Alpha fires at (4, 8) but the position is empty.
-TerminatorRoboCop Alpha fires at (8, 2) but the position is empty.
-TerminatorRoboCop Alpha fires at (7, 0) but the position is empty.
-BlueThunder Beta fires at (7, 9) but the position is empty.
-Madbot Kidd fires at (5, 5) but the position is empty.
-RoboTank Jet fires at (3, 2) but the position is empty.
-RoboCop Star has respawned from the queue at position (8, 0).
+TerminatorRoboCop Star is looking around:
+No robot has been detected by TerminatorRoboCop Star this round.
+TerminatorRoboCop Star move to (4, 8).
+TerminatorRoboCop Star fires at (2, 2) but the position is empty.
+TerminatorRoboCop Star fires at (3, 1) but the position is empty.
+TerminatorRoboCop Star fires at (1, 1) but the position is empty.
+HealingBomber Kidd enter the healing round but its remaining lives is full.
+
+HealingBomber Kidd fires at (5, 4) but the position is empty.
+HealingBomber Kidd fires at (4, 4) but the position is empty.
+HealingBomber Kidd fires at (6, 4) but the position is empty.
+HealingBomber Kidd fires at (5, 3) but the position is empty.
+HealingBomber Kidd fires at (5, 5) but the position is empty.
+HealingBomber Kidd move to (8, 4).
+RoboTank Jet fires at (6, 6) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-TerminatorRoboCop Alpha: 1
-BlueThunder Beta: 0
-Madbot Kidd: 0
+TerminatorRoboCop Star: 1
+HealingBomber Kidd: 0
 RoboTank Jet: 1
-RoboCop Star: 2
 
 -----------------------------
 
 Remaining lives of:
-TerminatorRoboCop Alpha: 3
-BlueThunder Beta: 2
-Madbot Kidd: 1
+TerminatorRoboCop Star: 3
+HealingBomber Kidd: 3
 RoboTank Jet: 1
-RoboCop Star: 1
 
 -----------------------------
 
@@ -1273,49 +1341,46 @@ RoboCop Star: 1
 Current step: 26
 
 ************
-*        R *
-*    O     *
-*          *
-*  N       *
 *          *
 *          *
-*      M   *
 *          *
 *          *
-*        B *
+*        H *
+*          *
+*          *
+*          *
+*    N   O *
+*          *
 ************
 Action:
-TerminatorRoboCop Alpha is looking around:
-No robot has been detected by TerminatorRoboCop Alpha this round.
-TerminatorRoboCop Alpha move to (3, 4).
-TerminatorRoboCop Alpha fires at (4, 1) and destroys RoboTank Jet!
-TerminatorRoboCop Alpha fires at (1, 0) but the position is empty.
-TerminatorRoboCop Alpha fires at (9, 2) but the position is empty.
-BlueThunder Beta fires at (9, 9) but the position is empty.
-Madbot Kidd fires at (5, 7) but the position is empty.
-RoboCop Star is looking around:
-No robot has been detected by RoboCop Star this round.
-RoboCop Star move to (7, 1).
-RoboCop Star fires at (7, 2) but the position is empty.
-RoboCop Star fires at (5, 9) but the position is empty.
-RoboCop Star fires at (2, 3) but the position is empty.
+TerminatorRoboCop Star is looking around:
+No robot has been detected by TerminatorRoboCop Star this round.
+TerminatorRoboCop Star move to (4, 9).
+TerminatorRoboCop Star fires at (3, 6) but the position is empty.
+TerminatorRoboCop Star fires at (5, 1) but the position is empty.
+TerminatorRoboCop Star fires at (8, 7) but the position is empty.
+HealingBomber Kidd fires at (4, 2) but the position is empty.
+HealingBomber Kidd fires at (3, 2) but the position is empty.
+HealingBomber Kidd fires at (5, 2) but the position is empty.
+HealingBomber Kidd fires at (4, 1) but the position is empty.
+HealingBomber Kidd fires at (4, 3) but the position is empty.
+HealingBomber Kidd move to (9, 5).
+RoboTank Jet fires at (6, 3) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-TerminatorRoboCop Alpha: 2
-BlueThunder Beta: 0
-Madbot Kidd: 0
-RoboCop Star: 2
+TerminatorRoboCop Star: 1
+HealingBomber Kidd: 0
+RoboTank Jet: 1
 
 -----------------------------
 
 Remaining lives of:
-TerminatorRoboCop Alpha: 3
-BlueThunder Beta: 2
-Madbot Kidd: 1
-RoboCop Star: 1
+TerminatorRoboCop Star: 3
+HealingBomber Kidd: 3
+RoboTank Jet: 1
 
 -----------------------------
 
@@ -1324,48 +1389,45 @@ Current step: 27
 
 ************
 *          *
-*       R  *
 *          *
 *          *
-*   N      *
-*          *
-*      M   *
 *          *
 *          *
-*        B *
+*         H*
+*          *
+*          *
+*        O *
+*    N     *
 ************
 Action:
-TerminatorRoboCop Alpha is looking around:
-No robot has been detected by TerminatorRoboCop Alpha this round.
-TerminatorRoboCop Alpha move to (4, 5).
-TerminatorRoboCop Alpha fires at (9, 4) but the position is empty.
-TerminatorRoboCop Alpha fires at (2, 6) but the position is empty.
-TerminatorRoboCop Alpha fires at (8, 9) and destroys BlueThunder Beta!
-Madbot Kidd fires at (7, 6) but the position is empty.
-RoboCop Star is looking around:
-No robot has been detected by RoboCop Star this round.
-RoboCop Star move to (6, 2).
-RoboCop Star fires at (7, 6) but the position is empty.
-RoboCop Star fires at (6, 7) but the position is empty.
-RoboCop Star fires at (0, 4) but the position is empty.
-BlueThunder Beta has respawned from the queue at position (1, 8).
+TerminatorRoboCop Star is looking around:
+No robot has been detected by TerminatorRoboCop Star this round.
+TerminatorRoboCop Star move to (3, 9).
+TerminatorRoboCop Star fires at (8, 5) but the position is empty.
+TerminatorRoboCop Star fires at (2, 1) but the position is empty.
+TerminatorRoboCop Star fires at (1, 7) but the position is empty.
+HealingBomber Kidd fires at (8, 9) but the position is empty.
+HealingBomber Kidd fires at (7, 9) but the position is empty.
+HealingBomber Kidd fires at (9, 9) but the position is empty.
+HealingBomber Kidd fires at (8, 8) and destroys RoboTank Jet!
+HealingBomber Kidd move to (9, 6).
+RoboTank Jet has been killed.
+RoboTank Jet doesn't have any lives remained.
+RoboTank Jet out!!!
+
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-UltimateRobot Alpha: 0
-Madbot Kidd: 0
-RoboCop Star: 2
-BlueThunder Beta: 0
+TerminatorRoboCop Star: 1
+HealingBomber Kidd: 1
 
 -----------------------------
 
 Remaining lives of:
-UltimateRobot Alpha: 3
-Madbot Kidd: 1
-RoboCop Star: 1
-BlueThunder Beta: 1
+TerminatorRoboCop Star: 3
+HealingBomber Kidd: 3
 
 -----------------------------
 
@@ -1375,47 +1437,46 @@ Current step: 28
 ************
 *          *
 *          *
-*      R   *
 *          *
 *          *
-*    U     *
-*      M   *
 *          *
-* B        *
 *          *
+*         H*
+*          *
+*          *
+*   N      *
 ************
 Action:
-UltimateRobot Alpha is looking around:
-No robot has been detected by UltimateRobot Alpha this round.
-UltimateRobot Alpha move to (5, 5).
-UltimateRobot Alpha fires at (3, 1) but the position is empty.
-UltimateRobot Alpha fires at (5, 4) but the position is empty.
-UltimateRobot Alpha fires at (9, 9) but the position is empty.
-Madbot Kidd fires at (7, 5) but the position is empty.
-RoboCop Star is looking around:
-No robot has been detected by RoboCop Star this round.
-RoboCop Star move to (6, 3).
-RoboCop Star fires at (8, 6) but the position is empty.
-RoboCop Star fires at (7, 7) but the position is empty.
-RoboCop Star fires at (5, 8) but the position is empty.
-BlueThunder Beta fires at (1, 9) but the position is empty.
+TerminatorRoboCop Star is looking around:
+No robot has been detected by TerminatorRoboCop Star this round.
+TerminatorRoboCop Star move to (2, 8).
+TerminatorRoboCop Star fires at (3, 6) but the position is empty.
+TerminatorRoboCop Star fires at (4, 9) but the position is empty.
+TerminatorRoboCop Star fires at (3, 8) but the position is empty.
+HealingBomber Kidd fires at (3, 8) but the position is empty.
+HealingBomber Kidd fires at (2, 8) and destroys TerminatorRoboCop Star!
+HealingBomber Kidd fires at (4, 8) but the position is empty.
+HealingBomber Kidd fires at (3, 7) but the position is empty.
+HealingBomber Kidd fires at (3, 9) but the position is empty.
+HealingBomber Kidd move to (9, 7).
+TerminatorRoboCop Star has been killed.
+TerminatorRoboCop Star's lives reduced by 1
+TerminatorRoboCop Star enter the waiting queue
+
+TerminatorRoboCop Star has respawned from the queue at position (9, 6).
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-UltimateRobot Alpha: 0
-Madbot Kidd: 0
-RoboCop Star: 2
-BlueThunder Beta: 0
+HealingBomber Kidd: 2
+TerminatorRoboCop Star: 1
 
 -----------------------------
 
 Remaining lives of:
-UltimateRobot Alpha: 3
-Madbot Kidd: 1
-RoboCop Star: 1
-BlueThunder Beta: 1
+HealingBomber Kidd: 3
+TerminatorRoboCop Star: 2
 
 -----------------------------
 
@@ -1426,43 +1487,45 @@ Current step: 29
 *          *
 *          *
 *          *
-*      R   *
 *          *
-*     U    *
-*      M   *
 *          *
-* B        *
+*          *
+*         N*
+*         H*
+*          *
 *          *
 ************
 Action:
-UltimateRobot Alpha is looking around:
-Position (6, 6) contains an enemy robot.
-UltimateRobot Alpha steps to (6, 6) and kills Madbot Kidd!
-UltimateRobot Alpha fires at (1, 1) but the position is empty.
-UltimateRobot Alpha fires at (9, 9) but the position is empty.
-UltimateRobot Alpha fires at (8, 8) but the position is empty.
-RoboCop Star is looking around:
-No robot has been detected by RoboCop Star this round.
-RoboCop Star move to (7, 3).
-RoboCop Star fires at (9, 5) but the position is empty.
-RoboCop Star fires at (2, 1) but the position is empty.
-RoboCop Star fires at (0, 5) but the position is empty.
-BlueThunder Beta fires at (2, 9) but the position is empty.
+HealingBomber Kidd fires at (7, 6) but the position is empty.
+HealingBomber Kidd fires at (6, 6) but the position is empty.
+HealingBomber Kidd fires at (8, 6) but the position is empty.
+HealingBomber Kidd fires at (7, 5) but the position is empty.
+HealingBomber Kidd fires at (7, 7) but the position is empty.
+HealingBomber Kidd move to (8, 7).
+TerminatorRoboCop Star is looking around:
+Position (8, 7) contains an enemy robot.
+TerminatorRoboCop Star steps to (8, 7) and kills HealingBomber Kidd!
+TerminatorRoboCop Star fires at (2, 6) but the position is empty.
+TerminatorRoboCop Star fires at (6, 1) but the position is empty.
+TerminatorRoboCop Star fires at (0, 5) but the position is empty.
+HealingBomber Kidd has been killed.
+HealingBomber Kidd's lives reduced by 1
+HealingBomber Kidd enter the waiting queue
+
+HealingBomber Kidd has respawned from the queue at position (7, 8).
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-UltimateRobot Alpha: 1
-RoboCop Star: 2
-BlueThunder Beta: 0
+TerminatorRoboCop Star: 2
+HealingBomber Kidd: 2
 
 -----------------------------
 
 Remaining lives of:
-UltimateRobot Alpha: 3
-RoboCop Star: 1
-BlueThunder Beta: 1
+TerminatorRoboCop Star: 2
+HealingBomber Kidd: 2
 
 -----------------------------
 
@@ -1473,43 +1536,41 @@ Current step: 30
 *          *
 *          *
 *          *
-*       R  *
 *          *
 *          *
-*      U   *
 *          *
-* B        *
+*          *
+*        N *
+*       H  *
 *          *
 ************
 Action:
-UltimateRobot Alpha is looking around:
-No robot has been detected by UltimateRobot Alpha this round.
-UltimateRobot Alpha move to (7, 7).
-UltimateRobot Alpha fires at (5, 2) but the position is empty.
-UltimateRobot Alpha fires at (6, 9) but the position is empty.
-UltimateRobot Alpha fires at (0, 4) but the position is empty.
-RoboCop Star is looking around:
-No robot has been detected by RoboCop Star this round.
-RoboCop Star move to (8, 4).
-RoboCop Star fires at (6, 5) but the position is empty.
-RoboCop Star fires at (5, 9) but the position is empty.
-RoboCop Star fires at (6, 5) but the position is empty.
-BlueThunder Beta fires at (2, 8) but the position is empty.
+TerminatorRoboCop Star is looking around:
+Position (7, 8) contains an enemy robot.
+TerminatorRoboCop Star steps to (7, 8) and kills HealingBomber Kidd!
+TerminatorRoboCop Star fires at (9, 2) but the position is empty.
+TerminatorRoboCop Star fires at (5, 9) but the position is empty.
+TerminatorRoboCop Star fires at (7, 2) but the position is empty.
+HealingBomber Kidd has been killed.
+HealingBomber Kidd's lives reduced by 1
+HealingBomber Kidd enter the waiting queue
+
+TerminatorRoboCop Star has been upgraded to UltimateRobot!
+
+HealingBomber Kidd has respawned from the queue at position (4, 6).
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-UltimateRobot Alpha: 1
-RoboCop Star: 2
-BlueThunder Beta: 0
+UltimateRobot Star: 0
+HealingBomber Kidd: 2
 
 -----------------------------
 
 Remaining lives of:
-UltimateRobot Alpha: 3
-RoboCop Star: 1
-BlueThunder Beta: 1
+UltimateRobot Star: 3
+HealingBomber Kidd: 1
 
 -----------------------------
 
@@ -1521,34 +1582,39 @@ Current step: 31
 *          *
 *          *
 *          *
-*        R *
 *          *
+*          *
+*    H     *
 *          *
 *       U  *
-* B        *
 *          *
 ************
 Action:
-UltimateRobot Alpha is looking around:
-No robot has been detected by UltimateRobot Alpha this round.
-UltimateRobot Alpha move to (6, 7).
-UltimateRobot Alpha fires at (8, 4) and destroys RoboCop Star!
-UltimateRobot Alpha fires at (3, 2) but the position is empty.
-UltimateRobot Alpha fires at (8, 3) but the position is empty.
-BlueThunder Beta fires at (2, 7) but the position is empty.
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (7, 7).
+UltimateRobot Star fires at (5, 4) but the position is empty.
+UltimateRobot Star fires at (9, 9) but the position is empty.
+UltimateRobot Star fires at (9, 1) but the position is empty.
+HealingBomber Kidd fires at (1, 3) but the position is empty.
+HealingBomber Kidd fires at (0, 3) but the position is empty.
+HealingBomber Kidd fires at (2, 3) but the position is empty.
+HealingBomber Kidd fires at (1, 2) but the position is empty.
+HealingBomber Kidd fires at (1, 4) but the position is empty.
+HealingBomber Kidd move to (3, 5).
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-UltimateRobot Alpha: 2
-BlueThunder Beta: 0
+UltimateRobot Star: 0
+HealingBomber Kidd: 2
 
 -----------------------------
 
 Remaining lives of:
-UltimateRobot Alpha: 3
-BlueThunder Beta: 1
+UltimateRobot Star: 3
+HealingBomber Kidd: 1
 
 -----------------------------
 
@@ -1561,33 +1627,37 @@ Current step: 32
 *          *
 *          *
 *          *
+*   H      *
 *          *
+*       U  *
 *          *
-*      U   *
-* B        *
 *          *
 ************
 Action:
-UltimateRobot Alpha is looking around:
-No robot has been detected by UltimateRobot Alpha this round.
-UltimateRobot Alpha move to (6, 8).
-UltimateRobot Alpha fires at (5, 1) but the position is empty.
-UltimateRobot Alpha fires at (0, 6) but the position is empty.
-UltimateRobot Alpha fires at (9, 5) but the position is empty.
-BlueThunder Beta fires at (1, 7) but the position is empty.
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (8, 8).
+UltimateRobot Star fires at (1, 6) but the position is empty.
+UltimateRobot Star fires at (7, 2) but the position is empty.
+UltimateRobot Star fires at (2, 4) but the position is empty.
+HealingBomber Kidd fires at (4, 9) but the position is empty.
+HealingBomber Kidd fires at (3, 9) but the position is empty.
+HealingBomber Kidd fires at (5, 9) but the position is empty.
+HealingBomber Kidd fires at (4, 8) but the position is empty.
+HealingBomber Kidd move to (4, 5).
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-UltimateRobot Alpha: 2
-BlueThunder Beta: 0
+UltimateRobot Star: 0
+HealingBomber Kidd: 2
 
 -----------------------------
 
 Remaining lives of:
-UltimateRobot Alpha: 3
-BlueThunder Beta: 1
+UltimateRobot Star: 3
+HealingBomber Kidd: 1
 
 -----------------------------
 
@@ -1600,33 +1670,45 @@ Current step: 33
 *          *
 *          *
 *          *
+*    H     *
 *          *
 *          *
-*          *
-* B    U   *
+*        U *
 *          *
 ************
 Action:
-UltimateRobot Alpha is looking around:
-No robot has been detected by UltimateRobot Alpha this round.
-UltimateRobot Alpha move to (5, 7).
-UltimateRobot Alpha fires at (9, 6) but the position is empty.
-UltimateRobot Alpha fires at (3, 7) but the position is empty.
-UltimateRobot Alpha fires at (9, 4) but the position is empty.
-BlueThunder Beta fires at (0, 7) but the position is empty.
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (9, 7).
+UltimateRobot Star fires at (9, 1) but the position is empty.
+UltimateRobot Star fires at (3, 0) but the position is empty.
+UltimateRobot Star fires at (1, 2) but the position is empty.
+HealingBomber Kidd fires at (8, 7) but the position is empty.
+HealingBomber Kidd fires at (7, 7) but the position is empty.
+HealingBomber Kidd fires at (9, 7) and destroys UltimateRobot Star!
+HealingBomber Kidd fires at (8, 6) but the position is empty.
+HealingBomber Kidd fires at (8, 8) but the position is empty.
+HealingBomber Kidd move to (4, 4).
+UltimateRobot Star has been killed.
+UltimateRobot Star's lives reduced by 1
+UltimateRobot Star enter the waiting queue
+
+HealingBomber Kidd has been upgraded to Terrorist!
+
+UltimateRobot Star has respawned from the queue at position (3, 1).
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-UltimateRobot Alpha: 2
-BlueThunder Beta: 0
+Terrorist Kidd: 0
+UltimateRobot Star: 0
 
 -----------------------------
 
 Remaining lives of:
-UltimateRobot Alpha: 3
-BlueThunder Beta: 1
+Terrorist Kidd: 3
+UltimateRobot Star: 2
 
 -----------------------------
 
@@ -1635,37 +1717,44 @@ Current step: 34
 
 ************
 *          *
+*   U      *
+*          *
+*          *
+*    Y     *
 *          *
 *          *
 *          *
 *          *
-*          *
-*          *
-*     U    *
-* B        *
 *          *
 ************
 Action:
-UltimateRobot Alpha is looking around:
-No robot has been detected by UltimateRobot Alpha this round.
-UltimateRobot Alpha move to (6, 8).
-UltimateRobot Alpha fires at (3, 9) but the position is empty.
-UltimateRobot Alpha fires at (0, 5) but the position is empty.
-UltimateRobot Alpha fires at (0, 1) but the position is empty.
-BlueThunder Beta fires at (0, 8) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (5, 2) but the position is empty.
+Terrorist Kidd fires at (4, 2) but the position is empty.
+Terrorist Kidd fires at (6, 2) but the position is empty.
+Terrorist Kidd fires at (5, 1) but the position is empty.
+Terrorist Kidd fires at (5, 3) but the position is empty.
+Terrorist Kidd move to (4, 5).
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (2, 2).
+UltimateRobot Star fires at (2, 5) but the position is empty.
+UltimateRobot Star fires at (5, 6) but the position is empty.
+UltimateRobot Star fires at (6, 6) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-UltimateRobot Alpha: 2
-BlueThunder Beta: 0
+Terrorist Kidd: 0
+UltimateRobot Star: 0
 
 -----------------------------
 
 Remaining lives of:
-UltimateRobot Alpha: 3
-BlueThunder Beta: 1
+Terrorist Kidd: 3
+UltimateRobot Star: 2
 
 -----------------------------
 
@@ -1675,36 +1764,42 @@ Current step: 35
 ************
 *          *
 *          *
+*  U       *
+*          *
+*          *
+*    Y     *
 *          *
 *          *
 *          *
-*          *
-*          *
-*          *
-* B    U   *
 *          *
 ************
 Action:
-UltimateRobot Alpha is looking around:
-No robot has been detected by UltimateRobot Alpha this round.
-UltimateRobot Alpha move to (7, 9).
-UltimateRobot Alpha fires at (1, 0) but the position is empty.
-UltimateRobot Alpha fires at (9, 3) but the position is empty.
-UltimateRobot Alpha fires at (8, 1) but the position is empty.
-BlueThunder Beta fires at (0, 9) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (3, 0) but the position is empty.
+Terrorist Kidd fires at (2, 0) but the position is empty.
+Terrorist Kidd fires at (4, 0) but the position is empty.
+Terrorist Kidd fires at (3, 1) but the position is empty.
+Terrorist Kidd move to (3, 6).
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (1, 1).
+UltimateRobot Star fires at (8, 3) but the position is empty.
+UltimateRobot Star fires at (3, 0) but the position is empty.
+UltimateRobot Star fires at (7, 6) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-UltimateRobot Alpha: 2
-BlueThunder Beta: 0
+Terrorist Kidd: 0
+UltimateRobot Star: 0
 
 -----------------------------
 
 Remaining lives of:
-UltimateRobot Alpha: 3
-BlueThunder Beta: 1
+Terrorist Kidd: 3
+UltimateRobot Star: 2
 
 -----------------------------
 
@@ -1713,37 +1808,43 @@ Current step: 36
 
 ************
 *          *
+* U        *
 *          *
 *          *
 *          *
 *          *
+*   Y      *
 *          *
 *          *
 *          *
-* B        *
-*       U  *
 ************
 Action:
-UltimateRobot Alpha is looking around:
-No robot has been detected by UltimateRobot Alpha this round.
-UltimateRobot Alpha move to (6, 9).
-UltimateRobot Alpha fires at (7, 0) but the position is empty.
-UltimateRobot Alpha fires at (0, 7) but the position is empty.
-UltimateRobot Alpha fires at (1, 2) but the position is empty.
-BlueThunder Beta fires at (1, 9) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (5, 9) but the position is empty.
+Terrorist Kidd fires at (4, 9) but the position is empty.
+Terrorist Kidd fires at (6, 9) but the position is empty.
+Terrorist Kidd fires at (5, 8) but the position is empty.
+Terrorist Kidd move to (3, 5).
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (2, 2).
+UltimateRobot Star fires at (7, 8) but the position is empty.
+UltimateRobot Star fires at (5, 9) but the position is empty.
+UltimateRobot Star fires at (0, 5) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-UltimateRobot Alpha: 2
-BlueThunder Beta: 0
+Terrorist Kidd: 0
+UltimateRobot Star: 0
 
 -----------------------------
 
 Remaining lives of:
-UltimateRobot Alpha: 3
-BlueThunder Beta: 1
+Terrorist Kidd: 3
+UltimateRobot Star: 2
 
 -----------------------------
 
@@ -1753,36 +1854,43 @@ Current step: 37
 ************
 *          *
 *          *
+*  U       *
+*          *
+*          *
+*   Y      *
 *          *
 *          *
 *          *
 *          *
-*          *
-*          *
-* B        *
-*      U   *
 ************
 Action:
-UltimateRobot Alpha is looking around:
-No robot has been detected by UltimateRobot Alpha this round.
-UltimateRobot Alpha move to (7, 8).
-UltimateRobot Alpha fires at (5, 7) but the position is empty.
-UltimateRobot Alpha fires at (7, 9) but the position is empty.
-UltimateRobot Alpha fires at (3, 8) but the position is empty.
-BlueThunder Beta fires at (2, 9) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (2, 7) but the position is empty.
+Terrorist Kidd fires at (1, 7) but the position is empty.
+Terrorist Kidd fires at (3, 7) but the position is empty.
+Terrorist Kidd fires at (2, 6) but the position is empty.
+Terrorist Kidd fires at (2, 8) but the position is empty.
+Terrorist Kidd move to (3, 6).
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (3, 2).
+UltimateRobot Star fires at (1, 7) but the position is empty.
+UltimateRobot Star fires at (9, 7) but the position is empty.
+UltimateRobot Star fires at (4, 3) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-UltimateRobot Alpha: 2
-BlueThunder Beta: 0
+Terrorist Kidd: 0
+UltimateRobot Star: 0
 
 -----------------------------
 
 Remaining lives of:
-UltimateRobot Alpha: 3
-BlueThunder Beta: 1
+Terrorist Kidd: 3
+UltimateRobot Star: 2
 
 -----------------------------
 
@@ -1792,36 +1900,42 @@ Current step: 38
 ************
 *          *
 *          *
+*   U      *
 *          *
 *          *
 *          *
+*   Y      *
 *          *
 *          *
-*          *
-* B     U  *
 *          *
 ************
 Action:
-UltimateRobot Alpha is looking around:
-No robot has been detected by UltimateRobot Alpha this round.
-UltimateRobot Alpha move to (8, 7).
-UltimateRobot Alpha fires at (8, 6) but the position is empty.
-UltimateRobot Alpha fires at (0, 7) but the position is empty.
-UltimateRobot Alpha fires at (3, 5) but the position is empty.
-BlueThunder Beta fires at (2, 8) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (3, 7) but the position is empty.
+Terrorist Kidd fires at (2, 7) but the position is empty.
+Terrorist Kidd fires at (4, 7) but the position is empty.
+Terrorist Kidd fires at (3, 8) but the position is empty.
+Terrorist Kidd move to (2, 5).
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (2, 2).
+UltimateRobot Star fires at (1, 9) but the position is empty.
+UltimateRobot Star fires at (2, 6) but the position is empty.
+UltimateRobot Star fires at (1, 1) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-UltimateRobot Alpha: 2
-BlueThunder Beta: 0
+Terrorist Kidd: 0
+UltimateRobot Star: 0
 
 -----------------------------
 
 Remaining lives of:
-UltimateRobot Alpha: 3
-BlueThunder Beta: 1
+Terrorist Kidd: 3
+UltimateRobot Star: 2
 
 -----------------------------
 
@@ -1831,36 +1945,43 @@ Current step: 39
 ************
 *          *
 *          *
+*  U       *
+*          *
+*          *
+*  Y       *
 *          *
 *          *
 *          *
-*          *
-*          *
-*        U *
-* B        *
 *          *
 ************
 Action:
-UltimateRobot Alpha is looking around:
-No robot has been detected by UltimateRobot Alpha this round.
-UltimateRobot Alpha move to (7, 7).
-UltimateRobot Alpha fires at (6, 1) but the position is empty.
-UltimateRobot Alpha fires at (4, 3) but the position is empty.
-UltimateRobot Alpha fires at (5, 3) but the position is empty.
-BlueThunder Beta fires at (2, 7) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (5, 4) but the position is empty.
+Terrorist Kidd fires at (4, 4) but the position is empty.
+Terrorist Kidd fires at (6, 4) but the position is empty.
+Terrorist Kidd fires at (5, 3) but the position is empty.
+Terrorist Kidd fires at (5, 5) but the position is empty.
+Terrorist Kidd move to (1, 5).
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (3, 2).
+UltimateRobot Star fires at (2, 9) but the position is empty.
+UltimateRobot Star fires at (9, 7) but the position is empty.
+UltimateRobot Star fires at (5, 8) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-UltimateRobot Alpha: 2
-BlueThunder Beta: 0
+Terrorist Kidd: 0
+UltimateRobot Star: 0
 
 -----------------------------
 
 Remaining lives of:
-UltimateRobot Alpha: 3
-BlueThunder Beta: 1
+Terrorist Kidd: 3
+UltimateRobot Star: 2
 
 -----------------------------
 
@@ -1870,36 +1991,43 @@ Current step: 40
 ************
 *          *
 *          *
+*   U      *
+*          *
+*          *
+* Y        *
 *          *
 *          *
 *          *
-*          *
-*          *
-*       U  *
-* B        *
 *          *
 ************
 Action:
-UltimateRobot Alpha is looking around:
-No robot has been detected by UltimateRobot Alpha this round.
-UltimateRobot Alpha move to (8, 6).
-UltimateRobot Alpha fires at (6, 1) but the position is empty.
-UltimateRobot Alpha fires at (0, 5) but the position is empty.
-UltimateRobot Alpha fires at (9, 8) but the position is empty.
-BlueThunder Beta fires at (1, 7) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (8, 3) but the position is empty.
+Terrorist Kidd fires at (7, 3) but the position is empty.
+Terrorist Kidd fires at (9, 3) but the position is empty.
+Terrorist Kidd fires at (8, 2) but the position is empty.
+Terrorist Kidd fires at (8, 4) but the position is empty.
+Terrorist Kidd move to (0, 6).
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (4, 1).
+UltimateRobot Star fires at (8, 7) but the position is empty.
+UltimateRobot Star fires at (1, 3) but the position is empty.
+UltimateRobot Star fires at (2, 8) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-UltimateRobot Alpha: 2
-BlueThunder Beta: 0
+Terrorist Kidd: 0
+UltimateRobot Star: 0
 
 -----------------------------
 
 Remaining lives of:
-UltimateRobot Alpha: 3
-BlueThunder Beta: 1
+Terrorist Kidd: 3
+UltimateRobot Star: 2
 
 -----------------------------
 
@@ -1908,37 +2036,44 @@ Current step: 41
 
 ************
 *          *
+*    U     *
 *          *
 *          *
 *          *
 *          *
+*Y         *
 *          *
-*        U *
 *          *
-* B        *
 *          *
 ************
 Action:
-UltimateRobot Alpha is looking around:
-No robot has been detected by UltimateRobot Alpha this round.
-UltimateRobot Alpha move to (9, 6).
-UltimateRobot Alpha fires at (9, 7) but the position is empty.
-UltimateRobot Alpha fires at (2, 7) but the position is empty.
-UltimateRobot Alpha fires at (8, 8) but the position is empty.
-BlueThunder Beta fires at (0, 7) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (1, 1) but the position is empty.
+Terrorist Kidd fires at (0, 1) but the position is empty.
+Terrorist Kidd fires at (2, 1) but the position is empty.
+Terrorist Kidd fires at (1, 0) but the position is empty.
+Terrorist Kidd fires at (1, 2) but the position is empty.
+Terrorist Kidd move to (0, 7).
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (3, 2).
+UltimateRobot Star fires at (9, 0) but the position is empty.
+UltimateRobot Star fires at (0, 5) but the position is empty.
+UltimateRobot Star fires at (7, 0) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-UltimateRobot Alpha: 2
-BlueThunder Beta: 0
+Terrorist Kidd: 0
+UltimateRobot Star: 0
 
 -----------------------------
 
 Remaining lives of:
-UltimateRobot Alpha: 3
-BlueThunder Beta: 1
+Terrorist Kidd: 3
+UltimateRobot Star: 2
 
 -----------------------------
 
@@ -1948,36 +2083,43 @@ Current step: 42
 ************
 *          *
 *          *
+*   U      *
 *          *
 *          *
 *          *
 *          *
-*         U*
+*Y         *
 *          *
-* B        *
 *          *
 ************
 Action:
-UltimateRobot Alpha is looking around:
-No robot has been detected by UltimateRobot Alpha this round.
-UltimateRobot Alpha move to (8, 7).
-UltimateRobot Alpha fires at (5, 8) but the position is empty.
-UltimateRobot Alpha fires at (4, 5) but the position is empty.
-UltimateRobot Alpha fires at (5, 0) but the position is empty.
-BlueThunder Beta fires at (0, 8) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (1, 1) but the position is empty.
+Terrorist Kidd fires at (0, 1) but the position is empty.
+Terrorist Kidd fires at (2, 1) but the position is empty.
+Terrorist Kidd fires at (1, 0) but the position is empty.
+Terrorist Kidd fires at (1, 2) but the position is empty.
+Terrorist Kidd move to (0, 8).
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (3, 3).
+UltimateRobot Star fires at (8, 5) but the position is empty.
+UltimateRobot Star fires at (5, 3) but the position is empty.
+UltimateRobot Star fires at (1, 3) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-UltimateRobot Alpha: 2
-BlueThunder Beta: 0
+Terrorist Kidd: 0
+UltimateRobot Star: 0
 
 -----------------------------
 
 Remaining lives of:
-UltimateRobot Alpha: 3
-BlueThunder Beta: 1
+Terrorist Kidd: 3
+UltimateRobot Star: 2
 
 -----------------------------
 
@@ -1988,35 +2130,44 @@ Current step: 43
 *          *
 *          *
 *          *
+*   U      *
 *          *
 *          *
 *          *
 *          *
-*        U *
-* B        *
+*Y         *
 *          *
 ************
 Action:
-UltimateRobot Alpha is looking around:
-No robot has been detected by UltimateRobot Alpha this round.
-UltimateRobot Alpha move to (7, 7).
-UltimateRobot Alpha fires at (9, 3) but the position is empty.
-UltimateRobot Alpha fires at (1, 0) but the position is empty.
-UltimateRobot Alpha fires at (6, 2) but the position is empty.
-BlueThunder Beta fires at (0, 9) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd enter the healing round but its remaining lives is full.
+
+Terrorist Kidd fires at (4, 2) but the position is empty.
+Terrorist Kidd fires at (3, 2) but the position is empty.
+Terrorist Kidd fires at (5, 2) but the position is empty.
+Terrorist Kidd fires at (4, 1) but the position is empty.
+Terrorist Kidd fires at (4, 3) but the position is empty.
+Terrorist Kidd move to (0, 9).
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (4, 3).
+UltimateRobot Star fires at (9, 6) but the position is empty.
+UltimateRobot Star fires at (2, 8) but the position is empty.
+UltimateRobot Star fires at (5, 3) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-UltimateRobot Alpha: 2
-BlueThunder Beta: 0
+Terrorist Kidd: 0
+UltimateRobot Star: 0
 
 -----------------------------
 
 Remaining lives of:
-UltimateRobot Alpha: 3
-BlueThunder Beta: 1
+Terrorist Kidd: 3
+UltimateRobot Star: 2
 
 -----------------------------
 
@@ -2027,35 +2178,41 @@ Current step: 44
 *          *
 *          *
 *          *
+*    U     *
 *          *
 *          *
 *          *
 *          *
-*       U  *
-* B        *
 *          *
+*Y         *
 ************
 Action:
-UltimateRobot Alpha is looking around:
-No robot has been detected by UltimateRobot Alpha this round.
-UltimateRobot Alpha move to (6, 6).
-UltimateRobot Alpha fires at (3, 2) but the position is empty.
-UltimateRobot Alpha fires at (0, 2) but the position is empty.
-UltimateRobot Alpha fires at (9, 1) but the position is empty.
-BlueThunder Beta fires at (1, 9) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (0, 7) but the position is empty.
+Terrorist Kidd fires at (1, 7) but the position is empty.
+Terrorist Kidd fires at (0, 6) but the position is empty.
+Terrorist Kidd fires at (0, 8) but the position is empty.
+Terrorist Kidd move to (0, 8).
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (3, 2).
+UltimateRobot Star fires at (3, 9) but the position is empty.
+UltimateRobot Star fires at (8, 1) but the position is empty.
+UltimateRobot Star fires at (0, 7) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-UltimateRobot Alpha: 2
-BlueThunder Beta: 0
+Terrorist Kidd: 0
+UltimateRobot Star: 0
 
 -----------------------------
 
 Remaining lives of:
-UltimateRobot Alpha: 3
-BlueThunder Beta: 1
+Terrorist Kidd: 3
+UltimateRobot Star: 2
 
 -----------------------------
 
@@ -2065,36 +2222,42 @@ Current step: 45
 ************
 *          *
 *          *
+*   U      *
 *          *
 *          *
 *          *
 *          *
-*      U   *
 *          *
-* B        *
+*Y         *
 *          *
 ************
 Action:
-UltimateRobot Alpha is looking around:
-No robot has been detected by UltimateRobot Alpha this round.
-UltimateRobot Alpha move to (5, 5).
-UltimateRobot Alpha fires at (4, 4) but the position is empty.
-UltimateRobot Alpha fires at (1, 5) but the position is empty.
-UltimateRobot Alpha fires at (6, 9) but the position is empty.
-BlueThunder Beta fires at (2, 9) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (3, 1) but the position is empty.
+Terrorist Kidd fires at (2, 1) but the position is empty.
+Terrorist Kidd fires at (4, 1) but the position is empty.
+Terrorist Kidd fires at (3, 0) but the position is empty.
+Terrorist Kidd fires at (3, 2) and destroys UltimateRobot Star!
+Terrorist Kidd move to (1, 8).
+UltimateRobot Star has been killed.
+UltimateRobot Star's lives reduced by 1
+UltimateRobot Star enter the waiting queue
+
+UltimateRobot Star has respawned from the queue at position (8, 2).
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-UltimateRobot Alpha: 2
-BlueThunder Beta: 0
+Terrorist Kidd: 1
+UltimateRobot Star: 0
 
 -----------------------------
 
 Remaining lives of:
-UltimateRobot Alpha: 3
-BlueThunder Beta: 1
+Terrorist Kidd: 3
+UltimateRobot Star: 1
 
 -----------------------------
 
@@ -2104,36 +2267,42 @@ Current step: 46
 ************
 *          *
 *          *
+*        U *
 *          *
 *          *
 *          *
-*     U    *
 *          *
 *          *
-* B        *
+* Y        *
 *          *
 ************
 Action:
-UltimateRobot Alpha is looking around:
-No robot has been detected by UltimateRobot Alpha this round.
-UltimateRobot Alpha move to (6, 4).
-UltimateRobot Alpha fires at (5, 3) but the position is empty.
-UltimateRobot Alpha fires at (3, 4) but the position is empty.
-UltimateRobot Alpha fires at (8, 9) but the position is empty.
-BlueThunder Beta fires at (2, 8) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (6, 9) but the position is empty.
+Terrorist Kidd fires at (5, 9) but the position is empty.
+Terrorist Kidd fires at (7, 9) but the position is empty.
+Terrorist Kidd fires at (6, 8) but the position is empty.
+Terrorist Kidd move to (2, 9).
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (8, 1).
+UltimateRobot Star fires at (3, 1) but the position is empty.
+UltimateRobot Star fires at (4, 4) but the position is empty.
+UltimateRobot Star fires at (6, 3) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-UltimateRobot Alpha: 2
-BlueThunder Beta: 0
+Terrorist Kidd: 1
+UltimateRobot Star: 0
 
 -----------------------------
 
 Remaining lives of:
-UltimateRobot Alpha: 3
-BlueThunder Beta: 1
+Terrorist Kidd: 3
+UltimateRobot Star: 1
 
 -----------------------------
 
@@ -2142,37 +2311,44 @@ Current step: 47
 
 ************
 *          *
+*        U *
 *          *
 *          *
 *          *
-*      U   *
 *          *
 *          *
 *          *
-* B        *
 *          *
+*  Y       *
 ************
 Action:
-UltimateRobot Alpha is looking around:
-No robot has been detected by UltimateRobot Alpha this round.
-UltimateRobot Alpha move to (5, 3).
-UltimateRobot Alpha fires at (6, 7) but the position is empty.
-UltimateRobot Alpha fires at (0, 1) but the position is empty.
-UltimateRobot Alpha fires at (8, 9) but the position is empty.
-BlueThunder Beta fires at (2, 7) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (1, 6) but the position is empty.
+Terrorist Kidd fires at (0, 6) but the position is empty.
+Terrorist Kidd fires at (2, 6) but the position is empty.
+Terrorist Kidd fires at (1, 5) but the position is empty.
+Terrorist Kidd fires at (1, 7) but the position is empty.
+Terrorist Kidd move to (1, 9).
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (9, 2).
+UltimateRobot Star fires at (4, 7) but the position is empty.
+UltimateRobot Star fires at (3, 1) but the position is empty.
+UltimateRobot Star fires at (1, 4) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-UltimateRobot Alpha: 2
-BlueThunder Beta: 0
+Terrorist Kidd: 1
+UltimateRobot Star: 0
 
 -----------------------------
 
 Remaining lives of:
-UltimateRobot Alpha: 3
-BlueThunder Beta: 1
+Terrorist Kidd: 3
+UltimateRobot Star: 1
 
 -----------------------------
 
@@ -2182,36 +2358,43 @@ Current step: 48
 ************
 *          *
 *          *
-*          *
-*     U    *
-*          *
+*         U*
 *          *
 *          *
 *          *
-* B        *
 *          *
+*          *
+*          *
+* Y        *
 ************
 Action:
-UltimateRobot Alpha is looking around:
-No robot has been detected by UltimateRobot Alpha this round.
-UltimateRobot Alpha move to (4, 4).
-UltimateRobot Alpha fires at (2, 0) but the position is empty.
-UltimateRobot Alpha fires at (5, 4) but the position is empty.
-UltimateRobot Alpha fires at (5, 4) but the position is empty.
-BlueThunder Beta fires at (1, 7) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (3, 3) but the position is empty.
+Terrorist Kidd fires at (2, 3) but the position is empty.
+Terrorist Kidd fires at (4, 3) but the position is empty.
+Terrorist Kidd fires at (3, 2) but the position is empty.
+Terrorist Kidd fires at (3, 4) but the position is empty.
+Terrorist Kidd move to (2, 8).
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (9, 3).
+UltimateRobot Star fires at (7, 0) but the position is empty.
+UltimateRobot Star fires at (9, 4) but the position is empty.
+UltimateRobot Star fires at (5, 1) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-UltimateRobot Alpha: 2
-BlueThunder Beta: 0
+Terrorist Kidd: 1
+UltimateRobot Star: 0
 
 -----------------------------
 
 Remaining lives of:
-UltimateRobot Alpha: 3
-BlueThunder Beta: 1
+Terrorist Kidd: 3
+UltimateRobot Star: 1
 
 -----------------------------
 
@@ -2222,35 +2405,42 @@ Current step: 49
 *          *
 *          *
 *          *
-*          *
-*    U     *
-*          *
+*         U*
 *          *
 *          *
-* B        *
+*          *
+*          *
+*  Y       *
 *          *
 ************
 Action:
-UltimateRobot Alpha is looking around:
-No robot has been detected by UltimateRobot Alpha this round.
-UltimateRobot Alpha move to (3, 3).
-UltimateRobot Alpha fires at (0, 5) but the position is empty.
-UltimateRobot Alpha fires at (8, 8) but the position is empty.
-UltimateRobot Alpha fires at (5, 7) but the position is empty.
-BlueThunder Beta fires at (0, 7) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (3, 5) but the position is empty.
+Terrorist Kidd fires at (2, 5) but the position is empty.
+Terrorist Kidd fires at (4, 5) but the position is empty.
+Terrorist Kidd fires at (3, 4) but the position is empty.
+Terrorist Kidd fires at (3, 6) but the position is empty.
+Terrorist Kidd move to (2, 7).
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (9, 2).
+UltimateRobot Star fires at (2, 8) but the position is empty.
+UltimateRobot Star fires at (6, 8) but the position is empty.
+UltimateRobot Star fires at (1, 1) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-UltimateRobot Alpha: 2
-BlueThunder Beta: 0
+Terrorist Kidd: 1
+UltimateRobot Star: 0
 
 -----------------------------
 
 Remaining lives of:
-UltimateRobot Alpha: 3
-BlueThunder Beta: 1
+Terrorist Kidd: 3
+UltimateRobot Star: 1
 
 -----------------------------
 
@@ -2260,39 +2450,781 @@ Current step: 50
 ************
 *          *
 *          *
-*          *
-*   U      *
-*          *
+*         U*
 *          *
 *          *
 *          *
-* B        *
+*          *
+*  Y       *
+*          *
 *          *
 ************
 Action:
-UltimateRobot Alpha is looking around:
-No robot has been detected by UltimateRobot Alpha this round.
-UltimateRobot Alpha move to (2, 3).
-UltimateRobot Alpha fires at (4, 7) but the position is empty.
-UltimateRobot Alpha fires at (8, 0) but the position is empty.
-UltimateRobot Alpha fires at (8, 6) but the position is empty.
-BlueThunder Beta fires at (0, 8) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (5, 0) but the position is empty.
+Terrorist Kidd fires at (4, 0) but the position is empty.
+Terrorist Kidd fires at (6, 0) but the position is empty.
+Terrorist Kidd fires at (5, 1) but the position is empty.
+Terrorist Kidd move to (3, 6).
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (8, 2).
+UltimateRobot Star fires at (0, 2) but the position is empty.
+UltimateRobot Star fires at (1, 4) but the position is empty.
+UltimateRobot Star fires at (0, 5) but the position is empty.
 
 Live Statistics:
 -----------------------------
 
 Number of robots terminated by...
-UltimateRobot Alpha: 2
-BlueThunder Beta: 0
+Terrorist Kidd: 1
+UltimateRobot Star: 0
 
 -----------------------------
 
 Remaining lives of:
-UltimateRobot Alpha: 3
-BlueThunder Beta: 1
+Terrorist Kidd: 3
+UltimateRobot Star: 1
 
 -----------------------------
 
 
-The war has reached the maximum number of steps.
-Draw!!!
+Current step: 51
+
+************
+*          *
+*          *
+*        U *
+*          *
+*          *
+*          *
+*   Y      *
+*          *
+*          *
+*          *
+************
+Action:
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (7, 0) but the position is empty.
+Terrorist Kidd fires at (6, 0) but the position is empty.
+Terrorist Kidd fires at (8, 0) but the position is empty.
+Terrorist Kidd fires at (7, 1) but the position is empty.
+Terrorist Kidd move to (2, 7).
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (7, 1).
+UltimateRobot Star fires at (6, 8) but the position is empty.
+UltimateRobot Star fires at (4, 4) but the position is empty.
+UltimateRobot Star fires at (4, 7) but the position is empty.
+
+Live Statistics:
+-----------------------------
+
+Number of robots terminated by...
+Terrorist Kidd: 1
+UltimateRobot Star: 0
+
+-----------------------------
+
+Remaining lives of:
+Terrorist Kidd: 3
+UltimateRobot Star: 1
+
+-----------------------------
+
+
+Current step: 52
+
+************
+*          *
+*       U  *
+*          *
+*          *
+*          *
+*          *
+*          *
+*  Y       *
+*          *
+*          *
+************
+Action:
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (4, 3) but the position is empty.
+Terrorist Kidd fires at (3, 3) but the position is empty.
+Terrorist Kidd fires at (5, 3) but the position is empty.
+Terrorist Kidd fires at (4, 2) but the position is empty.
+Terrorist Kidd fires at (4, 4) but the position is empty.
+Terrorist Kidd move to (3, 6).
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (8, 0).
+UltimateRobot Star fires at (7, 4) but the position is empty.
+UltimateRobot Star fires at (3, 6) and destroys Terrorist Kidd!
+UltimateRobot Star fires at (2, 4) but the position is empty.
+Terrorist Kidd has been killed.
+Terrorist Kidd's lives reduced by 1
+Terrorist Kidd enter the waiting queue
+
+Terrorist Kidd has respawned from the queue at position (9, 2).
+
+Live Statistics:
+-----------------------------
+
+Number of robots terminated by...
+UltimateRobot Star: 1
+Terrorist Kidd: 1
+
+-----------------------------
+
+Remaining lives of:
+UltimateRobot Star: 1
+Terrorist Kidd: 2
+
+-----------------------------
+
+
+Current step: 53
+
+************
+*        U *
+*          *
+*         Y*
+*          *
+*          *
+*          *
+*          *
+*          *
+*          *
+*          *
+************
+Action:
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (7, 0).
+UltimateRobot Star fires at (8, 9) but the position is empty.
+UltimateRobot Star fires at (7, 4) but the position is empty.
+UltimateRobot Star fires at (2, 6) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd recovers its lives by 1!
+Terrorist Kidd fires at (6, 7) but the position is empty.
+Terrorist Kidd fires at (5, 7) but the position is empty.
+Terrorist Kidd fires at (7, 7) but the position is empty.
+Terrorist Kidd fires at (6, 6) but the position is empty.
+Terrorist Kidd fires at (6, 8) but the position is empty.
+Terrorist Kidd move to (8, 3).
+
+Live Statistics:
+-----------------------------
+
+Number of robots terminated by...
+UltimateRobot Star: 1
+Terrorist Kidd: 1
+
+-----------------------------
+
+Remaining lives of:
+UltimateRobot Star: 1
+Terrorist Kidd: 3
+
+-----------------------------
+
+
+Current step: 54
+
+************
+*       U  *
+*          *
+*          *
+*        Y *
+*          *
+*          *
+*          *
+*          *
+*          *
+*          *
+************
+Action:
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (8, 0).
+UltimateRobot Star fires at (3, 2) but the position is empty.
+UltimateRobot Star fires at (0, 3) but the position is empty.
+UltimateRobot Star fires at (2, 3) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (5, 9) but the position is empty.
+Terrorist Kidd fires at (4, 9) but the position is empty.
+Terrorist Kidd fires at (6, 9) but the position is empty.
+Terrorist Kidd fires at (5, 8) but the position is empty.
+Terrorist Kidd move to (9, 3).
+
+Live Statistics:
+-----------------------------
+
+Number of robots terminated by...
+UltimateRobot Star: 1
+Terrorist Kidd: 1
+
+-----------------------------
+
+Remaining lives of:
+UltimateRobot Star: 1
+Terrorist Kidd: 3
+
+-----------------------------
+
+
+Current step: 55
+
+************
+*        U *
+*          *
+*          *
+*         Y*
+*          *
+*          *
+*          *
+*          *
+*          *
+*          *
+************
+Action:
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (9, 1).
+UltimateRobot Star fires at (4, 5) but the position is empty.
+UltimateRobot Star fires at (9, 2) but the position is empty.
+UltimateRobot Star fires at (0, 9) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (8, 5) but the position is empty.
+Terrorist Kidd fires at (7, 5) but the position is empty.
+Terrorist Kidd fires at (9, 5) but the position is empty.
+Terrorist Kidd fires at (8, 4) but the position is empty.
+Terrorist Kidd fires at (8, 6) but the position is empty.
+Terrorist Kidd move to (8, 2).
+
+Live Statistics:
+-----------------------------
+
+Number of robots terminated by...
+UltimateRobot Star: 1
+Terrorist Kidd: 1
+
+-----------------------------
+
+Remaining lives of:
+UltimateRobot Star: 1
+Terrorist Kidd: 3
+
+-----------------------------
+
+
+Current step: 56
+
+************
+*          *
+*         U*
+*        Y *
+*          *
+*          *
+*          *
+*          *
+*          *
+*          *
+*          *
+************
+Action:
+UltimateRobot Star is looking around:
+Position (8, 2) contains an enemy robot.
+UltimateRobot Star steps to (8, 2) and kills Terrorist Kidd!
+UltimateRobot Star fires at (6, 0) but the position is empty.
+UltimateRobot Star fires at (9, 9) but the position is empty.
+UltimateRobot Star fires at (9, 5) but the position is empty.
+Terrorist Kidd has been killed.
+Terrorist Kidd's lives reduced by 1
+Terrorist Kidd enter the waiting queue
+
+Terrorist Kidd has respawned from the queue at position (0, 5).
+
+Live Statistics:
+-----------------------------
+
+Number of robots terminated by...
+UltimateRobot Star: 2
+Terrorist Kidd: 1
+
+-----------------------------
+
+Remaining lives of:
+UltimateRobot Star: 1
+Terrorist Kidd: 2
+
+-----------------------------
+
+
+Current step: 57
+
+************
+*          *
+*          *
+*        U *
+*          *
+*          *
+*Y         *
+*          *
+*          *
+*          *
+*          *
+************
+Action:
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (9, 3).
+UltimateRobot Star fires at (5, 7) but the position is empty.
+UltimateRobot Star fires at (0, 5) and destroys Terrorist Kidd!
+UltimateRobot Star fires at (8, 5) but the position is empty.
+Terrorist Kidd has been killed.
+Terrorist Kidd's lives reduced by 1
+Terrorist Kidd enter the waiting queue
+
+Terrorist Kidd has respawned from the queue at position (8, 8).
+
+Live Statistics:
+-----------------------------
+
+Number of robots terminated by...
+UltimateRobot Star: 3
+Terrorist Kidd: 1
+
+-----------------------------
+
+Remaining lives of:
+UltimateRobot Star: 1
+Terrorist Kidd: 1
+
+-----------------------------
+
+
+Current step: 58
+
+************
+*          *
+*          *
+*          *
+*         U*
+*          *
+*          *
+*          *
+*          *
+*        Y *
+*          *
+************
+Action:
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (8, 2).
+UltimateRobot Star fires at (3, 1) but the position is empty.
+UltimateRobot Star fires at (5, 0) but the position is empty.
+UltimateRobot Star fires at (7, 4) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (5, 6) but the position is empty.
+Terrorist Kidd fires at (4, 6) but the position is empty.
+Terrorist Kidd fires at (6, 6) but the position is empty.
+Terrorist Kidd fires at (5, 5) but the position is empty.
+Terrorist Kidd fires at (5, 7) but the position is empty.
+Terrorist Kidd move to (7, 7).
+
+Live Statistics:
+-----------------------------
+
+Number of robots terminated by...
+UltimateRobot Star: 3
+Terrorist Kidd: 1
+
+-----------------------------
+
+Remaining lives of:
+UltimateRobot Star: 1
+Terrorist Kidd: 1
+
+-----------------------------
+
+
+Current step: 59
+
+************
+*          *
+*          *
+*        U *
+*          *
+*          *
+*          *
+*          *
+*       Y  *
+*          *
+*          *
+************
+Action:
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (7, 3).
+UltimateRobot Star fires at (8, 7) but the position is empty.
+UltimateRobot Star fires at (3, 9) but the position is empty.
+UltimateRobot Star fires at (8, 1) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (8, 8) but the position is empty.
+Terrorist Kidd fires at (7, 8) but the position is empty.
+Terrorist Kidd fires at (9, 8) but the position is empty.
+Terrorist Kidd fires at (8, 7) but the position is empty.
+Terrorist Kidd fires at (8, 9) but the position is empty.
+Terrorist Kidd move to (8, 6).
+
+Live Statistics:
+-----------------------------
+
+Number of robots terminated by...
+UltimateRobot Star: 3
+Terrorist Kidd: 1
+
+-----------------------------
+
+Remaining lives of:
+UltimateRobot Star: 1
+Terrorist Kidd: 1
+
+-----------------------------
+
+
+Current step: 60
+
+************
+*          *
+*          *
+*          *
+*       U  *
+*          *
+*          *
+*        Y *
+*          *
+*          *
+*          *
+************
+Action:
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (8, 4).
+UltimateRobot Star fires at (0, 3) but the position is empty.
+UltimateRobot Star fires at (1, 6) but the position is empty.
+UltimateRobot Star fires at (8, 8) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (4, 3) but the position is empty.
+Terrorist Kidd fires at (3, 3) but the position is empty.
+Terrorist Kidd fires at (5, 3) but the position is empty.
+Terrorist Kidd fires at (4, 2) but the position is empty.
+Terrorist Kidd fires at (4, 4) but the position is empty.
+Terrorist Kidd move to (9, 7).
+
+Live Statistics:
+-----------------------------
+
+Number of robots terminated by...
+UltimateRobot Star: 3
+Terrorist Kidd: 1
+
+-----------------------------
+
+Remaining lives of:
+UltimateRobot Star: 1
+Terrorist Kidd: 1
+
+-----------------------------
+
+
+Current step: 61
+
+************
+*          *
+*          *
+*          *
+*          *
+*        U *
+*          *
+*          *
+*         Y*
+*          *
+*          *
+************
+Action:
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (7, 4).
+UltimateRobot Star fires at (0, 2) but the position is empty.
+UltimateRobot Star fires at (0, 5) but the position is empty.
+UltimateRobot Star fires at (9, 3) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (1, 6) but the position is empty.
+Terrorist Kidd fires at (0, 6) but the position is empty.
+Terrorist Kidd fires at (2, 6) but the position is empty.
+Terrorist Kidd fires at (1, 5) but the position is empty.
+Terrorist Kidd fires at (1, 7) but the position is empty.
+Terrorist Kidd move to (8, 8).
+
+Live Statistics:
+-----------------------------
+
+Number of robots terminated by...
+UltimateRobot Star: 3
+Terrorist Kidd: 1
+
+-----------------------------
+
+Remaining lives of:
+UltimateRobot Star: 1
+Terrorist Kidd: 1
+
+-----------------------------
+
+
+Current step: 62
+
+************
+*          *
+*          *
+*          *
+*          *
+*       U  *
+*          *
+*          *
+*          *
+*        Y *
+*          *
+************
+Action:
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (6, 3).
+UltimateRobot Star fires at (9, 5) but the position is empty.
+UltimateRobot Star fires at (0, 0) but the position is empty.
+UltimateRobot Star fires at (5, 2) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (6, 0) but the position is empty.
+Terrorist Kidd fires at (5, 0) but the position is empty.
+Terrorist Kidd fires at (7, 0) but the position is empty.
+Terrorist Kidd fires at (6, 1) but the position is empty.
+Terrorist Kidd move to (7, 8).
+
+Live Statistics:
+-----------------------------
+
+Number of robots terminated by...
+UltimateRobot Star: 3
+Terrorist Kidd: 1
+
+-----------------------------
+
+Remaining lives of:
+UltimateRobot Star: 1
+Terrorist Kidd: 1
+
+-----------------------------
+
+
+Current step: 63
+
+************
+*          *
+*          *
+*          *
+*      U   *
+*          *
+*          *
+*          *
+*          *
+*       Y  *
+*          *
+************
+Action:
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (6, 4).
+UltimateRobot Star fires at (5, 3) but the position is empty.
+UltimateRobot Star fires at (8, 6) but the position is empty.
+UltimateRobot Star fires at (1, 6) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (4, 2) but the position is empty.
+Terrorist Kidd fires at (3, 2) but the position is empty.
+Terrorist Kidd fires at (5, 2) but the position is empty.
+Terrorist Kidd fires at (4, 1) but the position is empty.
+Terrorist Kidd fires at (4, 3) but the position is empty.
+Terrorist Kidd move to (8, 7).
+
+Live Statistics:
+-----------------------------
+
+Number of robots terminated by...
+UltimateRobot Star: 3
+Terrorist Kidd: 1
+
+-----------------------------
+
+Remaining lives of:
+UltimateRobot Star: 1
+Terrorist Kidd: 1
+
+-----------------------------
+
+
+Current step: 64
+
+************
+*          *
+*          *
+*          *
+*          *
+*      U   *
+*          *
+*          *
+*        Y *
+*          *
+*          *
+************
+Action:
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (6, 5).
+UltimateRobot Star fires at (7, 0) but the position is empty.
+UltimateRobot Star fires at (9, 6) but the position is empty.
+UltimateRobot Star fires at (6, 3) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd fires at (7, 2) but the position is empty.
+Terrorist Kidd fires at (6, 2) but the position is empty.
+Terrorist Kidd fires at (8, 2) but the position is empty.
+Terrorist Kidd fires at (7, 1) but the position is empty.
+Terrorist Kidd fires at (7, 3) but the position is empty.
+Terrorist Kidd move to (9, 7).
+
+Live Statistics:
+-----------------------------
+
+Number of robots terminated by...
+UltimateRobot Star: 3
+Terrorist Kidd: 1
+
+-----------------------------
+
+Remaining lives of:
+UltimateRobot Star: 1
+Terrorist Kidd: 1
+
+-----------------------------
+
+
+Current step: 65
+
+************
+*          *
+*          *
+*          *
+*          *
+*          *
+*      U   *
+*          *
+*         Y*
+*          *
+*          *
+************
+Action:
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (7, 6).
+UltimateRobot Star fires at (6, 1) but the position is empty.
+UltimateRobot Star fires at (1, 0) but the position is empty.
+UltimateRobot Star fires at (5, 2) but the position is empty.
+Terrorist Kidd is looking around:
+No robot has been detected by Terrorist Kidd this round.
+Terrorist Kidd recovers its lives by 1!
+Terrorist Kidd fires at (6, 0) but the position is empty.
+Terrorist Kidd fires at (5, 0) but the position is empty.
+Terrorist Kidd fires at (7, 0) but the position is empty.
+Terrorist Kidd fires at (6, 1) but the position is empty.
+Terrorist Kidd move to (9, 8).
+
+Live Statistics:
+-----------------------------
+
+Number of robots terminated by...
+UltimateRobot Star: 3
+Terrorist Kidd: 1
+
+-----------------------------
+
+Remaining lives of:
+UltimateRobot Star: 1
+Terrorist Kidd: 2
+
+-----------------------------
+
+
+Current step: 66
+
+************
+*          *
+*          *
+*          *
+*          *
+*          *
+*          *
+*       U  *
+*          *
+*         Y*
+*          *
+************
+Action:
+UltimateRobot Star is looking around:
+No robot has been detected by UltimateRobot Star this round.
+UltimateRobot Star move to (8, 7).
+UltimateRobot Star fires at (6, 7) but the position is empty.
+UltimateRobot Star fires at (9, 9) but the position is empty.
+UltimateRobot Star fires at (9, 7) but the position is empty.
+Terrorist Kidd is looking around:
+Position (8, 7) contains an enemy robot.
+Terrorist Kidd steps to (8, 7) and kills UltimateRobot Star!
+Terrorist Kidd fires at (3, 6) but the position is empty.
+Terrorist Kidd fires at (2, 6) but the position is empty.
+Terrorist Kidd fires at (4, 6) but the position is empty.
+Terrorist Kidd fires at (3, 5) but the position is empty.
+Terrorist Kidd fires at (3, 7) but the position is empty.
+UltimateRobot Star has been killed.
+UltimateRobot Star doesn't have any lives remained.
+UltimateRobot Star out!!!
+
+
+Live Statistics:
+-----------------------------
+
+Number of robots terminated by...
+Terrorist Kidd: 2
+
+-----------------------------
+
+Remaining lives of:
+Terrorist Kidd: 2
+
+-----------------------------
+
+
+War end.
+The winner is Kidd!!!
+Congratulations!!!

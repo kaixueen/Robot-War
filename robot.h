@@ -54,7 +54,7 @@ public:
     void resetCurrentNumOfRobotTerminated() { currentNumOfRobotTerminated = 0; }
     int getCurrentNumOfRobotTerminated() const { return currentNumOfRobotTerminated; }
 
-    virtual void takeTurn(Battlefield &bt, ofstream& outfile) = 0;                     // Pure virtual function
+    virtual void takeTurn(Battlefield &bt, ofstream &outfile) = 0;  // Pure virtual function
     bool getUpgradePermission() const { return upgradePermission; } // Valid for upgrade?
     void setUpgradePermission(bool p) { upgradePermission = p; }    // Set upgradePermission
 };
@@ -180,8 +180,8 @@ private:
 public:
     MovingRobot() : Robot() {}
     MovingRobot(string n, string t, int x, int y, char s);
-    virtual void move(Battlefield &bt, ofstream& outfile);
-    virtual void takeTurn(Battlefield &bt, ofstream& outfile) = 0; // Pure virtual function
+    virtual void move(Battlefield &bt, ofstream &outfile);
+    virtual void takeTurn(Battlefield &bt, ofstream &outfile) = 0; // Pure virtual function
     virtual ~MovingRobot() {}
 };
 
@@ -192,8 +192,8 @@ public:
     ShootingRobot() : Robot() {}
     ShootingRobot(string t, string n, int x, int y, char s);
 
-    virtual void fire(int offsetX, int offsetY, Battlefield &bt, ofstream& outfile);
-    virtual void takeTurn(Battlefield &bt, ofstream& outfile) = 0; // Pure virtual function
+    virtual void fire(int offsetX, int offsetY, Battlefield &bt, ofstream &outfile);
+    virtual void takeTurn(Battlefield &bt, ofstream &outfile) = 0; // Pure virtual function
     virtual ~ShootingRobot() {}
 };
 
@@ -213,8 +213,8 @@ public:
     bool getIsRobotDetected() const { return numOfRobotDetected != 0; }
     int getNumOfRobotDetected() const { return numOfRobotDetected; }
     void resetDetection();
-    virtual void look(int offsetX, int offsetY, Battlefield &bt, ofstream& outfile);
-    virtual void takeTurn(Battlefield &bt, ofstream& outfile) = 0; // Pure virtual function
+    virtual void look(int offsetX, int offsetY, Battlefield &bt, ofstream &outfile);
+    virtual void takeTurn(Battlefield &bt, ofstream &outfile) = 0; // Pure virtual function
     virtual ~SeeingRobot();
 };
 
@@ -226,10 +226,10 @@ private:
 
 public:
     SteppingRobot(string t, string n, int x, int y, char s);
-    virtual void step(int coordinateX, int coordinateY, Battlefield &bt, ofstream& outfile);
+    virtual void step(int coordinateX, int coordinateY, Battlefield &bt, ofstream &outfile);
     int getRobotStepCount() const { return robotStepCount; }
     void resetRobotStepCount() { robotStepCount = 0; }
-    virtual void takeTurn(Battlefield &bt, ofstream& outfile) = 0; // Pure virtual function
+    virtual void takeTurn(Battlefield &bt, ofstream &outfile) = 0; // Pure virtual function
     virtual ~SteppingRobot() {}
 };
 
@@ -238,7 +238,7 @@ class RoboCop : virtual public MovingRobot, virtual public ShootingRobot, virtua
 {
 public:
     RoboCop(string t, string n, int x, int y, char s);
-    virtual void takeTurn(Battlefield &bt, ofstream& outfile);
+    virtual void takeTurn(Battlefield &bt, ofstream &outfile);
 };
 
 // Terminator class
@@ -246,7 +246,7 @@ class Terminator : virtual public MovingRobot, virtual public SeeingRobot, virtu
 {
 public:
     Terminator(string t, string n, int x, int y, char s);
-    virtual void takeTurn(Battlefield &bt, ofstream& outfile);
+    virtual void takeTurn(Battlefield &bt, ofstream &outfile);
 };
 
 // BlueThunder class
@@ -257,7 +257,7 @@ private:
 
 public:
     BlueThunder(string t, string n, int x, int y, char s);
-    virtual void takeTurn(Battlefield &bt, ofstream& outfile);
+    virtual void takeTurn(Battlefield &bt, ofstream &outfile);
 };
 
 // Madbot class
@@ -265,7 +265,7 @@ class Madbot : virtual public BlueThunder
 {
 public:
     Madbot(string t, string n, int x, int y, char s);
-    virtual void takeTurn(Battlefield &bt, ofstream& outfile);
+    virtual void takeTurn(Battlefield &bt, ofstream &outfile);
 };
 
 // TerminatorRoboCop class
@@ -273,7 +273,7 @@ class TerminatorRoboCop : virtual public RoboCop, virtual public Terminator
 {
 public:
     TerminatorRoboCop(string t, string n, int x, int y, char s);
-    virtual void takeTurn(Battlefield &bt, ofstream& outfile);
+    virtual void takeTurn(Battlefield &bt, ofstream &outfile);
 };
 
 // RoboTank class
@@ -281,7 +281,7 @@ class RoboTank : virtual public Madbot
 {
 public:
     RoboTank(string t, string n, int x, int y, char s);
-    virtual void takeTurn(Battlefield &bt, ofstream& outfile);
+    virtual void takeTurn(Battlefield &bt, ofstream &outfile);
 };
 
 // UltimateRobot class
@@ -289,38 +289,51 @@ class UltimateRobot : public TerminatorRoboCop, public RoboTank
 {
 public:
     UltimateRobot(string t, string n, int x, int y, char s);
-    void takeTurn(Battlefield &bt, ofstream& outfile) override;
+    void takeTurn(Battlefield &bt, ofstream &outfile) override;
 };
 
-/*
 // Extra robot classes
-// BomberRobot class        X 
+// BomberRobot class        X
 // Can shoot in consequent XXX area and destroy the robots
 //                          X
-class BomberMan : public MovingRobot, public ShootingRobot
+class BomberMan : virtual public MovingRobot, virtual public ShootingRobot
 {
+private:
+    bool movePermission;
+
 public:
     BomberMan(string t, string n, int x, int y, char s);
-    virtual void takeTurn(Battlefield &bt, ofstream& outfile);
+    virtual void takeTurn(Battlefield &bt, ofstream &outfile);
+    bool getMovePermission() { return movePermission; }
+    void setMovePermission(bool m) { movePermission = m; }
     virtual ~BomberMan() {}
 };
 
 // HealingBomber class
 // Increase its remaining lives by 1 every 10 rounds if its remaining lives is less than 3
-class HealingBomber : public BomberMan
+class HealingBomber : virtual public BomberMan
 {
+private:
+    int healingTurn;
+
 public:
     HealingBomber(string t, string n, int x, int y, char s);
-    virtual void takeTurn(Battlefield &bt, ofstream& outfile) override;
-    void heal();
+    virtual void takeTurn(Battlefield &bt, ofstream &outfile) override;
+    void heal(ofstream &outfile);
     virtual ~HealingBomber() {}
 };
 
 // Terrorist class
-// can see and bomb
+// can see and step, if no step, move
+// can bomb
 // also can heal
-*/
-
+class Terrorist : public HealingBomber, public SeeingRobot, public SteppingRobot
+{
+public:
+    Terrorist(string t, string n, int x, int y, char s);
+    void takeTurn(Battlefield &bt, ofstream &outfile) override;
+    virtual ~Terrorist() {}
+};
 
 // War class
 class War
@@ -344,12 +357,12 @@ public:
     void initializeRobot(string tt, string tn, int tx, int ty);
     ~War() {}
 
-    bool isPlayingEmpty() const;
-    bool isWaitingEmpty() const;
+    bool isPlayingEmpty() const { return robotPlaying.getListLength() == 0; }
+    bool isWaitingEmpty() const { return robotWaiting.getQueueLength() == 0; }
 
     void changePosition(Robot *&r);
-    void terminateRobot(Robot &r);
-    void promoteRobot(Robot &r);
+    void terminateRobot(Robot &r, ofstream &outfile);
+    void promoteRobot(Robot &r, ofstream &outfile);
 
     void startWar(const string &output);
 };
