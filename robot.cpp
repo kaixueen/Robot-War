@@ -268,9 +268,9 @@ bool RobotList::removeRobot(Robot &rb) // remove robot from the linked list
         {
             prevNode->setNext(nodePtr->getNext());
             robotCount--;
-            return true;
             nodePtr->setRobot(nullptr);
             nodePtr->setNext(nullptr);
+            return true;
         }
         return false;
     }
@@ -805,9 +805,12 @@ void SteppingRobot::step(int coordinateX, int coordinateY, Battlefield &bt, ofst
         cout << getType() << " " << getName() << " steps to (" << coordinateX << ", " << coordinateY << ") and kills " << enemyRobot->getType() << " " << enemyRobot->getName() << "!\n";
         outfile << getType() << " " << getName() << " steps to (" << coordinateX << ", " << coordinateY << ") and kills " << enemyRobot->getType() << " " << enemyRobot->getName() << "!\n";
 
+        int prevX = getX();
+        int prevY = getY();
         setRobotTerminated(*enemyRobot);
         setX(coordinateX);
         setY(coordinateY);
+        bt.removeRobot(prevX, prevY);
         robotStepCount++;
     }
     else
