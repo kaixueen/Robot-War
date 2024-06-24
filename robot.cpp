@@ -1231,6 +1231,11 @@ War::War(const string &input)
                 }
             }
         }
+        if (tempX < 0 || tempX >= w || tempY < 0 || tempY >= l) // Exit if position is negative or out of bound
+        {
+            cout << "Invalid position!\n";
+            exit(EXIT_FAILURE);
+        }
         initializeRobot(tempType, tempName, tempX, tempY);
     }
     infile.close();
