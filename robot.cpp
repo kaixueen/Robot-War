@@ -1,3 +1,20 @@
+/**********|**********|**********|
+Program: robot.cpp / robot.h
+Course: CCP6124-OOPDS
+Trimester: 2410
+Group members:
+1.  Name: NG KAI XUEN
+    ID  : 1211111363
+2.  Name: SIAO WEI CHENG
+    ID  : 1211108953
+3.  Name: TAN YEW WEN
+    ID  : 1211109701
+Lecture Section: TC4L
+Tutorial Section: T14L
+Email: 1211111363@student.mmu.edu.my
+Phone: 011-10669638
+**********|**********|**********/
+
 #include <iostream>
 #include <cstdlib>
 #include <time.h>
@@ -1425,6 +1442,7 @@ void War::startWar(const string &output)
 
             currentRobot->takeTurn(battlefield, outfile); // Robot takes its turn
             cout << endl;
+            outfile << endl;
 
             battlefield.removeRobot(prevX, prevY);                                                // Remove robot's old position
             battlefield.updatePosition(currentRobot, currentRobot->getX(), currentRobot->getY()); // Update robot's new position
