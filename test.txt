@@ -1,8 +1,0 @@
-M by N : 10 10
-steps: 100
-robots: 5
-BomberMan   Kidd    3   6
-RoboTank    Jet     1  1
-Terminator  Alpha   3  2
-BlueThunder Beta    2  3
-RoboCop     Star    5  2

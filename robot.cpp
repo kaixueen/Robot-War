@@ -49,7 +49,7 @@ Robot::Robot(const Robot &r) // Copy constructor
         robotTerminated[i] = r.robotTerminated[i];
 }
 
-Robot::Robot(Robot &&r) noexcept : robotName(r.robotName), robotType(r.robotType), robotSymbol(r.robotSymbol), robotPositionX(r.robotPositionX), robotPositionY(r.robotPositionY), remainingLives(r.remainingLives), upgradePermission(r.upgradePermission), numOfRobotTerminated(r.numOfRobotTerminated), currentNumOfRobotTerminated(r.currentNumOfRobotTerminated) // move constructor
+Robot::Robot(Robot &&r) : robotName(r.robotName), robotType(r.robotType), robotSymbol(r.robotSymbol), robotPositionX(r.robotPositionX), robotPositionY(r.robotPositionY), remainingLives(r.remainingLives), upgradePermission(r.upgradePermission), numOfRobotTerminated(r.numOfRobotTerminated), currentNumOfRobotTerminated(r.currentNumOfRobotTerminated) // move constructor
 {
     // Transfer ownership of terminated robots
     for (int i = 0; i < 3; ++i)
@@ -169,7 +169,7 @@ RobotList &RobotList::operator=(const RobotList &rl) // copy assignment operator
 
         // copy new list
         RobotNode *origListPtr = rl.headPtr;
-
+        robotCount = rl.robotCount; // new code
         if (origListPtr == nullptr)
             headPtr = nullptr;
         else

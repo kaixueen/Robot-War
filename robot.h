@@ -26,7 +26,7 @@ public:
     Robot();                                         // Default constructor
     Robot(string t, string n, int x, int y, char s); // Parameterized constructor
     Robot(const Robot &r);                           // Copy constructor
-    Robot(Robot &&r) noexcept;                       // move constructor
+    Robot(Robot &&r);                                // move constructor
     Robot &operator=(const Robot &right);            // Assignment operator overloading
     virtual ~Robot();                                // Destructor
 
